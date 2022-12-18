@@ -1,0 +1,12 @@
+{
+    "ignore": [
+        "docs/**/*",
+        "node_modules/**/*"
+    ],
+    "watch": [
+        "dist/**/*",
+        "files/**/*"
+    ],
+    "ext": "js,mjs,json,njk",
+    "exec": "cd docs && npx @11ty/eleventy --serve"
+}

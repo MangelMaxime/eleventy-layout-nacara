@@ -1,0 +1,48 @@
+{
+	"definitions": {},
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"type": "object",
+	"required": [
+		"url",
+        "title",
+        "description",
+        "author"
+	],
+	"properties": {
+        "$schema": {
+            "type": "string"
+        },
+		"url": {
+			"type": "string"
+		},
+        "title": {
+            "type": "string"
+        },
+        "description": {
+            "type": "string"
+        },
+        "editUrl": {
+            "type": "string"
+        },
+        "baseUrl": {
+            "type": "string"
+        },
+        "author": {
+            "type": "object",
+            "required": [
+                "name",
+                "twitter"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "twitter": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false
+        }
+	},
+    "additionalProperties": false
+}

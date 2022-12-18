@@ -1,0 +1,26 @@
+{
+    "$schema": "./../../schemas/menu-schema.json",
+    "items": [
+        {
+            "type": "section",
+            "label": "Section 1",
+            "items": [
+                "introduction",
+                "configuration"
+            ]
+        },
+        "guides/create-a-page",
+        {
+            "type": "section",
+            "label": "Section 2",
+            "items": [
+                "guides/customize-the-style"
+            ]
+        },
+        {
+            "type": "link",
+            "label": "Fable",
+            "href": "https://fable.io"
+        }
+    ]
+}

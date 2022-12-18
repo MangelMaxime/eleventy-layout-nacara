@@ -1,0 +1,70 @@
+{
+    "definitions": {},
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+        "$schema": {
+            "type": "string"
+        },
+        "copyright": {
+            "description": "Configure copy right",
+            "type": "object",
+            "properties": {
+                "startDate": {
+                    "description": "Start date of copy right",
+                    "type": "string"
+                },
+                "attribution": {
+                    "description": "Optional attribution of the copy right. You can use HTML tags.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "startDate"
+            ],
+            "additionalProperties": false
+        },
+        "text": {
+            "description": "If set, the text will be displayed below the sitemap. You can use HTML tags.",
+            "type": "string"
+        },
+        "sitemapSections": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "label": {
+                                    "type": "string"
+                                },
+                                "url": {
+                                    "type": "string"
+                                },
+                                "icon": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "label",
+                                "url"
+                            ]
+                        }
+                    }
+                },
+                "required": [
+                    "title",
+                    "items"
+                ],
+                "additionalProperties": false
+            }
+        }
+    },
+    "additionalProperties": false
+}

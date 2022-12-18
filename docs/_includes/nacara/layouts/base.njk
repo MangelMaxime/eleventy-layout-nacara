@@ -1,0 +1,88 @@
+{#
+    This code is part of eleventy-layout-nacara.
+
+    Changes to this files will be overwritten on the next build.
+
+    If you want to make changes please create an issue or send a PR to:
+    https://github.com/MangelMaxime/eleventy-layout-nacara
+#}
+{#
+    Compute body class to identify the current page and the layout
+
+    The ideas is taken from: https://11ty.rocks/tips/layout-templating/
+
+    It makes it easy to apply page specific styles
+#}
+
+{#
+    Use page.fileSlug is available otherwise fallback to home
+
+    Note: index doesn't have a fileSlug computed so will fallback to home
+#}
+{% set pageBodyClass = page.filePathStem | file_to_body_class %}
+{% set layoutBodyClass = layout | layout_to_body_class %}
+{% set hasFooterBodyClass = "has-footer" if footer.sitemapSections or footer.text or footer.copyright else "" %}
+
+<!doctype html>
+<html class="has-navbar-fixed-top" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        {% if isDevelopment %}
+            {{ '🚨' | fav_icon_from_emoji | safe }}
+        {% else %}
+            <link rel="icon" href="{{ '/assets/img/favicon/favicon-192x192.png' | add_hash }}" type="image/png">
+        {% endif %}
+
+        <meta name="referrer" content="no-referrer-when-downgrade">
+
+        <link rel="stylesheet" href="/style.css">
+        <link rel="preconnect" href="/" crossorigin="crossorigin">
+        <title>{{ title or metadata.title | escape }}</title>
+        <script src="/assets/js/navbar.js" defer="defer"></script>
+    </head>
+    <body class="{{ pageBodyClass }} {{ layoutBodyClass }} {{ hasFooterBodyClass }}">
+        {% include "nacara/components/navbar.njk" %}
+        <div class="page-content nacara-content">
+            <div class="container">
+
+                <div class="columns is-gapless is-mobile">
+                    <div class="column is-menu-column is-3-desktop is-hidden-touch">
+                        {{ collections.all | nacara_menu | safe }}
+                    </div>
+                    <div class="column is-9-desktop is-full-touch">
+                        <section class="section">
+                            <div class="content">
+                                <header class="page-header">
+                                    <div class="columns is-vcentered is-hidden-touch">
+                                        <div class="column">
+                                            {{ collections.all | nacara_breadcrumb | safe }}
+                                        </div>
+                                        <div class="column is-narrow">
+                                            <a class="button is-ghost" target="_blank" href="{{ metadata.editUrl + page.inputPath.slice(1) }}">
+                                                Edit
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <h1 class="title is-1">{{ title }}</h1>
+                                </header>
+
+                                {{ content | safe }}
+                            </div>
+
+                            {{ collections.all | nacara_navigation | safe }}
+
+                        </section>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        {% include "nacara/components/footer.njk" %}
+
+    </body>
+</html>

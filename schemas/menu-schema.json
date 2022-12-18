@@ -1,0 +1,110 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "required": [
+        "items"
+    ],
+    "properties": {
+        "$schema": {
+            "type": "string"
+        },
+        "items": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/menu_item"
+            }
+        }
+    },
+    "additionalProperties": false,
+    "definitions": {
+        "menu_section": {
+            "type": "object",
+            "required": [
+                "type",
+                "label",
+                "items"
+            ],
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "section"
+                    ]
+                },
+                "label": {
+                    "type": "string"
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/menu_item"
+                    }
+                }
+            }
+        },
+        "menu_link": {
+            "type": "object",
+            "required": [
+                "type",
+                "label",
+                "href"
+            ],
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "link"
+                    ]
+                },
+                "label": {
+                    "type": "string"
+                },
+                "href": {
+                    "type": "string"
+                }
+            }
+        },
+        "menu_page": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "object",
+                    "required": [
+                        "type",
+                        "label",
+                        "pageId"
+                    ],
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "enum": [
+                                "pageId"
+                            ]
+                        },
+                        "label": {
+                            "type": "string"
+                        },
+                        "page": {
+                            "type": "string"
+                        }
+                    }
+                }
+            ]
+        },
+        "menu_item": {
+            "anyOf": [
+                {
+                    "$ref": "#/definitions/menu_section"
+                },
+                {
+                    "$ref": "#/definitions/menu_link"
+                },
+                {
+                    "$ref": "#/definitions/menu_page"
+                }
+            ]
+        }
+    }
+}

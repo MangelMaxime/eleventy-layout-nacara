@@ -1,0 +1,50 @@
+{
+    "$schema": "./../../schemas/footer-schema.json",
+    "copyright": {
+        "startDate": "2021",
+        "attribution": "Elmish contributors"
+    },
+    "text": "Built with <a class=\"is-underlined\" href=\"https://mangelmaxime.github.io/Nacara/\">eleventy-layout-nacara</a>",
+    "sitemapSections": [
+        {
+            "title": "Project ressources",
+            "items": [
+                {
+                    "label": "Repository",
+                    "icon": "lucide:file-code",
+                    "url": "https://github.com/elmish/elmish.github.io"
+                },
+                {
+                    "label": "License",
+                    "icon": "lucide:copyright",
+                    "url": "https://github.com/elmish/elmish.github.io"
+                }
+            ]
+        },
+        {
+            "title": "Other Links",
+            "items": [
+                {
+                    "label": "Fable",
+                    "icon": "assets:fable",
+                    "url": "https://github.com/elmish/elmish.github.io"
+                },
+                {
+                    "label": "Fable Gitter",
+                    "icon": "simpleIcons:gitter",
+                    "url": "https://github.com/elmish/elmish.github.io"
+                },
+                {
+                    "label": "Fable Slack",
+                    "icon": "simpleIcons:slack",
+                    "url": ""
+                },
+                {
+                    "label": "F# Software Foundation",
+                    "icon": "assets:fsf",
+                    "url": "https://github.com/elmish/elmish.github.io"
+                }
+            ]
+        }
+    ]
+}

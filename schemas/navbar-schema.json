@@ -1,0 +1,120 @@
+{
+    "definitions": {},
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+        "$schema": {
+            "type": "string"
+        },
+        "start": {
+            "type": "array",
+            "items": {
+                "anyOf": [
+                    {
+                        "type": "object",
+                        "required": [
+                            "label"
+                        ],
+                        "properties": {
+                            "label": {
+                                "type": "string"
+                            },
+                            "items": {
+                                "type": "array",
+                                "items": {
+                                    "anyOf": [
+                                        {
+                                            "type": "string",
+                                            "enum": [
+                                                "divider"
+                                            ]
+                                        },
+                                        {
+                                            "type": "object",
+                                            "required": [
+                                                "label",
+                                                "section"
+                                            ],
+                                            "properties": {
+                                                "section": {
+                                                    "type": "string"
+                                                },
+                                                "url": {
+                                                    "type": "string"
+                                                },
+                                                "label": {
+                                                    "type": "string"
+                                                },
+                                                "description": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "additionalProperties": false
+                                        }
+                                    ]
+                                }
+                            },
+                            "pinned": {
+                                "type": "boolean"
+                            },
+                            "fullwidth": {
+                                "type": "boolean"
+                            },
+                            "partial": {
+                                "type": "string"
+                            }
+                        },
+                        "additionalProperties": false
+                    },
+                    {
+                        "type": "object",
+                        "required": [
+                            "url",
+                            "label"
+                        ],
+                        "properties": {
+                            "section": {
+                                "type": "string"
+                            },
+                            "url": {
+                                "type": "string"
+                            },
+                            "pinned": {
+                                "type": "boolean",
+                                "default": false
+                            },
+                            "label": {
+                                "type": "string"
+                            }
+                        },
+                        "additionalProperties": false
+                    }
+                ]
+            }
+        },
+        "end": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": [
+                    "url",
+                    "icon",
+                    "label"
+                ],
+                "properties": {
+                    "url": {
+                        "type": "string"
+                    },
+                    "icon": {
+                        "type": "string"
+                    },
+                    "label": {
+                        "type": "string"
+                    }
+                },
+                "additionalProperties": false
+            }
+        }
+    },
+    "additionalProperties": false
+}
