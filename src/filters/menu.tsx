@@ -35,13 +35,15 @@ const MenuItemPage = ({ pageId, pages, currentPageId }: IMenuItemPageProps) => {
     const isCurrentPage =
         getPageId(pageOfMenuItem?.filePathStem) === currentPageId;
 
-    const pageHref =
-        pageOfMenuItem.data.baseUrl + pageOfMenuItem.data.page.url;
+    const pageHref = pageOfMenuItem.data.baseUrl + pageOfMenuItem.data.page.url;
 
     return (
         <li>
-            <a href={pageHref} class={isCurrentPage ? "is-active" : ""}>
-                {pageOfMenuItem?.data.title}
+            <a
+                href={pageHref}
+                class={isCurrentPage ? "is-active" : ""}
+                innerHTML={{ __dangerousHtml: pageOfMenuItem?.data.title }}
+            >
             </a>
         </li>
     );
@@ -98,9 +100,7 @@ const MenuItem = ({ menuItem, pages, currentPageId }: IMenuItemProps) => {
             return (
                 <ul class="menu-list">
                     <li>
-                        <a href={menuItem.href}>
-                            {menuItem.label}
-                        </a>
+                        <a href={menuItem.href}>{menuItem.label}</a>
                     </li>
                 </ul>
             );

@@ -1,4 +1,4 @@
 ---
-title: Customize the style
+title: Menus
 layout: nacara/layouts/docs.njk
 ---

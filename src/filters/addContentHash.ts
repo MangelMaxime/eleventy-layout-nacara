@@ -1,5 +1,3 @@
-// @ts-check
-
 import fs from "fs/promises";
 import crypto from "crypto";
 import path from "path";

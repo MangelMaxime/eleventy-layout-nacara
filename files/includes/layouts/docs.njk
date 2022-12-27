@@ -1,0 +1,41 @@
+{% extends "nacara/layouts/base.njk" %}
+
+{% block content %}
+    <div class="page-content nacara-content">
+        <div class="container">
+
+            <div class="columns is-gapless is-mobile">
+                <div class="column is-menu-column is-3-desktop is-hidden-touch">
+                    {{ collections.all | nacara_menu | safe }}
+                </div>
+                <div class="column is-9-desktop is-full-touch">
+                    <section class="section">
+                        <div class="content">
+                            <header class="page-header">
+                                <div class="columns is-vcentered is-hidden-touch">
+                                    <div class="column">
+                                        {{ collections.all | nacara_breadcrumb | safe }}
+                                    </div>
+                                    <div class="column is-narrow">
+                                        <a class="button is-ghost" target="_blank" href="{{ metadata.editUrl + page.inputPath.slice(1) }}">
+                                                Edit
+                                            </a>
+                                    </div>
+                                </div>
+                                <h1 class="title is-1">{{ title }}</h1>
+                            </header>
+
+                            {{ content | safe }}
+                        </div>
+
+                        {{ collections.all | nacara_navigation | safe }}
+
+                    </section>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+{% endblock content %}

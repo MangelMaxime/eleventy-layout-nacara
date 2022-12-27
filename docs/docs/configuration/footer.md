@@ -1,4 +1,4 @@
 ---
-title: Customize the style
+title: Footer
 layout: nacara/layouts/docs.njk
 ---

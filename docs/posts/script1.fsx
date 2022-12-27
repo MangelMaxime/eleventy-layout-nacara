@@ -1,7 +1,7 @@
 (***
 title: This is my first post.
 description: This is a post on My Blog about agile frameworks.
-layout: nacara/layouts/base.njk
+layout: nacara/layouts/docs.njk
 ***)
 
 let add (a : int) (b : int) = a + b

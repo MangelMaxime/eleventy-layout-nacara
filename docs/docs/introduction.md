@@ -1,6 +1,6 @@
 ---
-title: Introduction
-layout: nacara/layouts/base.njk
+title: Why Nacara?
+layout: nacara/layouts/docs.njk
 ---
 
 **eleventy-layout-nacara** is a plugin for Eleventy that provides an opinionated layout for your documentation.

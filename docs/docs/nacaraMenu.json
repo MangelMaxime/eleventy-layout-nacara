@@ -3,24 +3,55 @@
     "items": [
         {
             "type": "section",
-            "label": "Section 1",
+            "label": "Why?",
             "items": [
                 "introduction",
                 "configuration"
             ]
         },
-        "guides/create-a-page",
         {
             "type": "section",
-            "label": "Section 2",
+            "label": "Getting started",
+            "items": []
+        },
+        {
+            "type": "section",
+            "label": "Layouts",
             "items": [
-                "guides/customize-the-style"
+                "layouts/base"
             ]
         },
         {
-            "type": "link",
-            "label": "Fable",
-            "href": "https://fable.io"
+            "type": "section",
+            "label": "Configuration",
+            "items": [
+                "configuration/metadata",
+                "configuration/navbar",
+                "configuration/footer",
+                "configuration/menus"
+            ]
+        },
+        {
+            "type": "section",
+            "label": "Filters",
+            "items": [
+                "filters/add-content-hash",
+                "filters/file-to-body-class",
+                "filters/format-date",
+                "filters/last-modified-date",
+                "filters/layout-to-body-class",
+                "filters/nacara-breadcrumb",
+                "filters/nacara-menu",
+                "filters/nacara-navigation"
+            ]
+        },
+        {
+            "type": "section",
+            "label": "Data",
+            "items": [
+                "data/base-url",
+                "data/nacara-menu"
+            ]
         }
     ]
 }

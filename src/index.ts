@@ -1,7 +1,7 @@
 import formatDateFilter from "./filters/formatDate";
 import lastModifiedDateFilter from "./filters/lastModifiedDate";
 import favIconFromEmojiFilter from "./filters/favIconFromEmoji";
-import addHashFilter from "./filters/addHash";
+import addHashFilter from "./filters/addContentHash";
 import fileToBodyClassFilter from "./filters/fileToBodyClass";
 import layoutToBodyClassFilter from "./filters/layoutToBodyClass";
 import toIconFilterBuilder, {
@@ -29,13 +29,13 @@ const defaultEleventyComputed = {
             return "";
         }
 
-        if (data.metadata == undefined) {
+        if (data.nacaraMetadata == undefined) {
             throw new Error(
-                "eleventy-layout-nacara: Please provide the metadata information by creating a _data/metadata.json file."
+                "eleventy-layout-nacara: Please provide the metadata information by creating a _data/nacaraMetadata.json file."
             );
         }
 
-        return data.metadata.baseUrl;
+        return data.nacaraMetadata.baseUrl;
     },
     nacaraMenu: async (data : any) => {
         // Find the root of the project
@@ -51,7 +51,7 @@ const defaultEleventyComputed = {
         const sectionDir = path.join(root, inputPathSegments[0])
         // Build the nacaraMenu.json expected path
         const menuFilepath = path.join(sectionDir, 'nacaraMenu.json');
-
+        console.log(sectionDir);
         // If the nacaraMenu.json file exists, read it and expose
         if (fs.existsSync(menuFilepath)) {
             const menuBuffer = await fs.readFile(menuFilepath);
@@ -105,7 +105,7 @@ function configFunction(eleventyConfig: any, options?: Options) {
     eleventyConfig.addFilter("fav_icon_from_emoji", favIconFromEmojiFilter);
     eleventyConfig.addAsyncFilter("last_modified_date", lastModifiedDateFilter);
     eleventyConfig.addFilter("format_date", formatDateFilter);
-    eleventyConfig.addAsyncFilter("add_hash", addHashFilter);
+    eleventyConfig.addAsyncFilter("add_content_hash", addHashFilter);
     eleventyConfig.addFilter("file_to_body_class", fileToBodyClassFilter);
     eleventyConfig.addFilter("layout_to_body_class", layoutToBodyClassFilter);
     eleventyConfig.addAsyncFilter(

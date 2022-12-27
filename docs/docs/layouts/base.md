@@ -1,4 +1,4 @@
 ---
-title: Customize the style
+title: Base
 layout: nacara/layouts/docs.njk
 ---
