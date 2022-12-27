@@ -21,7 +21,7 @@ function flattenMenu(menu: Menu): FlatMenu {
     return menu.flatMap(flatten);
 }
 
-function tryFindSection(menu: Menu, pageId: string) : MenuSection | undefined {
+function tryFindSection(menu: Menu, pageId: string): MenuSection | undefined {
     const findInSection = (menu: Menu, pageId: string) => {
         const result = menu.find((menuItem) => {
             if (typeof menuItem === "string") {
@@ -44,8 +44,8 @@ function tryFindSection(menu: Menu, pageId: string) : MenuSection | undefined {
             }
         });
 
-        return result
-    }
+        return result;
+    };
 
     // When searching from the top level, we don't want to return a match on a top-level
     // page id, because it is not in a section.
@@ -73,7 +73,7 @@ function tryFindSection(menu: Menu, pageId: string) : MenuSection | undefined {
         }
     });
 
-    return result as (MenuSection | undefined);
+    return result as MenuSection | undefined;
 }
 
 /**
@@ -81,9 +81,7 @@ function tryFindSection(menu: Menu, pageId: string) : MenuSection | undefined {
  * It ensures that the "Next button" is on the right of the page
  */
 const EmptyPreviousButton = () => {
-    return (
-        <a class="button navigate-to-previous is-invisible"></a>
-    );
+    return <a class="button navigate-to-previous is-invisible"></a>;
 };
 
 /**
@@ -96,8 +94,9 @@ const EmptyNextButton = () => {
 type IPreviousPageButtonProps = {
     currentPageIndex: number;
     flatMenu: FlatMenu;
-    menu : Menu;
+    menu: Menu;
     pages: any[];
+    currentSection: string;
 };
 
 const PreviousPageButton = ({
@@ -105,6 +104,7 @@ const PreviousPageButton = ({
     flatMenu,
     menu,
     pages,
+    currentSection,
 }: IPreviousPageButtonProps) => {
     // If the current page is the first page of the menu,
     // we can't generate a "real" previous button
@@ -123,7 +123,9 @@ const PreviousPageButton = ({
     const previousPageId = previousMenuItem; // Rename it for clarity
 
     const previousPageContext = pages.find(
-        (page) => getPageId(page.filePathStem) === previousMenuItem
+        (page) =>
+            page.data.nacaraSection === currentSection &&
+            getPageId(page.filePathStem) === previousMenuItem
     );
 
     if (!previousPageContext) {
@@ -155,8 +157,9 @@ const PreviousPageButton = ({
 interface INextPageButtonProps {
     currentPageIndex: number;
     flatMenu: FlatMenu;
-    menu : Menu;
+    menu: Menu;
     pages: any[];
+    currentSection: string;
 }
 
 const NextPageButton = ({
@@ -164,6 +167,7 @@ const NextPageButton = ({
     flatMenu,
     menu,
     pages,
+    currentSection,
 }: INextPageButtonProps) => {
     // If the current page is the first page of the menu,
     // we can't generate a "real" previous button
@@ -182,7 +186,9 @@ const NextPageButton = ({
     const nextPageId = nextMenuItem; // Rename it for clarity
 
     const nextPageContext = pages.find(
-        (page) => getPageId(page.filePathStem) === nextMenuItem
+        (page) =>
+            page.data.nacaraSection === currentSection &&
+            getPageId(page.filePathStem) === nextMenuItem
     );
 
     if (!nextPageContext) {
@@ -248,12 +254,14 @@ export default function navigationFilter(this: any, pages: any[]) {
                 menu={currentPage.data.nacaraMenu}
                 flatMenu={flatMenu}
                 pages={pages}
+                currentSection={currentPage.data.nacaraSection}
             />
             <NextPageButton
                 currentPageIndex={currentPageIndex}
                 menu={currentPage.data.nacaraMenu}
                 flatMenu={flatMenu}
                 pages={pages}
+                currentSection={currentPage.data.nacaraSection}
             />
         </div>
     );

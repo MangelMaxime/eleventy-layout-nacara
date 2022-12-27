@@ -5,8 +5,7 @@
             "type": "section",
             "label": "Why?",
             "items": [
-                "introduction",
-                "configuration"
+                "introduction"
             ]
         },
         {
@@ -49,7 +48,9 @@
             "type": "section",
             "label": "Data",
             "items": [
+                "data/is-development",
                 "data/base-url",
+                "data/nacara-section",
                 "data/nacara-menu"
             ]
         }

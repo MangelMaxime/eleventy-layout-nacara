@@ -37,7 +37,7 @@ const defaultEleventyComputed = {
 
         return data.nacaraMetadata.baseUrl;
     },
-    nacaraMenu: async (data : any) => {
+    sectionDir: async (data: any) => {
         // Find the root of the project
         // Data doesn't contains the eleventyConfig.dir information
         // If needed, we can make the plugin expose it in the data
@@ -50,8 +50,18 @@ const defaultEleventyComputed = {
         // Build the section direction, which consist of the root + the first segment of the path
         const sectionDir = path.join(root, inputPathSegments[0])
         // Build the nacaraMenu.json expected path
-        const menuFilepath = path.join(sectionDir, 'nacaraMenu.json');
-        console.log(sectionDir);
+        return sectionDir;
+    },
+    nacaraSection: async (data: any) => {
+        //  Normal the path, so we can split using the path separator
+        const normalizedInputPath = path.normalize(data.page.inputPath);
+        // Extract all the segments of the path
+        const inputPathSegments = normalizedInputPath.split(path.sep);
+        // Build the section direction, which consist of the root + the first segment of the path
+        return inputPathSegments[0]
+    },
+    nacaraMenu: async (data : any) => {
+        const menuFilepath = path.join(data.sectionDir, 'nacaraMenu.json');
         // If the nacaraMenu.json file exists, read it and expose
         if (fs.existsSync(menuFilepath)) {
             const menuBuffer = await fs.readFile(menuFilepath);

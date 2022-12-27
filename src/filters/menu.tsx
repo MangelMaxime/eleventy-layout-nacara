@@ -21,15 +21,16 @@ interface IMenuItemPageProps {
     pageId: MenuItem;
     pages: any[];
     currentPageId: PageId;
+    currentSection: string;
 }
 
-const MenuItemPage = ({ pageId, pages, currentPageId }: IMenuItemPageProps) => {
-    const pageOfMenuItem = pages.find(
-        (page) => getPageId(page.filePathStem) === pageId
-    );
+const MenuItemPage = ({ pageId, pages, currentPageId, currentSection }: IMenuItemPageProps) => {
+    const pageOfMenuItem = pages.find((page) => {
+        return page.data.nacaraSection === currentSection && getPageId(page.filePathStem) === pageId;
+    });
 
     if (!pageOfMenuItem) {
-        throw `Could not find page with id ${pageId} in the pages collection`;
+        throw `Could not find page with id '${currentSection}/${pageId}'`;
     }
 
     const isCurrentPage =
@@ -43,8 +44,7 @@ const MenuItemPage = ({ pageId, pages, currentPageId }: IMenuItemPageProps) => {
                 href={pageHref}
                 class={isCurrentPage ? "is-active" : ""}
                 innerHTML={{ __dangerousHtml: pageOfMenuItem?.data.title }}
-            >
-            </a>
+            ></a>
         </li>
     );
 };
@@ -53,15 +53,17 @@ interface ISubMenu {
     menuItem: MenuItem;
     pages: any[];
     currentPageId: PageId;
+    currentSection: string;
 }
 
-const SubMenu = ({ menuItem, pages, currentPageId }: ISubMenu) => {
+const SubMenu = ({ menuItem, pages, currentPageId, currentSection }: ISubMenu) => {
     if (typeof menuItem === "string") {
         return (
             <MenuItemPage
                 pageId={menuItem}
                 pages={pages}
                 currentPageId={currentPageId}
+                currentSection={currentSection}
             />
         );
     } else if (typeof menuItem === "object") {
@@ -82,9 +84,10 @@ interface IMenuItemProps {
     menuItem: MenuItem;
     pages: any[];
     currentPageId: PageId;
+    currentSection: string;
 }
 
-const MenuItem = ({ menuItem, pages, currentPageId }: IMenuItemProps) => {
+const MenuItem = ({ menuItem, pages, currentPageId, currentSection }: IMenuItemProps) => {
     if (typeof menuItem === "string") {
         return (
             <ul class="menu-list">
@@ -92,6 +95,7 @@ const MenuItem = ({ menuItem, pages, currentPageId }: IMenuItemProps) => {
                     pageId={menuItem}
                     pages={pages}
                     currentPageId={currentPageId}
+                    currentSection={currentSection}
                 />
             </ul>
         );
@@ -114,6 +118,7 @@ const MenuItem = ({ menuItem, pages, currentPageId }: IMenuItemProps) => {
                                 menuItem={subMenuItem}
                                 pages={pages}
                                 currentPageId={currentPageId}
+                                currentSection={currentSection}
                             />
                         ))}
                     </ul>
@@ -131,9 +136,10 @@ interface IMenuProps {
     menu: MenuItem[];
     pages: any[];
     currentPageId: PageId;
+    currentSection: string;
 }
 
-const Menu = ({ menu, pages, currentPageId }: IMenuProps) => {
+const Menu = ({ menu, pages, currentPageId, currentSection }: IMenuProps) => {
     return (
         <div class="menu-container">
             <aside class="menu">
@@ -142,12 +148,24 @@ const Menu = ({ menu, pages, currentPageId }: IMenuProps) => {
                         menuItem={element}
                         pages={pages}
                         currentPageId={currentPageId}
+                        currentSection={currentSection}
                     />
                 ))}
             </aside>
         </div>
     );
 };
+
+function getRootDirectory(filePath: string) {
+    const parts = filePath.replace(/\\/g, "/").split("/");
+
+    // We remove the first element if it's "current dir"
+    if (parts[0] === ".") {
+        parts.shift();
+    }
+
+    return parts[0];
+}
 
 /**
  *
@@ -160,6 +178,7 @@ export default function menuFilter(this: any, pages: any[]) {
     );
 
     const currentPageId = getPageId(currentPage.filePathStem);
+    const currentPageSection = currentPage.data.nacaraSection;
 
     if (currentPage.data.nacaraMenu) {
         return Nano.renderSSR(
@@ -167,6 +186,7 @@ export default function menuFilter(this: any, pages: any[]) {
                 menu={currentPage.data.nacaraMenu}
                 pages={pages}
                 currentPageId={currentPageId}
+                currentSection={currentPageSection}
             />
         );
     } else {
