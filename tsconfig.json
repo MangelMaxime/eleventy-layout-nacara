@@ -13,5 +13,7 @@
         "jsxFactory": "h",
         "jsxFragmentFactory": "Fragment",
         "preserveWatchOutput": true
-    }
+    },
+    "include": ["src/**/*", "types/**/*"],
+    "exclude": ["node_modules", "dist"]
 }
