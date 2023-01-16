@@ -1,5 +1,6 @@
 import getPageId from "../utils/getPageId";
 import Nano, { h, Fragment } from "nano-jsx";
+import path from "path";
 
 function flattenMenu(menu: MenuItem): MenuItem[] {
     if (typeof menu === "string") {
@@ -18,23 +19,35 @@ function flattenMenu(menu: MenuItem): MenuItem[] {
 }
 
 interface IMenuItemPageProps {
-    pageId: MenuItem;
+    pageId: string;
     pages: any[];
-    currentPageId: PageId;
-    currentSection: string;
+    currentPageInputPath: string;
+    nacaraSectionDir: string;
 }
 
-const MenuItemPage = ({ pageId, pages, currentPageId, currentSection }: IMenuItemPageProps) => {
+const MenuItemPage = ({ pageId, pages, currentPageInputPath, nacaraSectionDir }: IMenuItemPageProps) => {
     const pageOfMenuItem = pages.find((page) => {
-        return page.data.nacaraSection === currentSection && getPageId(page.filePathStem) === pageId;
+        const currentPageRelativePath = path.relative(
+            nacaraSectionDir,
+            path.join(page.data.eleventy.env.root, page.inputPath)
+        );
+
+        return (
+            path.normalize(currentPageRelativePath) ===
+            path.normalize(pageId)
+        )
     });
 
     if (!pageOfMenuItem) {
-        throw `Could not find page with id '${currentSection}/${pageId}'`;
+        const absolutePageInputPath = path.join(
+            nacaraSectionDir,
+            pageId
+        );
+        throw `Could not find page with id '${absolutePageInputPath}'`;
     }
 
     const isCurrentPage =
-        getPageId(pageOfMenuItem?.filePathStem) === currentPageId;
+        currentPageInputPath === pageOfMenuItem.inputPath;
 
     const pageHref = pageOfMenuItem.data.baseUrl + pageOfMenuItem.data.page.url;
 
@@ -52,18 +65,18 @@ const MenuItemPage = ({ pageId, pages, currentPageId, currentSection }: IMenuIte
 interface ISubMenu {
     menuItem: MenuItem;
     pages: any[];
-    currentPageId: PageId;
-    currentSection: string;
+    currentPageInputPath: string;
+    nacaraSectionDir: string;
 }
 
-const SubMenu = ({ menuItem, pages, currentPageId, currentSection }: ISubMenu) => {
+const SubMenu = ({ menuItem, pages, currentPageInputPath, nacaraSectionDir }: ISubMenu) => {
     if (typeof menuItem === "string") {
         return (
             <MenuItemPage
                 pageId={menuItem}
                 pages={pages}
-                currentPageId={currentPageId}
-                currentSection={currentSection}
+                currentPageInputPath={currentPageInputPath}
+                nacaraSectionDir={nacaraSectionDir}
             />
         );
     } else if (typeof menuItem === "object") {
@@ -83,19 +96,19 @@ const SubMenu = ({ menuItem, pages, currentPageId, currentSection }: ISubMenu) =
 interface IMenuItemProps {
     menuItem: MenuItem;
     pages: any[];
-    currentPageId: PageId;
-    currentSection: string;
+    currentPageInputPath: string;
+    nacaraSectionDir: string;
 }
 
-const MenuItem = ({ menuItem, pages, currentPageId, currentSection }: IMenuItemProps) => {
+const MenuItem = ({ menuItem, pages, currentPageInputPath, nacaraSectionDir }: IMenuItemProps) => {
     if (typeof menuItem === "string") {
         return (
             <ul class="menu-list">
                 <MenuItemPage
                     pageId={menuItem}
                     pages={pages}
-                    currentPageId={currentPageId}
-                    currentSection={currentSection}
+                    currentPageInputPath={currentPageInputPath}
+                    nacaraSectionDir={nacaraSectionDir}
                 />
             </ul>
         );
@@ -117,8 +130,8 @@ const MenuItem = ({ menuItem, pages, currentPageId, currentSection }: IMenuItemP
                             <SubMenu
                                 menuItem={subMenuItem}
                                 pages={pages}
-                                currentPageId={currentPageId}
-                                currentSection={currentSection}
+                                currentPageInputPath={currentPageInputPath}
+                                nacaraSectionDir={nacaraSectionDir}
                             />
                         ))}
                     </ul>
@@ -135,11 +148,11 @@ const MenuItem = ({ menuItem, pages, currentPageId, currentSection }: IMenuItemP
 interface IMenuProps {
     menu: MenuItem[];
     pages: any[];
-    currentPageId: PageId;
-    currentSection: string;
+    currentPageInputPath: string;
+    nacaraSectionDir: string;
 }
 
-const Menu = ({ menu, pages, currentPageId, currentSection }: IMenuProps) => {
+const Menu = ({ menu, pages, currentPageInputPath, nacaraSectionDir }: IMenuProps) => {
     return (
         <div class="menu-container">
             <aside class="menu">
@@ -147,8 +160,8 @@ const Menu = ({ menu, pages, currentPageId, currentSection }: IMenuProps) => {
                     <MenuItem
                         menuItem={element}
                         pages={pages}
-                        currentPageId={currentPageId}
-                        currentSection={currentSection}
+                        currentPageInputPath={currentPageInputPath}
+                        nacaraSectionDir={nacaraSectionDir}
                     />
                 ))}
             </aside>
@@ -185,8 +198,8 @@ export default function menuFilter(this: any, pages: any[]) {
             <Menu
                 menu={currentPage.data.nacaraMenu}
                 pages={pages}
-                currentPageId={currentPageId}
-                currentSection={currentPageSection}
+                currentPageInputPath={currentPage.inputPath}
+                nacaraSectionDir={getRootDirectory(currentPage.inputPath)}
             />
         );
     } else {

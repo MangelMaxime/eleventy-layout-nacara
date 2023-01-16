@@ -2,6 +2,11 @@
 import path from "path";
 import Nano, { h } from "nano-jsx";
 
+function removeExtension(fileName: string): string {
+    const parsedPath = path.parse(fileName);
+    return path.join(parsedPath.dir, parsedPath.name);
+}
+
 /**
  *
  * Generate the partial breadcrumb to a give page.
@@ -20,7 +25,9 @@ import Nano, { h } from "nano-jsx";
  *  the menu or undefined if the page is not found in the menu
  */
 function generatePartialBreadcrumb(
-    pageId: PageId,
+    evelentyRoot: string,
+    nacaraSectionDir: string,
+    searchedRelativePath: string,
     acc: string[],
     menuElements: Menu
 ): string[] | undefined {
@@ -32,28 +39,56 @@ function generatePartialBreadcrumb(
         return undefined;
     } else {
         if (typeof currentMenuItem === "string") {
+            const currentItenRelativePath = path.relative(
+                nacaraSectionDir,
+                path.join(nacaraSectionDir, currentMenuItem)
+            );
+
             // This is the page we are looking for
             // Store the pageId in the accumulator and return the result
-            if (currentMenuItem === pageId) {
+            if (
+                removeExtension(currentItenRelativePath) ===
+                searchedRelativePath
+            ) {
                 return [...acc];
                 // Keep looking
             } else {
-                return generatePartialBreadcrumb(pageId, acc, restOfMenu);
+                return generatePartialBreadcrumb(
+                    evelentyRoot,
+                    nacaraSectionDir,
+                    searchedRelativePath,
+                    acc,
+                    restOfMenu
+                );
             }
         } else if (typeof currentMenuItem === "object") {
             // A link cannot beling to the breadcrumb, so we skip it
             if (currentMenuItem.type === "link") {
-                return generatePartialBreadcrumb(pageId, acc, restOfMenu);
+                return generatePartialBreadcrumb(
+                    evelentyRoot,
+                    nacaraSectionDir,
+                    searchedRelativePath,
+                    acc,
+                    restOfMenu
+                );
             } else if (currentMenuItem.type === "section") {
                 const sectionResult = generatePartialBreadcrumb(
-                    pageId,
+                    evelentyRoot,
+                    nacaraSectionDir,
+                    searchedRelativePath,
                     [...acc, currentMenuItem.label],
                     currentMenuItem.items
                 );
 
                 // If the current section doesn't contain the pageId, we keep looking
                 if (sectionResult === undefined) {
-                    return generatePartialBreadcrumb(pageId, acc, restOfMenu);
+                    return generatePartialBreadcrumb(
+                        evelentyRoot,
+                        nacaraSectionDir,
+                        searchedRelativePath,
+                        acc,
+                        restOfMenu
+                    );
                     // We got a result, so we store the section title in the accumulator
                     // and return the result
                 } else {
@@ -62,23 +97,6 @@ function generatePartialBreadcrumb(
             }
         }
     }
-}
-
-/**
- *
- * @param fileStem
- * @returns The pageId representing the provided fileStem
- */
-function getPageId(fileStem: string) {
-    //  Normal the path, so we can split using the path separator
-    const normalizedInputPath = path.normalize(fileStem);
-    // Extract all the segments of the path
-    const inputPathSegments = normalizedInputPath.split(path.sep);
-    // console.log("inputPathSegments:", inputPathSegments);
-    // Build the section direction, which consist of the root + the first segment of the path
-    const pageIdSegments = inputPathSegments.slice(2);
-
-    return pageIdSegments.join("/");
 }
 
 /**
@@ -93,18 +111,41 @@ function generateBreadcrumb(page: any, menuConfig: Menu): string[] | undefined {
         return undefined;
     }
 
-    const pageId = getPageId(page.filePathStem);
+    console.log("ddd", page.data.eleventy.env.root);
+    console.log(page.inputPath);
+    // console.log(page.);
 
-    const partialBreadcrumb = generatePartialBreadcrumb(pageId, [], menuConfig);
+    const searchedRelativePath = path.relative(
+        page.data.nacaraSectionDir,
+        path.join(page.data.eleventy.env.root, page.filePathStem)
+    );
+
+    console.log("searchedRelativePath", searchedRelativePath);
+
+    const partialBreadcrumb = generatePartialBreadcrumb(
+        page.data.eleventy.env.root,
+        page.data.nacaraSectionDir,
+        searchedRelativePath,
+        [],
+        menuConfig
+    );
 
     // If the page is not found in the menu, we return nothing
     if (partialBreadcrumb === undefined) {
         return undefined;
         // Otherwise, we compute the current page title and return the full breadcrumb
     } else {
-        return [...partialBreadcrumb, page.data.title];
+        return [...partialBreadcrumb, page.data.sanitizedTitle];
     }
 }
+
+const BreadcrumbItem = ({ text }: { text: string }) => {
+    return (
+        <li class="is-active">
+            <a innerHTML={{ __dangerousHtml: text }}></a>
+        </li>
+    );
+};
 
 export default function breadcrumbFilter(this: any, pages: any[]) {
     const currentPage = pages.find(
@@ -116,23 +157,21 @@ export default function breadcrumbFilter(this: any, pages: any[]) {
         currentPage.data.nacaraMenu
     );
 
+    // console.log("current page", currentPage);
+    console.log("breadcrumbItems22", currentPage.data.nacaraMenu);
+
     if (breadcrumbItems === undefined) {
         return undefined;
     } else {
-
-        return Nano.renderSSR(
+        return Nano.renderSSR(() => (
             <nav class="breadcrumb">
                 <ul>
                     {breadcrumbItems.map((breadcrumbItem) => {
-                        return (
-                            <li class="is-active">
-                                <a>{breadcrumbItem}</a>
-                            </li>
-                        );
+                        return <BreadcrumbItem text={breadcrumbItem} />;
                     })}
                 </ul>
             </nav>
-        );
+        ));
     }
 }
 

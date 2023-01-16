@@ -5,7 +5,7 @@
             "type": "section",
             "label": "Why?",
             "items": [
-                "introduction"
+                "./introduction.md"
             ]
         },
         {
@@ -17,41 +17,42 @@
             "type": "section",
             "label": "Layouts",
             "items": [
-                "layouts/base"
+                "./layouts/base.md"
             ]
         },
         {
             "type": "section",
             "label": "Configuration",
             "items": [
-                "configuration/metadata",
-                "configuration/navbar",
-                "configuration/footer",
-                "configuration/menus"
+                "./configuration/metadata.md",
+                "./configuration/navbar.md",
+                "./configuration/footer.md",
+                "./configuration/menus.md"
             ]
         },
         {
             "type": "section",
             "label": "Filters",
             "items": [
-                "filters/add-content-hash",
-                "filters/file-to-body-class",
-                "filters/format-date",
-                "filters/last-modified-date",
-                "filters/layout-to-body-class",
-                "filters/nacara-breadcrumb",
-                "filters/nacara-menu",
-                "filters/nacara-navigation"
+                "./filters/add-content-hash.md",
+                "./filters/file-to-body-class.md",
+                "./filters/format-date-to-utc.md",
+                "./filters/last-modified-date.md",
+                "./filters/layout-to-body-class.md",
+                "./filters/nacara-breadcrumb.md",
+                "./filters/nacara-menu.md",
+                "./filters/nacara-navigation.md"
             ]
         },
         {
             "type": "section",
             "label": "Data",
             "items": [
-                "data/is-development",
-                "data/base-url",
-                "data/nacara-section",
-                "data/nacara-menu"
+                "./data/is-development.md",
+                "./data/base-url.md",
+                "./data/nacara-section.md",
+                "./data/nacara-menu.md",
+                "./data/sanitized-title.md"
             ]
         }
     ]

@@ -32,14 +32,17 @@
         {% if isDevelopment %}
             {{ '🚨' | fav_icon_from_emoji | safe }}
         {% else %}
-            <link rel="icon" href="{{ '/assets/img/favicon/favicon-192x192.png' | add_content_hash }}" type="image/png">
+            {% block headExtra %}
+
+            {% endblock headExtra %}
+            {# <link rel="icon" href="{{ '/assets/img/favicon/favicon-192x192.png' | add_content_hash }}" type="image/png"> #}
         {% endif %}
 
         <meta name="referrer" content="no-referrer-when-downgrade">
 
         <link rel="stylesheet" href="/style.css">
         <link rel="preconnect" href="/" crossorigin="crossorigin">
-        <title>{{ title or metadata.title | escape }}</title>
+        <title>{{ sanitazedTitle or title or metadata.title | escape }}</title>
         <script src="/assets/js/navbar.js" defer="defer"></script>
     </head>
     <body class="{{ pageBodyClass }} {{ layoutBodyClass }} {{ hasFooterBodyClass }}">

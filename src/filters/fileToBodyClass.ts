@@ -4,7 +4,6 @@
 import path from 'path';
 
 export default function fileToBodyClassFilter (filePath : string) {
-    // console.log(filePath);
     // Compute path without extension
     const fileDir = path.dirname(filePath);
     const fileName = path.basename(filePath, path.extname(filePath));

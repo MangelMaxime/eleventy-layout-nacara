@@ -5,16 +5,16 @@
             "type": "section",
             "label": "Section 1",
             "items": [
-                "introduction",
-                "configuration"
+                "./introduction.md",
+                "./configuration.md"
             ]
         },
-        "guides/create-a-page",
+        "./guides/create-a-page.md",
         {
             "type": "section",
             "label": "Section 2",
             "items": [
-                "guides/customize-the-style"
+                "./guides/customize-the-style.md"
             ]
         },
         {

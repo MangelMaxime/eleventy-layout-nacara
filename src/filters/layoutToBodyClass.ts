@@ -5,8 +5,9 @@ import path from 'path';
 
 export default function layoutToBodyClassFilter (layout : string) {
     // If layout is undefined, default to 'base'
+    // Disable because I don't think this should happen
+    // layout = layout || 'base';
 
-    layout = layout || 'base';
     // Compute path without extension
     const layoutDir = path.dirname(layout);
     const layoutName = path.basename(layout, path.extname(layout));

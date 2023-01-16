@@ -111,7 +111,7 @@ export async function lucideGenerator(iconString: string): GeneratorFunction {
 
         return lucideIconSvg.svg();
     } else {
-        return new Error(`Icon ${iconName} not found in Lucide`);
+        return new Error(`Icon '${iconName}' not found in Lucide`);
     }
 }
 
@@ -138,7 +138,7 @@ export async function simpleIconsGenerator(
 
         return simpleIconSvg.svg();
     } else {
-        return new Error(`Icon ${iconName} not found in simple-icons`);
+        return new Error(`Icon '${iconName}' not found in simple-icons`);
     }
 }
 
@@ -151,6 +151,8 @@ export async function assetsGenerator(iconString: string): GeneratorFunction {
         `${iconName}.svg`
     );
 
+    console.log(iconPath);
+
     if (await fileExists(iconPath)) {
         const fileContent = await fs.readFile(iconPath);
         const iconSvg = SVG(fileContent.toString());
@@ -162,7 +164,7 @@ export async function assetsGenerator(iconString: string): GeneratorFunction {
 
         return iconSvg.svg();
     } else {
-        return new Error(`Icon ${iconName} not found in 'assets/icons' folder`);
+        return new Error(`Icon '${iconName}' not found in 'assets/icons' folder`);
     }
 }
 

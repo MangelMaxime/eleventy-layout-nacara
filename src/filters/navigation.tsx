@@ -1,5 +1,6 @@
 import getPageId from "../utils/getPageId";
 import Nano, { h, Fragment } from "nano-jsx";
+import path from "path";
 
 function flattenMenu(menu: Menu): FlatMenu {
     function flatten(menuItem: MenuItem): FlatMenu {
@@ -21,11 +22,11 @@ function flattenMenu(menu: Menu): FlatMenu {
     return menu.flatMap(flatten);
 }
 
-function tryFindSection(menu: Menu, pageId: string): MenuSection | undefined {
-    const findInSection = (menu: Menu, pageId: string) => {
+function tryFindSection(menu: Menu, pagePath: string): MenuSection | undefined {
+    const findInSection = (menu: Menu, pagePath: string) => {
         const result = menu.find((menuItem) => {
             if (typeof menuItem === "string") {
-                return menuItem === pageId;
+                return menuItem === pagePath;
             } else if (typeof menuItem === "object") {
                 if (menuItem.type === "link") {
                     return false;
@@ -33,7 +34,7 @@ function tryFindSection(menu: Menu, pageId: string): MenuSection | undefined {
                     if (menuItem.items.length === 0) {
                         return false;
                     } else {
-                        const subResult = findInSection(menuItem.items, pageId);
+                        const subResult = findInSection(menuItem.items, pagePath);
                         if (subResult) {
                             return true;
                         } else {
@@ -62,7 +63,7 @@ function tryFindSection(menu: Menu, pageId: string): MenuSection | undefined {
                 if (menuItem.items.length === 0) {
                     return false;
                 } else {
-                    const subResult = findInSection(menuItem.items, pageId);
+                    const subResult = findInSection(menuItem.items, pagePath);
                     if (subResult) {
                         return true;
                     } else {
@@ -91,12 +92,16 @@ const EmptyNextButton = () => {
     return <a class="button navigate-to-next is-invisible"></a>;
 };
 
+const ButtonText = ({ text }: { text: string }) => {
+    return <strong innerHTML={{ __dangerousHtml: text }}></strong>;
+};
+
 type IPreviousPageButtonProps = {
     currentPageIndex: number;
     flatMenu: FlatMenu;
     menu: Menu;
     pages: any[];
-    currentSection: string;
+    nacaraSectionDir: string;
 };
 
 const PreviousPageButton = ({
@@ -104,7 +109,7 @@ const PreviousPageButton = ({
     flatMenu,
     menu,
     pages,
-    currentSection,
+    nacaraSectionDir,
 }: IPreviousPageButtonProps) => {
     // If the current page is the first page of the menu,
     // we can't generate a "real" previous button
@@ -120,13 +125,18 @@ const PreviousPageButton = ({
     }
 
     // Previous menu item is valid for generating a "real" previous button
-    const previousPageId = previousMenuItem; // Rename it for clarity
+    const previousPageRelativePath = previousMenuItem; // Rename it for clarity
 
-    const previousPageContext = pages.find(
-        (page) =>
-            page.data.nacaraSection === currentSection &&
-            getPageId(page.filePathStem) === previousMenuItem
-    );
+    const previousPageContext = pages.find((page) => {
+        const currentItenRelativePath = path.relative(
+            nacaraSectionDir,
+            path.join(page.data.eleventy.env.root, page.inputPath)
+        );
+        return (
+            path.normalize(currentItenRelativePath) ===
+            path.normalize(previousPageRelativePath)
+        );
+    });
 
     if (!previousPageContext) {
         throw "Nacara-Navigation: Previous page not found";
@@ -134,7 +144,7 @@ const PreviousPageButton = ({
 
     const previousButtonText = previousPageContext.data.title;
 
-    const previousButtonSection = tryFindSection(menu, previousPageId);
+    const previousButtonSection = tryFindSection(menu, previousPageRelativePath);
     const previousButtonSectionText = previousButtonSection?.label;
 
     const previousButtonHref =
@@ -148,7 +158,7 @@ const PreviousPageButton = ({
             <i>←</i>
             <span class="is-hidden-mobile">
                 <em>{previousButtonSectionText}</em>
-                <strong>{previousButtonText}</strong>
+                <ButtonText text={previousButtonText} />
             </span>
         </a>
     );
@@ -159,7 +169,7 @@ interface INextPageButtonProps {
     flatMenu: FlatMenu;
     menu: Menu;
     pages: any[];
-    currentSection: string;
+    nacaraSectionDir: string;
 }
 
 const NextPageButton = ({
@@ -167,7 +177,7 @@ const NextPageButton = ({
     flatMenu,
     menu,
     pages,
-    currentSection,
+    nacaraSectionDir,
 }: INextPageButtonProps) => {
     // If the current page is the first page of the menu,
     // we can't generate a "real" previous button
@@ -182,14 +192,19 @@ const NextPageButton = ({
         return <EmptyNextButton />;
     }
 
-    // Previous menu item is valid for generating a "real" previous button
-    const nextPageId = nextMenuItem; // Rename it for clarity
+    // Next menu item is valid for generating a "real" previous button
+    const nextPageRelativePath = nextMenuItem; // Rename it for clarity
 
-    const nextPageContext = pages.find(
-        (page) =>
-            page.data.nacaraSection === currentSection &&
-            getPageId(page.filePathStem) === nextMenuItem
-    );
+    const nextPageContext = pages.find((page) => {
+        const currentItemRelativePath = path.relative(
+            nacaraSectionDir,
+            path.join(page.data.eleventy.env.root, page.inputPath)
+        );
+        return (
+            path.normalize(currentItemRelativePath) ===
+            path.normalize(nextPageRelativePath)
+        );
+    });
 
     if (!nextPageContext) {
         throw "Nacara-Navigation: Next page not found";
@@ -197,7 +212,7 @@ const NextPageButton = ({
 
     const nextButtonText = nextPageContext.data.title;
 
-    const nextButtonSection = tryFindSection(menu, nextPageId);
+    const nextButtonSection = tryFindSection(menu, nextPageRelativePath);
     const nextButtonSectionText = nextButtonSection?.label;
 
     const nextButtonHref =
@@ -210,7 +225,7 @@ const NextPageButton = ({
         >
             <span class="is-hidden-mobile">
                 <em>{nextButtonSectionText}</em>
-                <strong>{nextButtonText}</strong>
+                <ButtonText text={nextButtonText} />
             </span>
             <i>→</i>
         </a>
@@ -222,7 +237,12 @@ export default function navigationFilter(this: any, pages: any[]) {
         (page) => page.inputPath === this.ctx.page.inputPath
     );
 
-    const currentPageId: string = getPageId(currentPage.filePathStem);
+    // const currentPageId: string = getPageId(currentPage.filePathStem);
+
+    const currentPageRelativePath = path.relative(
+        currentPage.data.nacaraSectionDir,
+        path.join(currentPage.data.eleventy.env.root, currentPage.inputPath)
+    );
 
     if (!currentPage.data.nacaraMenu) {
         return null;
@@ -233,7 +253,11 @@ export default function navigationFilter(this: any, pages: any[]) {
     const currentPageIndex = flatMenu.findIndex(
         (flatMenuItem: FlatMenuItem) => {
             if (typeof flatMenuItem === "string") {
-                return flatMenuItem === currentPageId;
+                const currentItenRelativePath = path.relative(
+                    currentPage.data.nacaraSectionDir,
+                    path.join(currentPage.data.nacaraSectionDir, flatMenuItem)
+                );
+                return currentItenRelativePath === currentPageRelativePath;
             } else if (typeof flatMenuItem === "object") {
                 // If this is an object, it means it is a link which
                 // cannot be the current page
@@ -254,14 +278,14 @@ export default function navigationFilter(this: any, pages: any[]) {
                 menu={currentPage.data.nacaraMenu}
                 flatMenu={flatMenu}
                 pages={pages}
-                currentSection={currentPage.data.nacaraSection}
+                nacaraSectionDir={currentPage.data.nacaraSectionDir}
             />
             <NextPageButton
                 currentPageIndex={currentPageIndex}
                 menu={currentPage.data.nacaraMenu}
                 flatMenu={flatMenu}
                 pages={pages}
-                currentSection={currentPage.data.nacaraSection}
+                nacaraSectionDir={currentPage.data.nacaraSectionDir}
             />
         </div>
     );

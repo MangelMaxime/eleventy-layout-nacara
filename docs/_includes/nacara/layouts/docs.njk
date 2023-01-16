@@ -22,7 +22,10 @@
                                             </a>
                                     </div>
                                 </div>
-                                <h1 class="title is-1">{{ title }}</h1>
+                                {{ filePathStem }}
+                                <h1 class="title is-1">
+                                    {{ title | safe }}
+                                </h1>
                             </header>
 
                             {{ content | safe }}

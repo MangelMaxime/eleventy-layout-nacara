@@ -21,7 +21,7 @@ const setupNavbarBurger = () => {
         });
     }
 };
-console.log("dizhduizhdiz")
+
 const setupMobileMenu = () => {
     const mobileMenuTrigger = document.querySelector(
         ".mobile-menu .menu-trigger"
