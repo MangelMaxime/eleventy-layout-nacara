@@ -40,7 +40,8 @@
                         "$ref": "#/definitions/menu_item"
                     }
                 }
-            }
+            },
+            "additionalProperties": false
         },
         "menu_link": {
             "type": "object",
@@ -62,7 +63,8 @@
                 "href": {
                     "type": "string"
                 }
-            }
+            },
+            "additionalProperties": false
         },
         "menu_page": {
             "anyOf": [

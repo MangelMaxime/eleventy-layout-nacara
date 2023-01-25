@@ -1,0 +1,13 @@
+{
+    "$schema": "./../../../../schemas/menu-schema.json",
+    "items": [
+        {
+            "type": "section",
+            "label": "Getting Started",
+            "items": [
+                "./getting-started/page1.md",
+                "./getting-started/page2.md"
+            ]
+        }
+    ]
+}

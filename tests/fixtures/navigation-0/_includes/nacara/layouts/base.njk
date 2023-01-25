@@ -1,0 +1,65 @@
+{#
+    This code is part of eleventy-layout-nacara.
+
+    Changes to this files will be overwritten on the next build.
+
+    If you want to make changes please create an issue or send a PR to:
+    https://github.com/MangelMaxime/eleventy-layout-nacara
+#}
+{#
+    Compute body class to identify the current page and the layout
+
+    The ideas is taken from: https://11ty.rocks/tips/layout-templating/
+
+    It makes it easy to apply page specific styles
+#}
+
+{#
+    Use page.fileSlug is available otherwise fallback to home
+
+    Note: index doesn't have a fileSlug computed so will fallback to home
+#}
+{% set pageBodyClass = page.filePathStem | file_to_body_class %}
+{% set layoutBodyClass = layout | layout_to_body_class %}
+{% set hasFooterBodyClass = "has-footer" if nacaraFooter.sitemapSections or nacaraFooter.text or nacaraFooter.copyright else "" %}
+
+<!doctype html>
+<html class="has-navbar-fixed-top" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        {% if isDevelopment %}
+            {{ '🚨' | fav_icon_from_emoji | safe }}
+        {% else %}
+            {% block headExtra %}
+
+            {% endblock headExtra %}
+            {# <link rel="icon" href="{{ '/assets/img/favicon/favicon-192x192.png' | add_content_hash }}" type="image/png"> #}
+        {% endif %}
+
+        <meta name="referrer" content="no-referrer-when-downgrade">
+
+        <link rel="stylesheet" href="/style.css">
+        <link rel="preconnect" href="/" crossorigin="crossorigin">
+        <title>{{ sanitazedTitle or title or metadata.title | escape }}</title>
+        <script src="/assets/js/navbar.js" defer="defer"></script>
+    </head>
+    <body class="{{ pageBodyClass }} {{ layoutBodyClass }} {{ hasFooterBodyClass }}">
+
+        {% block navbar %}
+            {% include "nacara/components/navbar.njk" %}
+        {% endblock navbar %}
+
+        {% block content %}
+            <div class="page-content nacara-content">
+            </div>
+        {% endblock content %}
+
+        {% block footer %}
+            {% include "nacara/components/footer.njk" %}
+        {% endblock footer %}
+
+    </body>
+
+</html>

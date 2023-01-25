@@ -1,4 +1,3 @@
-import getPageId from "../utils/getPageId";
 import Nano, { h, Fragment } from "nano-jsx";
 import path from "path";
 
@@ -189,9 +188,6 @@ export default function menuFilter(this: any, pages: any[]) {
     const currentPage = pages.find(
         (page) => page.inputPath === this.ctx.page.inputPath
     );
-
-    const currentPageId = getPageId(currentPage.filePathStem);
-    const currentPageSection = currentPage.data.nacaraSection;
 
     if (currentPage.data.nacaraMenu) {
         return Nano.renderSSR(

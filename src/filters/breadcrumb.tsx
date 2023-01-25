@@ -1,11 +1,7 @@
 // @ts-ignore
 import path from "path";
 import Nano, { h } from "nano-jsx";
-
-function removeExtension(fileName: string): string {
-    const parsedPath = path.parse(fileName);
-    return path.join(parsedPath.dir, parsedPath.name);
-}
+import { removeExtension } from "../utils/removeExtension";
 
 /**
  *
@@ -111,16 +107,10 @@ function generateBreadcrumb(page: any, menuConfig: Menu): string[] | undefined {
         return undefined;
     }
 
-    console.log("ddd", page.data.eleventy.env.root);
-    console.log(page.inputPath);
-    // console.log(page.);
-
     const searchedRelativePath = path.relative(
         page.data.nacaraSectionDir,
         path.join(page.data.eleventy.env.root, page.filePathStem)
     );
-
-    console.log("searchedRelativePath", searchedRelativePath);
 
     const partialBreadcrumb = generatePartialBreadcrumb(
         page.data.eleventy.env.root,
@@ -156,9 +146,6 @@ export default function breadcrumbFilter(this: any, pages: any[]) {
         currentPage,
         currentPage.data.nacaraMenu
     );
-
-    // console.log("current page", currentPage);
-    console.log("breadcrumbItems22", currentPage.data.nacaraMenu);
 
     if (breadcrumbItems === undefined) {
         return undefined;

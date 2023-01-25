@@ -151,8 +151,6 @@ export async function assetsGenerator(iconString: string): GeneratorFunction {
         `${iconName}.svg`
     );
 
-    console.log(iconPath);
-
     if (await fileExists(iconPath)) {
         const fileContent = await fs.readFile(iconPath);
         const iconSvg = SVG(fileContent.toString());

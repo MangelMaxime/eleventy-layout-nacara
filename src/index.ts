@@ -118,9 +118,6 @@ const defaultEleventyComputed = {
 };
 
 function configFunction(eleventyConfig: any, options?: Options) {
-    console.log("Nacara plugin loaded");
-    console.log(process.cwd());
-
     copyIncludesToUserFolder(options?.includesDir);
 
     eleventyConfig.addGlobalData(

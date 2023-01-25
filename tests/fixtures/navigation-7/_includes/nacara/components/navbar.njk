@@ -1,0 +1,124 @@
+{#
+    This code is part of eleventy-layout-nacara.
+
+    Changes to this files will be overwritten on the next build.
+
+    If you want to make changes please create an issue or send a PR to:
+    https://github.com/MangelMaxime/eleventy-layout-nacara
+#}
+<nav class="navbar is-fixed-top is-spaced">
+    <div class="navbar-brand">
+        <a class="navbar-item title is-4" href="{{nacaraMetadata.url}}">
+            {{ nacaraMetadata.title }}
+        </a>
+    </div>
+    <div class="navbar-menu">
+        <div class="navbar-start">
+            {% for startItem in nacaraNavbar.start %}
+                {#
+                    If the startItem contains an items property then
+                    it is a dropdown menu
+                #}
+                {% if startItem.items %}
+                    {% set dropdownTypeClass = 'is-fullwidth' if startItem.fullwidth else 'is-floating' %}
+                    {% set mobileDisplayClass = 'is-hidden-mobile' if not startItem.pinned %}
+                    <div class="navbar-item
+                        has-nacara-dropdown
+                        {{ dropdownTypeClass }}
+                        {{ mobileDisplayClass }} ">
+
+                        <div class="nacara-dropdown-link">
+                            {{ startItem.label }}
+                        </div>
+
+                        <div class="nacara-dropdown
+                            {{ dropdownTypeClass }}
+                            {{ mobileDisplayClass }} ">
+
+                            {% for dropdownElement in startItem.items %}
+
+                                {% if dropdownElement == "divider" %}
+                                    <hr class="navbar-divider">
+                                {% else %}
+                                    <a class="nacara-dropdown-item" href="{{ dropdownElement.url }}">
+                                        {% if dropdownElement.description %}
+                                            <div>
+                                                <strong>{{ dropdownElement.label }}</strong>
+                                                <div class="nacara-dropdown-item-description">{{ dropdownElement.description }}</div>
+                                            </div>
+
+                                        {% else %}
+                                            <div>
+                                                {{ dropdownElement.label }}
+                                            </div>
+                                        {% endif %}
+                                    </a>
+                                {% endif %}
+
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    {# Otherwise, it is a normal navbar-item #}
+                {% else %}
+                    <a class="navbar-item is-hidden-mobile" href="{{ startItem.url }}">
+                        {{ startItem.label }}
+                    </a>
+                {% endif %}
+
+            {% endfor %}
+
+            <div class="navbar-item navbar-burger-dots is-hidden-tablet">
+                <svg height="4" stroke="none" viewbox="0 0 22 4" width="22">
+                    <circle cx="2" cy="2" r="2"></circle>
+                    <circle cx="2" cy="2" r="2" transform="translate(9,0)"></circle>
+                    <circle cx="2" cy="2" r="2" transform="translate(18,0)"></circle>
+                </svg>
+            </div>
+        </div>
+        <div class="navbar-end is-hidden-mobile">
+            {% for endItem in nacaraNavbar.end %}
+                <a class="navbar-item" href="{{ endItem.url }}">
+                    <span class="icon">
+                        <i class="{{endItem.icon}} fa-lg"></i>
+                    </span>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="nacara-navbar-menu">
+        {# Generate the elements from the start section of the navbar #}
+        {% for startItem in nacaraNavbar.start %}
+            {# If this is a dropdown #}
+            {% if startItem.items %}
+                {# Only render the dropdown if it is not pinned #}
+                {% if not startItem.pinned %}
+                    <div class="nacara-navbar-menu-dropdown">
+                        <div class="nacara-navbar-menu-dropdown-label">
+                            {{ startItem.label }}
+                        </div>
+                        {% for dropdownElement in startItem.items %}
+                            {# Only render the element if it is not a divider #}
+                            {% if not(dropdownElement == "divider") %}
+                                <a class="nacara-navbar-menu-dropdown-link" href="{{dropdownElement.url}}">
+                                    <span>{{ dropdownElement.label }}</span>
+                                </a>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% else %}
+                <a class="nacara-navbar-menu-item" href="{{startItem.url}}">
+                    <span>{{ startItem.label }}</span>
+                </a>
+            {% endif %}
+        {% endfor %}
+        {# Generate the elements from the end section of the navbar #}
+        {% for endItem in nacaraNavbar.end %}
+            <a class="nacara-navbar-menu-item" href="{{endItem.url}}">
+                <span>{{ endItem.label }}</span>
+            </a>
+        {% endfor %}
+    </div>
+</nav>
+<div class="grey-overlay"></div>

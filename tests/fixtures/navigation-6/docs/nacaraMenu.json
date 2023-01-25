@@ -1,0 +1,19 @@
+{
+    "$schema": "./../../../../schemas/menu-schema.json",
+    "items": [
+        {
+            "type": "section",
+            "label": "Getting Started",
+            "items": [
+                "./getting-started/page1.md",
+                "./getting-started/page2.md",
+                {
+                    "type": "link",
+                    "label": "External Link",
+                    "href": "https://www.google.com"
+                },
+                "./getting-started/page3.md"
+            ]
+        }
+    ]
+}

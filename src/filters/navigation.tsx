@@ -1,6 +1,6 @@
-import getPageId from "../utils/getPageId";
 import Nano, { h, Fragment } from "nano-jsx";
 import path from "path";
+import { removeExtension } from "../utils/removeExtension";
 
 function flattenMenu(menu: Menu): FlatMenu {
     function flatten(menuItem: MenuItem): FlatMenu {
@@ -26,7 +26,7 @@ function tryFindSection(menu: Menu, pagePath: string): MenuSection | undefined {
     const findInSection = (menu: Menu, pagePath: string) => {
         const result = menu.find((menuItem) => {
             if (typeof menuItem === "string") {
-                return menuItem === pagePath;
+                return removeExtension(menuItem) === pagePath;
             } else if (typeof menuItem === "object") {
                 if (menuItem.type === "link") {
                     return false;
@@ -34,7 +34,10 @@ function tryFindSection(menu: Menu, pagePath: string): MenuSection | undefined {
                     if (menuItem.items.length === 0) {
                         return false;
                     } else {
-                        const subResult = findInSection(menuItem.items, pagePath);
+                        const subResult = findInSection(
+                            menuItem.items,
+                            pagePath
+                        );
                         if (subResult) {
                             return true;
                         } else {
@@ -125,17 +128,14 @@ const PreviousPageButton = ({
     }
 
     // Previous menu item is valid for generating a "real" previous button
-    const previousPageRelativePath = previousMenuItem; // Rename it for clarity
+    const previousPageRelativePath = removeExtension(previousMenuItem); // Rename it for clarity
 
     const previousPageContext = pages.find((page) => {
         const currentItenRelativePath = path.relative(
             nacaraSectionDir,
-            path.join(page.data.eleventy.env.root, page.inputPath)
+            path.join(page.data.eleventy.env.root, page.filePathStem)
         );
-        return (
-            path.normalize(currentItenRelativePath) ===
-            path.normalize(previousPageRelativePath)
-        );
+        return currentItenRelativePath === previousPageRelativePath;
     });
 
     if (!previousPageContext) {
@@ -144,7 +144,10 @@ const PreviousPageButton = ({
 
     const previousButtonText = previousPageContext.data.title;
 
-    const previousButtonSection = tryFindSection(menu, previousPageRelativePath);
+    const previousButtonSection = tryFindSection(
+        menu,
+        previousPageRelativePath
+    );
     const previousButtonSectionText = previousButtonSection?.label;
 
     const previousButtonHref =
@@ -193,17 +196,14 @@ const NextPageButton = ({
     }
 
     // Next menu item is valid for generating a "real" previous button
-    const nextPageRelativePath = nextMenuItem; // Rename it for clarity
+    const nextPageRelativePath = removeExtension(nextMenuItem); // Rename it for clarity
 
     const nextPageContext = pages.find((page) => {
         const currentItemRelativePath = path.relative(
             nacaraSectionDir,
-            path.join(page.data.eleventy.env.root, page.inputPath)
+            path.join(page.data.eleventy.env.root, page.filePathStem)
         );
-        return (
-            path.normalize(currentItemRelativePath) ===
-            path.normalize(nextPageRelativePath)
-        );
+        return currentItemRelativePath === nextPageRelativePath;
     });
 
     if (!nextPageContext) {
@@ -237,11 +237,9 @@ export default function navigationFilter(this: any, pages: any[]) {
         (page) => page.inputPath === this.ctx.page.inputPath
     );
 
-    // const currentPageId: string = getPageId(currentPage.filePathStem);
-
     const currentPageRelativePath = path.relative(
         currentPage.data.nacaraSectionDir,
-        path.join(currentPage.data.eleventy.env.root, currentPage.inputPath)
+        path.join(currentPage.data.eleventy.env.root, currentPage.filePathStem)
     );
 
     if (!currentPage.data.nacaraMenu) {
@@ -253,11 +251,15 @@ export default function navigationFilter(this: any, pages: any[]) {
     const currentPageIndex = flatMenu.findIndex(
         (flatMenuItem: FlatMenuItem) => {
             if (typeof flatMenuItem === "string") {
-                const currentItenRelativePath = path.relative(
+                const currentItemRelativePath = path.relative(
                     currentPage.data.nacaraSectionDir,
                     path.join(currentPage.data.nacaraSectionDir, flatMenuItem)
                 );
-                return currentItenRelativePath === currentPageRelativePath;
+
+                return (
+                    removeExtension(currentItemRelativePath) ===
+                    currentPageRelativePath
+                );
             } else if (typeof flatMenuItem === "object") {
                 // If this is an object, it means it is a link which
                 // cannot be the current page
@@ -267,11 +269,11 @@ export default function navigationFilter(this: any, pages: any[]) {
     );
 
     // Current page is not found in the menu, we can't generate a navigation info
-    if (currentPageIndex === undefined) {
+    if (currentPageIndex === -1) {
         return null;
     }
 
-    return Nano.renderSSR(
+    return Nano.renderSSR(() => (
         <div class="section bd-docs-pagination bd-pagination-links">
             <PreviousPageButton
                 currentPageIndex={currentPageIndex}
@@ -288,7 +290,7 @@ export default function navigationFilter(this: any, pages: any[]) {
                 nacaraSectionDir={currentPage.data.nacaraSectionDir}
             />
         </div>
-    );
+    ));
 }
 
 module.exports = navigationFilter;
