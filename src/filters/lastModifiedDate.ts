@@ -21,23 +21,23 @@ async function lastModifiedDateFromGit(fileName: string) {
 
         return new Date();
     } catch (e: any) {
-        console.error(e.message);
-        return new Date();
+        // console.error(e.message);
+        // return new Date();
+        throw new Error(`Error while trying to get the last modified date of ${fileName}.
+Original error: ${e.message}`);
     }
 }
 
-export default async function lastModifiedDateFilter (
-    fileName: string
-) {
+export default async function lastModifiedDateFilter(fileName: string) {
     const cachedValue = lastModifiedDateCache.get(fileName);
 
     if (cachedValue) {
         return cachedValue;
     } else {
-        const lastModifiedDate = await lastModifiedDateFromGit(fileName)
+        const lastModifiedDate = await lastModifiedDateFromGit(fileName);
         lastModifiedDateCache.set(fileName, lastModifiedDate);
         return lastModifiedDate;
     }
-};
+}
 
 module.exports = lastModifiedDateFilter;

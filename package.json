@@ -71,7 +71,8 @@
             "!**/_site/**"
         ],
         "ignoredByWatcher": [
-            "tests/**/_includes/nacara/**"
+            "tests/**/_includes/nacara/**",
+            "tests/fixtures/temp/**"
         ]
     }
 }
