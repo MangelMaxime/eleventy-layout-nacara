@@ -7,8 +7,8 @@
     https://github.com/MangelMaxime/eleventy-layout-nacara
 #}
 {# Only generate a footer if one of the properties is present #}
-{% if not nacaraFooter and (nacaraFooter.sitemapSections or nacaraFooter.text or nacaraFooter.copyright) %}
-    <footer class="footer">
+{% if nacaraFooter.sitemapSections or nacaraFooter.text or nacaraFooter.copyright %}
+    <div class="footer">
         <div class="is-size-5">
             {# Add the sitemap if present #}
             {% if nacaraFooter.sitemapSections %}
@@ -69,6 +69,7 @@
             document
                 .getElementById('copyright-end-year')
                 .innerHTML = year;
+            console.log(year);
         </script>
-    </footer>
+    </div>
 {% endif %}

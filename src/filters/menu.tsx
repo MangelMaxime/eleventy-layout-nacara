@@ -1,52 +1,36 @@
 import Nano, { h, Fragment } from "nano-jsx";
 import path from "path";
-
-function flattenMenu(menu: MenuItem): MenuItem[] {
-    if (typeof menu === "string") {
-        return [menu];
-    } else if (typeof menu === "object") {
-        if (menu.type === "link") {
-            return [menu];
-        } else if (menu.type === "section") {
-            return menu.items.flatMap(flattenMenu);
-        } else {
-            throw "Invalid menu item element";
-        }
-    } else {
-        throw "Invalid menu item element";
-    }
-}
+import { removeExtension } from "../utils/removeExtension";
 
 interface IMenuItemPageProps {
-    pageId: string;
+    pageStem: string;
     pages: any[];
-    currentPageInputPath: string;
+    currentPageStem: string;
     nacaraSectionDir: string;
 }
 
-const MenuItemPage = ({ pageId, pages, currentPageInputPath, nacaraSectionDir }: IMenuItemPageProps) => {
+const MenuItemPage = ({ pageStem, pages, currentPageStem, nacaraSectionDir }: IMenuItemPageProps) => {
     const pageOfMenuItem = pages.find((page) => {
         const currentPageRelativePath = path.relative(
             nacaraSectionDir,
-            path.join(page.data.eleventy.env.root, page.inputPath)
+            path.join(page.data.eleventy.env.root, page.filePathStem)
         );
 
         return (
-            path.normalize(currentPageRelativePath) ===
-            path.normalize(pageId)
+            removeExtension(currentPageRelativePath) === pageStem
         )
     });
 
     if (!pageOfMenuItem) {
         const absolutePageInputPath = path.join(
             nacaraSectionDir,
-            pageId
+            pageStem
         );
-        throw `Could not find page with id '${absolutePageInputPath}'`;
+        throw `Could not find page with filePathStem '${absolutePageInputPath}'`;
     }
 
     const isCurrentPage =
-        currentPageInputPath === pageOfMenuItem.inputPath;
+        currentPageStem === pageOfMenuItem.filePathStem;
 
     const pageHref = pageOfMenuItem.data.baseUrl + pageOfMenuItem.data.page.url;
 
@@ -72,9 +56,9 @@ const SubMenu = ({ menuItem, pages, currentPageInputPath, nacaraSectionDir }: IS
     if (typeof menuItem === "string") {
         return (
             <MenuItemPage
-                pageId={menuItem}
+                pageStem={menuItem}
                 pages={pages}
-                currentPageInputPath={currentPageInputPath}
+                currentPageStem={currentPageInputPath}
                 nacaraSectionDir={nacaraSectionDir}
             />
         );
@@ -87,7 +71,7 @@ const SubMenu = ({ menuItem, pages, currentPageInputPath, nacaraSectionDir }: IS
             );
         } else if (menuItem.type === "section") {
             // We don't support nested sections yet
-            return null;
+            throw "Nested sections are not supported yet by the menu of eleventy-layout-nacara";
         }
     }
 };
@@ -95,18 +79,18 @@ const SubMenu = ({ menuItem, pages, currentPageInputPath, nacaraSectionDir }: IS
 interface IMenuItemProps {
     menuItem: MenuItem;
     pages: any[];
-    currentPageInputPath: string;
+    currentPageStem: string;
     nacaraSectionDir: string;
 }
 
-const MenuItem = ({ menuItem, pages, currentPageInputPath, nacaraSectionDir }: IMenuItemProps) => {
+const MenuItem = ({ menuItem, pages, currentPageStem , nacaraSectionDir }: IMenuItemProps) => {
     if (typeof menuItem === "string") {
         return (
             <ul class="menu-list">
                 <MenuItemPage
-                    pageId={menuItem}
+                    pageStem={menuItem}
                     pages={pages}
-                    currentPageInputPath={currentPageInputPath}
+                    currentPageStem={currentPageStem}
                     nacaraSectionDir={nacaraSectionDir}
                 />
             </ul>
@@ -129,7 +113,7 @@ const MenuItem = ({ menuItem, pages, currentPageInputPath, nacaraSectionDir }: I
                             <SubMenu
                                 menuItem={subMenuItem}
                                 pages={pages}
-                                currentPageInputPath={currentPageInputPath}
+                                currentPageInputPath={currentPageStem}
                                 nacaraSectionDir={nacaraSectionDir}
                             />
                         ))}
@@ -147,11 +131,11 @@ const MenuItem = ({ menuItem, pages, currentPageInputPath, nacaraSectionDir }: I
 interface IMenuProps {
     menu: MenuItem[];
     pages: any[];
-    currentPageInputPath: string;
+    currentPageStem: string;
     nacaraSectionDir: string;
 }
 
-const Menu = ({ menu, pages, currentPageInputPath, nacaraSectionDir }: IMenuProps) => {
+const Menu = ({ menu, pages, currentPageStem, nacaraSectionDir }: IMenuProps) => {
     return (
         <div class="menu-container">
             <aside class="menu">
@@ -159,7 +143,7 @@ const Menu = ({ menu, pages, currentPageInputPath, nacaraSectionDir }: IMenuProp
                     <MenuItem
                         menuItem={element}
                         pages={pages}
-                        currentPageInputPath={currentPageInputPath}
+                        currentPageStem={currentPageStem}
                         nacaraSectionDir={nacaraSectionDir}
                     />
                 ))}
@@ -168,17 +152,6 @@ const Menu = ({ menu, pages, currentPageInputPath, nacaraSectionDir }: IMenuProp
     );
 };
 
-function getRootDirectory(filePath: string) {
-    const parts = filePath.replace(/\\/g, "/").split("/");
-
-    // We remove the first element if it's "current dir"
-    if (parts[0] === ".") {
-        parts.shift();
-    }
-
-    return parts[0];
-}
-
 /**
  *
  * @param pages
@@ -186,7 +159,7 @@ function getRootDirectory(filePath: string) {
  */
 export default function menuFilter(this: any, pages: any[]) {
     const currentPage = pages.find(
-        (page) => page.inputPath === this.ctx.page.inputPath
+        (page) => page.filePathStem === this.ctx.page.filePathStem
     );
 
     if (currentPage.data.nacaraMenu) {
@@ -194,8 +167,8 @@ export default function menuFilter(this: any, pages: any[]) {
             <Menu
                 menu={currentPage.data.nacaraMenu}
                 pages={pages}
-                currentPageInputPath={currentPage.inputPath}
-                nacaraSectionDir={getRootDirectory(currentPage.inputPath)}
+                currentPageStem={currentPage.filePathStem}
+                nacaraSectionDir={currentPage.data.nacaraSectionDir}
             />
         );
     } else {

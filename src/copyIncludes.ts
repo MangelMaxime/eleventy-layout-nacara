@@ -37,5 +37,5 @@ export function copyIncludesToUserFolder(includesDir? : string) {
         // like that if user update the plugin, the files will be updated
         overwrite: true,
     });
-    fs.writeFileSync(path.join(destination, ".gitignore"), "");
+    fs.writeFileSync(path.join(destination, ".gitignore"), "**/*");
 }

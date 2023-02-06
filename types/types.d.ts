@@ -13,7 +13,6 @@ interface MenuLink {
 
 type MenuItem = MenuSection | MenuLink | string;
 type Menu = MenuItem [];
-type PageId = string;
 
 type FlatMenuItem = (MenuLink | string)
 type FlatMenu = FlatMenuItem [];

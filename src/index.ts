@@ -15,11 +15,41 @@ import eleventySass from "eleventy-sass";
 import { copyIncludesToUserFolder } from "./copyIncludes";
 import fs from "fs-extra";
 import path from "path";
+import { removeExtension } from "./utils/removeExtension";
 
 export interface Options {
     iconFilter?: IconFilterBuilderOptions;
     eleventySass?: any;
     includesDir?: string;
+}
+
+const removeInitialDotSlash = (str: string) => {
+    if (str.startsWith("./")) {
+        return str.substring(2);
+    }
+    return str;
+};
+
+const stemifyMenu = (menu: Menu) : Menu => {
+    return menu.map((item) => {
+        if (typeof item === "string") {
+            return removeInitialDotSlash(removeExtension(item));
+        }
+
+        if (item.type === "section") {
+            return {
+                ...item,
+                items: stemifyMenu(item.items),
+            };
+        }
+
+        // Link are not stemified
+        if (item.type === "link") {
+            return item;
+        }
+
+        throw new Error("Unknown menu item type");
+    });
 }
 
 // Default eleventyComputed required by the layout plugin
@@ -99,7 +129,7 @@ const defaultEleventyComputed = {
             // If this is an object, we assume this is because user
             // is using an object to include the JSON schema
             if (typeof parsedMenu === "object" && parsedMenu.items) {
-                return parsedMenu.items;
+                return stemifyMenu(parsedMenu.items);
             } else {
                 throw new Error(`Invalid nacaraMenu.json file. Expected format is:
 {
