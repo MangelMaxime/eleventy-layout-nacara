@@ -10,9 +10,9 @@ test("returns nothing if there is no menu", async (t) => {
     const json = await elev.toJSON();
 
     t.is(
+        json[0].content,
         `
-`,
-        json[0].content
+`
     );
 });
 

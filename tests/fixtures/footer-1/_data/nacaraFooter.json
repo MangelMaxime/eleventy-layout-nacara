@@ -1,0 +1,4 @@
+{
+    "$schema": "./../../../../schemas/footer-schema.json",
+    "text": "Built with <a class=\"is-underlined\" href=\"https://mangelmaxime.github.io/Nacara/\">eleventy-layout-nacara</a>"
+}

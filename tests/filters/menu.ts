@@ -10,9 +10,9 @@ test("returns nothing if there is not nacaraMenu provided", async (t) => {
     const json = await elev.toJSON();
 
     t.is(
+        json[0].content,
         `
 `,
-        json[0].content
     );
 });
 

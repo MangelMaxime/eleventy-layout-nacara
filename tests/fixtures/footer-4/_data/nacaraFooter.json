@@ -1,0 +1,24 @@
+{
+    "$schema": "./../../../../schemas/footer-schema.json",
+    "sitemapSections": [
+        {
+            "title": "About",
+            "items": [
+                {
+                    "label": "About Us",
+                    "url": "/about-us"
+                },
+                {
+                    "icon": "lucide:users",
+                    "label": "Our People",
+                    "url": "/our-people"
+                }
+            ]
+        }
+    ],
+    "copyright": {
+        "attribution": "Mangel Maxime",
+        "startDate": "2023"
+    },
+    "text": "Build with eleventy-layout-nacara"
+}

@@ -1,0 +1,32 @@
+{
+    "$schema": "./../../../../schemas/footer-schema.json",
+    "sitemapSections": [
+        {
+            "title": "About",
+            "items": [
+                {
+                    "label": "About Us",
+                    "url": "/about-us"
+                },
+                {
+                    "icon": "lucide:users",
+                    "label": "Our People",
+                    "url": "/our-people"
+                }
+            ]
+        },
+        {
+            "title": "Ressources",
+            "items": [
+                {
+                    "label": "Blog",
+                    "url": "/blog"
+                },
+                {
+                    "label": "FAQ",
+                    "url": "/faq"
+                }
+            ]
+        }
+    ]
+}

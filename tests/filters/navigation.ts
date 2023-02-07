@@ -15,9 +15,8 @@ test("returns nothing if there is not nacaraMenu provided", async (t) => {
     const formattedResult = formatHTML(json[0].content);
 
     t.is(
-        `
-`,
-        json[0].content
+        formattedResult,
+        ``
     );
 });
 
@@ -37,6 +36,7 @@ test("returns the Previous button marked as invisible and the second button norm
     const formattedResult = formatHTML(page1Json.content);
 
     t.is(
+        formattedResult,
         `<div class="section bd-docs-pagination bd-pagination-links">
     <a class="button navigate-to-previous is-invisible"></a>
     <a
@@ -50,8 +50,7 @@ test("returns the Previous button marked as invisible and the second button norm
         <i>→</i>
     </a>
 </div>
-`,
-        formattedResult
+`
     );
 });
 
@@ -71,6 +70,7 @@ test("returns the Next button marked as invisible and the first button normal if
     const formattedResult = formatHTML(page2Json.content);
 
     t.is(
+        formattedResult,
         `<div class="section bd-docs-pagination bd-pagination-links">
     <a
         class="button bd-fat-button is-primary is-light bd-pagination-prev"
@@ -84,8 +84,7 @@ test("returns the Next button marked as invisible and the first button normal if
     </a>
     <a class="button navigate-to-next is-invisible"></a>
 </div>
-`,
-        formattedResult
+`
     );
 });
 
@@ -105,6 +104,7 @@ test("the Next button include the section title page is inside a section", async
     const formattedResult = formatHTML(page2Json.content);
 
     t.is(
+        formattedResult,
         `<div class="section bd-docs-pagination bd-pagination-links">
     <a
         class="button bd-fat-button is-primary is-light bd-pagination-prev"
@@ -118,8 +118,7 @@ test("the Next button include the section title page is inside a section", async
     </a>
     <a class="button navigate-to-next is-invisible"></a>
 </div>
-`,
-        formattedResult
+`
     );
 });
 
@@ -139,6 +138,7 @@ test("the Previous button include the section title page is inside a section", a
     const formattedResult = formatHTML(page2Json.content);
 
     t.is(
+        formattedResult,
         `<div class="section bd-docs-pagination bd-pagination-links">
     <a class="button navigate-to-previous is-invisible"></a>
     <a
@@ -152,8 +152,7 @@ test("the Previous button include the section title page is inside a section", a
         <i>→</i>
     </a>
 </div>
-`,
-        formattedResult
+`
     );
 });
 
@@ -173,6 +172,7 @@ test("both buttons are present if the page is between 2 valid element in the men
     const formattedResult = formatHTML(page2Json.content);
 
     t.is(
+        formattedResult,
         `<div class="section bd-docs-pagination bd-pagination-links">
     <a
         class="button bd-fat-button is-primary is-light bd-pagination-prev"
@@ -195,8 +195,7 @@ test("both buttons are present if the page is between 2 valid element in the men
         <i>→</i>
     </a>
 </div>
-`,
-        formattedResult
+`
     );
 });
 
@@ -217,6 +216,7 @@ test("the Next button is empty if the next menu element is a link", async (t) =>
     const formattedResult = formatHTML(page2Json.content);
 
     t.is(
+        formattedResult,
         `<div class="section bd-docs-pagination bd-pagination-links">
     <a
         class="button bd-fat-button is-primary is-light bd-pagination-prev"
@@ -230,8 +230,7 @@ test("the Next button is empty if the next menu element is a link", async (t) =>
     </a>
     <a class="button navigate-to-next is-invisible"></a>
 </div>
-`,
-        formattedResult
+`
     );
 });
 
@@ -251,6 +250,7 @@ test("the Previous button is empty if the previous menu element is a link", asyn
     const formattedResult = formatHTML(page2Json.content);
 
     t.is(
+        formattedResult,
         `<div class="section bd-docs-pagination bd-pagination-links">
     <a class="button navigate-to-previous is-invisible"></a>
     <a
@@ -264,7 +264,6 @@ test("the Previous button is empty if the previous menu element is a link", asyn
         <i>→</i>
     </a>
 </div>
-`,
-        formattedResult
+`
     );
 });

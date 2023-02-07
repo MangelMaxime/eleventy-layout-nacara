@@ -7,7 +7,7 @@
     https://github.com/MangelMaxime/eleventy-layout-nacara
 #}
 {# Only generate a footer if one of the properties is present #}
-{% if not nacaraFooter and (nacaraFooter.sitemapSections or nacaraFooter.text or nacaraFooter.copyright) %}
+{% if nacaraFooter | length %}
     <footer class="footer">
         <div class="is-size-5">
             {# Add the sitemap if present #}
@@ -61,14 +61,15 @@
                     {{ nacaraFooter.copyright.startDate }}-<span id="copyright-end-year"></span>
                     {{ nacaraFooter.copyright.attribution | safe }}
                 </p>
+
+                {# Add script to update the end year of the copyright automatically #}
+                <script type="text/javascript">
+                    const year = new Date().getFullYear();
+                    document
+                        .getElementById('copyright-end-year')
+                        .innerHTML = year;
+                </script>
             {% endif %}
         </div>
-        {# Add script to update the end year of the copyright automatically #}
-        <script type="text/javascript">
-            const year = new Date().getFullYear();
-            document
-                .getElementById('copyright-end-year')
-                .innerHTML = year;
-        </script>
     </footer>
 {% endif %}

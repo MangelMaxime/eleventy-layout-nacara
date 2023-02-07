@@ -5,7 +5,7 @@
     "description": "",
     "main": "dist/index.js",
     "scripts": {
-        "test": "cd tests && npx ava",
+        "test": "npx tsc && cd tests && npx ava",
         "test-watch-ava": "cd tests && npx ava --watch",
         "test-watch-typescript": "npx tsc --watch",
         "test-watch": "npx concurrently --handle-input -n w: npm:test-watch-*",

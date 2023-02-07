@@ -148,7 +148,14 @@ const defaultEleventyComputed = {
 };
 
 function configFunction(eleventyConfig: any, options?: Options) {
-    copyIncludesToUserFolder(options?.includesDir);
+    let isFirstBuild = true;
+
+    eleventyConfig.on("eleventy.before", async (args : any) => {
+        if (isFirstBuild) {
+            isFirstBuild = false;
+            copyIncludesToUserFolder(args);
+        }
+    });
 
     eleventyConfig.addGlobalData(
         "isDevelopment",

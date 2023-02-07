@@ -1,0 +1,7 @@
+{
+    "$schema": "./../../../../schemas/footer-schema.json",
+    "copyright": {
+        "attribution": "Mangel Maxime",
+        "startDate": "2023"
+    }
+}
