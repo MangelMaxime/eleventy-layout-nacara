@@ -1,0 +1,12 @@
+{
+    "$schema": "./../../../schemas/metadata-schema.json",
+    "url": "https://mangelmaxime.github.io",
+    "editUrl": "https://github.com/MangelMaxime/Nacara/edit/master/docsrc",
+    "baseUrl": "/Nacara/",
+    "title": "Eleventy Nacara",
+    "description": "",
+    "author": {
+        "name": "Maxime Mangel",
+        "twitter": "MangelMaxime"
+    }
+}

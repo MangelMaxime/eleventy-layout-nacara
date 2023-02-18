@@ -90,7 +90,8 @@
                         "additionalProperties": false
                     }
                 ]
-            }
+            },
+            "additionalProperties": false
         },
         "end": {
             "type": "array",
@@ -113,7 +114,8 @@
                     }
                 },
                 "additionalProperties": false
-            }
+            },
+            "additionalProperties": false
         }
     },
     "additionalProperties": false

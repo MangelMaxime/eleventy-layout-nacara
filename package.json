@@ -8,11 +8,11 @@
         "test": "npx tsc && cd tests && npx ava",
         "test-watch-ava": "cd tests && npx ava --watch",
         "test-watch-typescript": "npx tsc --watch",
-        "test-watch": "npx concurrently --handle-input -n w: npm:test-watch-*",
+        "test-watch": "npx concurrently --handle-input -p none npm:test-watch-*",
         "demo": "cd docs && npx @11ty/eleventy",
-        "watch-eleventy": "npx nodemon",
-        "watch-typescript": "npx tsc --watch",
-        "watch": "npx concurrently -n w: npm:watch-*",
+        "docs-watch-typescript": "npx tsc --watch",
+        "docs-watch-eleventy": "npx nodemon",
+        "docs-watch": "npx concurrently -p none npm:docs-watch-*",
         "prepublish": "npx tsc"
     },
     "keywords": [

@@ -1,5 +1,4 @@
-const eleventyLayoutNacara = require("../dist/index.js");
-const eleventyRemark = require('@fec/eleventy-plugin-remark');
+const eleventyLayoutNacara = require("../../../dist/index.js");
 
 /** @param {import("@11ty/eleventy/src/UserConfig")} eleventyConfig */
 module.exports = function (eleventyConfig) {

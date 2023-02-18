@@ -1,0 +1,11 @@
+{
+    "$schema": "./../../../../schemas/navbar-schema.json",
+    "start": [
+        {
+            "section": "docs",
+            "label": "Docs",
+            "url": "/docs/introduction/index.html",
+            "pinned": true
+        }
+    ]
+}

@@ -6,7 +6,7 @@
     If you want to make changes please create an issue or send a PR to:
     https://github.com/MangelMaxime/eleventy-layout-nacara
 #}
-<nav class="navbar is-fixed-top is-spaced">
+<nav class="navbar is-fixed-top is-spaced" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-item title is-4" href="{{nacaraMetadata.url}}">
             {{ nacaraMetadata.title }}
@@ -61,7 +61,9 @@
 
                     {# Otherwise, it is a normal navbar-item #}
                 {% else %}
-                    <a class="navbar-item is-hidden-mobile" href="{{ startItem.url }}">
+                    {% set mobileDisplayClass = 'is-hidden-mobile' if not startItem.pinned %}
+                    <a class="navbar-item
+                        {{ mobileDisplayClass }}" href="{{ startItem.url }}">
                         {{ startItem.label }}
                     </a>
                 {% endif %}
@@ -80,7 +82,7 @@
             {% for endItem in nacaraNavbar.end %}
                 <a class="navbar-item" href="{{ endItem.url }}">
                     <span class="icon">
-                        <i class="{{endItem.icon}} fa-lg"></i>
+                        {{ endItem.icon | to_icon | safe }}
                     </span>
                 </a>
             {% endfor %}
@@ -108,9 +110,12 @@
                     </div>
                 {% endif %}
             {% else %}
-                <a class="nacara-navbar-menu-item" href="{{startItem.url}}">
-                    <span>{{ startItem.label }}</span>
-                </a>
+                {# Only render the link elevent if it is not pinned #}
+                {% if not startItem.pinned %}
+                    <a class="nacara-navbar-menu-item" href="{{startItem.url}}">
+                        <span>{{ startItem.label }}</span>
+                    </a>
+                {% endif %}
             {% endif %}
         {% endfor %}
         {# Generate the elements from the end section of the navbar #}

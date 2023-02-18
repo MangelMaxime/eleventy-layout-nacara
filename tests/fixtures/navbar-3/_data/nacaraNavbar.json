@@ -1,0 +1,10 @@
+{
+    "$schema": "./../../../../schemas/navbar-schema.json",
+    "end": [
+        {
+            "label": "GitHub",
+            "url": "https://github.com/",
+            "icon": "simpleIcons:github"
+        }
+    ]
+}

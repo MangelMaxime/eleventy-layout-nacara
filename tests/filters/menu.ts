@@ -12,7 +12,7 @@ test("returns nothing if there is not nacaraMenu provided", async (t) => {
     t.is(
         json[0].content,
         `
-`,
+`
     );
 });
 

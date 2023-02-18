@@ -48,12 +48,12 @@
     "end": [
         {
             "url": "https://github.com/MangelMaxime/Nacara",
-            "icon": "fab fa-github",
+            "icon": "simpleIcons:github",
             "label": "Github"
         },
         {
             "url": "https://twitter.com/MangelMaxime",
-            "icon": "fab fa-twitter",
+            "icon": "simpleIcons:twitter",
             "label": "Twitter"
         }
     ]

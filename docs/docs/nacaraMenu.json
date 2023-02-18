@@ -11,7 +11,9 @@
         {
             "type": "section",
             "label": "Getting started",
-            "items": []
+            "items": [
+                "./getting-started/quick-start.md"
+            ]
         },
         {
             "type": "section",
