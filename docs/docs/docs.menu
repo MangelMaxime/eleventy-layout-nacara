@@ -12,7 +12,8 @@
             "type": "section",
             "label": "Getting started",
             "items": [
-                "./getting-started/quick-start.md"
+                "./getting-started/quick-start.md",
+                "./getting-started/migration-from-nacara.md"
             ]
         },
         {
@@ -24,12 +25,20 @@
         },
         {
             "type": "section",
+            "label": "Components",
+            "items": [
+                "./components/navbar.md",
+                "./components/footer.md"
+            ]
+        },
+        {
+            "type": "section",
             "label": "Configuration",
             "items": [
                 "./configuration/metadata.md",
                 "./configuration/navbar.md",
-                "./configuration/footer.md",
-                "./configuration/menus.md"
+                "./configuration/menus.md",
+                "./configuration/footer.md"
             ]
         },
         {
@@ -43,7 +52,8 @@
                 "./filters/layout-to-body-class.md",
                 "./filters/nacara-breadcrumb.md",
                 "./filters/nacara-menu.md",
-                "./filters/nacara-navigation.md"
+                "./filters/nacara-navigation.md",
+                "./filters/to-icon.md"
             ]
         },
         {

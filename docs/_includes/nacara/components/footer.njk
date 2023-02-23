@@ -7,13 +7,14 @@
     https://github.com/MangelMaxime/eleventy-layout-nacara
 #}
 {# Only generate a footer if one of the properties is present #}
-{% if nacaraFooter | length %}
+{% set footer = footer.nacara %}
+{% if footer | length %}
     <footer class="footer">
         <div class="is-size-5">
             {# Add the sitemap if present #}
-            {% if nacaraFooter.sitemapSections %}
+            {% if footer.sitemapSections %}
                 <div class="sitemap">
-                    {% for sitemapSection in nacaraFooter.sitemapSections %}
+                    {% for sitemapSection in footer.sitemapSections %}
                         {#
                         Note: We can't use macro to structure the code because macro can't use
                         asynchronous functions and we need to call `to_icon` filter which
@@ -48,18 +49,18 @@
             {% endif %}
 
             {# Add optional text if present #}
-            {% if nacaraFooter.text %}
+            {% if footer.text %}
                 <p class="has-text-centered">
-                    {{ nacaraFooter.text | safe }}
+                    {{ footer.text | safe }}
                 </p>
             {% endif %}
 
             {# Add copyright information if present #}
-            {% if nacaraFooter.copyright %}
+            {% if footer.copyright %}
                 <p class="has-text-centered">
                     Copyright ©
-                    {{ nacaraFooter.copyright.startDate }}-<span id="copyright-end-year"></span>
-                    {{ nacaraFooter.copyright.attribution | safe }}
+                    {{ footer.copyright.startDate }}-<span id="copyright-end-year"></span>
+                    {{ footer.copyright.attribution | safe }}
                 </p>
 
                 {# Add script to update the end year of the copyright automatically #}

@@ -21,7 +21,7 @@
 #}
 {% set pageBodyClass = page.filePathStem | file_to_body_class %}
 {% set layoutBodyClass = layout | layout_to_body_class %}
-{% set hasFooterBodyClass = "has-footer" if nacaraFooter.sitemapSections or nacaraFooter.text or nacaraFooter.copyright else "" %}
+{% set hasFooterBodyClass = "has-footer" if footer.nacara.sitemapSections or footer.nacara.text or footer.nacara.copyright else "" %}
 
 <!doctype html>
 <html class="has-navbar-fixed-top" lang="en">
@@ -44,6 +44,7 @@
         <link rel="preconnect" href="/" crossorigin="crossorigin">
         <title>{{ sanitazedTitle or title or metadata.title | escape }}</title>
         <script src="/assets/js/navbar.js" defer="defer"></script>
+        <link href="https://cdn.jsdelivr.net/gh/PrismJS/prism-themes@447479fc7b2be2051fe27e561aceed7cc87a589f/themes/prism-one-light.css" rel="stylesheet">
     </head>
     <body class="{{ pageBodyClass }} {{ layoutBodyClass }} {{ hasFooterBodyClass }}">
 

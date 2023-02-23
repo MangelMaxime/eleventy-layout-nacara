@@ -2,7 +2,7 @@ import test from "ava";
 import { formatHTML } from "../utils/_formatHTML";
 const Eleventy = require("@11ty/eleventy");
 
-test("minimal navbar is generated if no nacaraNavbar data is provided", async (t) => {
+test("minimal navbar is generated if no navbar.nacara data is provided", async (t) => {
     const elev = new Eleventy(
         "./fixtures/navbar-0/",
         "./fixtures/navbar-0/_site",

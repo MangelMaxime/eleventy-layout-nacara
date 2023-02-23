@@ -2,7 +2,7 @@ import test from "ava";
 import { formatHTML } from "../utils/_formatHTML";
 const Eleventy = require("@11ty/eleventy");
 
-test("render nothing if nacaraFooter is not provided", async (t) => {
+test("render nothing if footer.nacara is not provided", async (t) => {
     const elev = new Eleventy(
         "./fixtures/footer-0/",
         "./fixtures/footer-0/_site",

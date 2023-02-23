@@ -30,7 +30,7 @@ const removeInitialDotSlash = (str: string) => {
     return str;
 };
 
-const stemifyMenu = (menu: Menu) : Menu => {
+const stemifyMenu = (menu: Menu): Menu => {
     return menu.map((item) => {
         if (typeof item === "string") {
             return removeInitialDotSlash(removeExtension(item));
@@ -50,7 +50,7 @@ const stemifyMenu = (menu: Menu) : Menu => {
 
         throw new Error("Unknown menu item type");
     });
-}
+};
 
 // Default eleventyComputed required by the layout plugin
 const defaultEleventyComputed = {
@@ -67,13 +67,13 @@ const defaultEleventyComputed = {
             return "";
         }
 
-        if (data.nacaraMetadata == undefined) {
+        if (data.metadata.nacara == undefined) {
             throw new Error(
-                "eleventy-layout-nacara: Please provide the metadata information by creating a _data/nacaraMetadata.json file."
+                "eleventy-layout-nacara: Please provide the metadata information by creating a _data/metadata.nacara file."
             );
         }
 
-        return data.nacaraMetadata.baseUrl;
+        return data.metadata.nacara.baseUrl;
     },
     nacaraSectionDir: async (data: any) => {
         // Find the root of the project
@@ -113,44 +113,13 @@ const defaultEleventyComputed = {
 
         // Build the section direction, which consist of the root + the first segment of the path
         return inputPathSegments[0];
-    },
-    nacaraMenu: async (data: any) => {
-        const menuFilepath = path.join(
-            data.nacaraSectionDir,
-            "nacaraMenu.json"
-        );
-
-        // If the nacaraMenu.json file exists, read it and expose
-        if (fs.existsSync(menuFilepath)) {
-            const menuBuffer = await fs.readFile(menuFilepath);
-            const menu = menuBuffer.toString();
-            const parsedMenu = JSON.parse(menu);
-
-            // If this is an object, we assume this is because user
-            // is using an object to include the JSON schema
-            if (typeof parsedMenu === "object" && parsedMenu.items) {
-                return stemifyMenu(parsedMenu.items);
-            } else {
-                throw new Error(`Invalid nacaraMenu.json file. Expected format is:
-{
-    "$schema": "./../../schemas/menu-schema.json",
-    "items": [
-        ...
-    ]
-}
-`);
-            }
-        }
-
-        // Otherwise, return null
-        return null;
-    },
+    }
 };
 
 function configFunction(eleventyConfig: any, options?: Options) {
     let isFirstBuild = true;
 
-    eleventyConfig.on("eleventy.before", async (args : any) => {
+    eleventyConfig.on("eleventy.before", async (args: any) => {
         if (isFirstBuild) {
             isFirstBuild = false;
             copyIncludesToUserFolder(args);
@@ -192,6 +161,55 @@ function configFunction(eleventyConfig: any, options?: Options) {
 
     // Register the sass plugin as with provide the styles using SCSS
     eleventyConfig.addPlugin(eleventySass, options?.eleventySass);
+
+    eleventyConfig.addDataExtension(
+        "menu",
+        (contents: string, filePath: string) => {
+            const parsedMenu = JSON.parse(contents);
+
+            // If this is an object, we assume this is because user
+            // is using an object to include the JSON schema
+            if (typeof parsedMenu === "object" && parsedMenu.items) {
+                return {
+                    nacaraMenu: stemifyMenu(parsedMenu.items),
+                };
+            } else {
+                throw new Error(`Invalid *.menu file. Expected format is:
+{
+    "$schema": "<path to eleventy-layout-nacara>/schemas/menu-schema.json",
+    "items": [
+        ...
+    ]
+}
+`);
+            }
+        }
+    );
+
+    eleventyConfig.addDataExtension(
+        "nacara",
+        (contents: string, filePath: string) => {
+            const fileName = path.basename(filePath);
+            const parsed = JSON.parse(contents);
+
+            switch (fileName) {
+                case "footer.nacara":
+                    return {
+                        nacara: parsed
+                    };
+                case "navbar.nacara":
+                    return {
+                        nacara: parsed
+                    };
+                case "metadata.nacara":
+                    return {
+                        nacara: parsed
+                    };
+                default:
+                    throw new Error(`Unknown nacara file: ${fileName}`);
+            }
+        }
+    );
 }
 
 module.exports = {

@@ -6,15 +6,16 @@
     If you want to make changes please create an issue or send a PR to:
     https://github.com/MangelMaxime/eleventy-layout-nacara
 #}
+{% set navbar = navbar.nacara %}
 <nav class="navbar is-fixed-top is-spaced" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-        <a class="navbar-item title is-4" href="{{nacaraMetadata.url}}">
-            {{ nacaraMetadata.title }}
+        <a class="navbar-item title is-4" href="{{metadata.nacara.url}}">
+            {{ metadata.nacara.title }}
         </a>
     </div>
     <div class="navbar-menu">
         <div class="navbar-start">
-            {% for startItem in nacaraNavbar.start %}
+            {% for startItem in navbar.start %}
                 {#
                     If the startItem contains an items property then
                     it is a dropdown menu
@@ -79,7 +80,7 @@
             </div>
         </div>
         <div class="navbar-end is-hidden-mobile">
-            {% for endItem in nacaraNavbar.end %}
+            {% for endItem in navbar.end %}
                 <a class="navbar-item" href="{{ endItem.url }}">
                     <span class="icon">
                         {{ endItem.icon | to_icon | safe }}
@@ -90,7 +91,7 @@
     </div>
     <div class="nacara-navbar-menu">
         {# Generate the elements from the start section of the navbar #}
-        {% for startItem in nacaraNavbar.start %}
+        {% for startItem in navbar.start %}
             {# If this is a dropdown #}
             {% if startItem.items %}
                 {# Only render the dropdown if it is not pinned #}
@@ -119,7 +120,7 @@
             {% endif %}
         {% endfor %}
         {# Generate the elements from the end section of the navbar #}
-        {% for endItem in nacaraNavbar.end %}
+        {% for endItem in navbar.end %}
             <a class="nacara-navbar-menu-item" href="{{endItem.url}}">
                 <span>{{ endItem.label }}</span>
             </a>

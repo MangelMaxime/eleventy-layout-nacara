@@ -104,3 +104,67 @@ $body-size: 14px;
 .footer a {
     color: $white;
 }
+
+
+// Adapt style for nested tables
+// .table .fullwidth-cell.has-nested-table:has(.table:only-child) {
+//     // margin: 0;
+//     // padding: 0;
+
+//     .table:only-child {
+//         tr:last-child td, tr:last-child th {
+//             border-top: unset;
+//             border-bottom: unset;
+//         }
+
+//         tr td:last-child, tr th:last-child {
+//             border-right: unset;
+//         }
+
+//         tr td:first-child, tr th:first-child {
+//             border-left: unset;
+//         }
+//     }
+// }
+
+// Nacara documentation site specific rules
+
+.content {
+    .table {
+        &.is-vcentered {
+            td,
+            th {
+                vertical-align: middle;
+            }
+        }
+
+        .label-cell {
+            white-space: nowrap;
+            text-align: center !important;
+            vertical-align: middle !important;
+        }
+
+        // Force call to take the maximum place
+        .fullwidth-cell {
+            width: 100%;
+        }
+    }
+}
+
+// Prevent bulma from custimizing .tag inside of code blocks
+// This happen if you are using HTML language in a code block
+// while using PrismJS renderer
+code .tag:not(body) {
+   align-items: unset;
+   background-color: unset;
+   border-radius: unset;
+   color: unset;
+   display: unset;
+   font-size: unset;
+   height: unset;
+   justify-content: unset;
+   line-height: unset;
+   padding-left: unset;
+   padding-right: unset;
+   white-space: unset;
+}

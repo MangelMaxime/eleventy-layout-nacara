@@ -1,11 +1,13 @@
 {
     "ignore": [
-        "docs/**/*",
-        "node_modules/**/*"
+        "node_modules/**/*",
+        "docs/_site/**/*",
+        "docs/_includes/nacara/**/*"
     ],
     "watch": [
         "dist/**/*",
-        "files/**/*"
+        "files/**/*",
+        "docs/**/*"
     ],
     "ext": "js,mjs,json,njk",
     "exec": "cd docs && npx @11ty/eleventy --serve"
