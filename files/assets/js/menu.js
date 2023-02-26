@@ -1,3 +1,9 @@
+const { default: scrollIntoView } = await import(
+    'https://esm.sh/scroll-into-view-if-needed@3'
+)
+
+window.scrollIntoView = scrollIntoView;
+
 const scrollMenuOrTableOfContentIfNeeded = () => {
 
     // Make the table of content visible
@@ -7,14 +13,14 @@ const scrollMenuOrTableOfContentIfNeeded = () => {
     if ($tableOfContentElement !== null) {
         scrollIntoView($tableOfContentElement, {
             scrollMode: "if-needed",
-            block: 'nearest',
+            block: 'center',
             inline: 'nearest',
             boundary: document.querySelector(".menu-container")
         });
     } else if ($activeMenuItemElement !== null) {
         scrollIntoView($activeMenuItemElement, {
             scrollMode: "if-needed",
-            block: 'nearest',
+            block: 'center',
             inline: 'nearest',
             boundary: document.querySelector(".menu-container")
         });
