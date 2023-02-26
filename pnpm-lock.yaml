@@ -19,9 +19,11 @@ specifiers:
   fs-extra: ^11.1.0
   gatsby-remark-vscode: ^3.3.1
   lucide-static: ^0.115.0
+  luxon: ^3.2.1
   nano-jsx: ^0.0.36
   nodemon: ^2.0.20
   prettier: ^2.8.4
+  primjs: ^0.6.5
   rehype-autolink-headings: ^6.1.1
   rehype-raw: ^6.1.1
   rehype-slug: ^5.1.0
@@ -43,6 +45,7 @@ dependencies:
   fs-extra: 11.1.0
   gatsby-remark-vscode: 3.3.1
   lucide-static: 0.115.0
+  luxon: 3.2.1
   nano-jsx: 0.0.36
   rehype-autolink-headings: 6.1.1
   rehype-raw: 6.1.1
@@ -68,6 +71,7 @@ devDependencies:
   eleventy-sass: 2.2.1_@11ty+eleventy@2.0.0
   nodemon: 2.0.20
   prettier: 2.8.4
+  primjs: 0.6.5
   shx: 0.3.4
   ts-node: 10.9.1_tncu2ai53lzgmizdedur7lbibe
   typescript: 4.9.5
@@ -2740,6 +2744,10 @@ packages:
     engines: {node: '>=14.16'}
     dependencies:
       parse-ms: 3.0.0
+    dev: true
+
+  /primjs/0.6.5:
+    resolution: {integrity: sha512-azrmNBLKpXyKKtBNeWlX2RDHSWet3mlMYizPalVr0ErsAmZldSSSdWc5q0VnRHn4QOwsjnNCLKfgEmTmjNIxTA==}
     dev: true
 
   /prismjs/1.29.0:

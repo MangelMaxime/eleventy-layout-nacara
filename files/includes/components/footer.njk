@@ -65,10 +65,14 @@
 
                 {# Add script to update the end year of the copyright automatically #}
                 <script type="text/javascript">
-                    const year = new Date().getFullYear();
-                    document
-                        .getElementById('copyright-end-year')
-                        .innerHTML = year;
+                    // Use IIFE to avoid polluting the global scope
+                    // This also avoid conflict because of `const year` on the components/footer page
+                    (function () {
+                        const year = new Date().getFullYear();
+                        document
+                            .getElementById('copyright-end-year')
+                            .innerHTML = year;
+                    })();
                 </script>
             {% endif %}
         </div>

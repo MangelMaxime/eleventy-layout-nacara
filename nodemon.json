@@ -2,7 +2,8 @@
     "ignore": [
         "node_modules/**/*",
         "docs/_site/**/*",
-        "docs/_includes/nacara/**/*"
+        "docs/_includes/nacara/**/*",
+        "assets/nacara/**/*"
     ],
     "watch": [
         "dist/**/*",
