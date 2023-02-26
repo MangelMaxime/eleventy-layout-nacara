@@ -33,7 +33,8 @@ const removeInitialDotSlash = (str: string) => {
 const stemifyMenu = (menu: Menu): Menu => {
     return menu.map((item) => {
         if (typeof item === "string") {
-            return removeInitialDotSlash(removeExtension(item));
+            const normalised = item.replace(/\\/g, "/");
+            return removeInitialDotSlash(removeExtension(normalised));
         }
 
         if (item.type === "section") {
@@ -157,7 +158,7 @@ function configFunction(eleventyConfig: any, options?: Options) {
 
     eleventyConfig.addFilter("nacara_menu", menuFilter);
     eleventyConfig.addFilter("nacara_breadcrumb", breadcrumbFilter);
-    eleventyConfig.addFilter("nacara_navigation", navigationFilter);
+    eleventyConfig.addFilter("nacara_previous_next_pagination", navigationFilter);
 
     // Register the sass plugin as with provide the styles using SCSS
     eleventyConfig.addPlugin(eleventySass, options?.eleventySass);

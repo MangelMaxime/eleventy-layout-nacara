@@ -168,3 +168,9 @@ code .tag:not(body) {
    padding-right: unset;
    white-space: unset;
 }
+
+.nunjuck-preview {
+    border: 1px solid lightgray;
+    padding: 2rem;
+    border-radius: 5px;
+}

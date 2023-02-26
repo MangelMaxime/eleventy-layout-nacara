@@ -61,14 +61,11 @@ Nunjuks template which generates a navbar based on [navbar](/docs/configuration/
 
 <style>
     .preview-navbar {
-        border: 1px solid lightgray;
-        padding: 2rem;
-        border-radius: 5px;
-        width: 100%;
         height: 300px;
+        width: 100%;
     }
 </style>
-<iframe id="FileFrame" class="preview-navbar" scrolling="no" seamless="seamless" src="about:blank"></iframe>
+<iframe id="FileFrame" class="nunjuck-preview preview-navbar" scrolling="no" seamless="seamless" src="about:blank"></iframe>
 
 <script type="text/javascript">
    var doc = document.getElementById('FileFrame').contentWindow.document;

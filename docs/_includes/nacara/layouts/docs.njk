@@ -6,7 +6,7 @@
 
             <div class="columns is-gapless is-mobile">
                 <div class="column is-menu-column is-3-desktop is-hidden-touch">
-                    {{ collections.all | nacara_menu | safe }}
+                    {% include "nacara/components/menu.njk" %}
                 </div>
                 <div class="column is-9-desktop is-full-touch">
                     <section class="section">
@@ -22,7 +22,6 @@
                                             </a>
                                     </div>
                                 </div>
-                                {{ filePathStem }}
                                 <h1 class="title is-1">
                                     {{ title | safe }}
                                 </h1>
@@ -31,7 +30,7 @@
                             {{ content | safe }}
                         </div>
 
-                        {{ collections.all | nacara_navigation | safe }}
+                        {% include "nacara/components/previous-next-pagination.njk" %}
 
                     </section>
 

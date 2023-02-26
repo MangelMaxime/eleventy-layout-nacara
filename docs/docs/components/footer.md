@@ -10,17 +10,12 @@ Nunjuks template which generates a footer based on [footer](/docs/configuration/
 {% raw %}
 ```html
 <style>
-    .footer-preview {
-        border: 1px solid lightgray;
-        padding: 2rem;
-        border-radius: 5px;
-    }
-
     .text-center {
         text-align: center;
     }
 </style>
-<div class="footer-preview">
+
+<div>
     <p class="text-center">
         This is a demo to show how you can include the footer in your own template.
     </p>
@@ -43,17 +38,11 @@ Nunjuks template which generates a footer based on [footer](/docs/configuration/
     "text": "This is a demo"
 } %}
 <style>
-    .footer-preview {
-        border: 1px solid lightgray;
-        padding: 2rem;
-        border-radius: 5px;
-    }
-
     .text-center {
         text-align: center;
     }
 </style>
-<div class="footer-preview">
+<div class="nunjuck-preview">
     <p class="text-center">
         This is a demo to show how you can include the footer in your own template.
     </p>

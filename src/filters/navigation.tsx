@@ -232,7 +232,7 @@ const NextPageButton = ({
     );
 };
 
-export default function navigationFilter(this: any, pages: any[]) {
+export default function previousNextPaginationFilter(this: any, pages: any[]) {
     const currentPage = pages.find(
         (page) => page.inputPath === this.ctx.page.inputPath
     );
@@ -293,4 +293,4 @@ export default function navigationFilter(this: any, pages: any[]) {
     ));
 }
 
-module.exports = navigationFilter;
+module.exports = previousNextPaginationFilter;

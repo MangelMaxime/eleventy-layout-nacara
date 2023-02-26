@@ -28,7 +28,9 @@
             "label": "Components",
             "items": [
                 "./components/navbar.md",
-                "./components/footer.md"
+                "./components/footer.md",
+                "./components/menu.md",
+                "./components/previous-next-pagination.md"
             ]
         },
         {
