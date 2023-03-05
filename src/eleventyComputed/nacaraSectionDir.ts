@@ -1,6 +1,6 @@
 import path from "path";
 
-export async function nacaraSectionDir() {
+export default async function nacaraSectionDir() {
     return async (data: any) => {
         // Find the root of the project
         // Data doesn't contains the eleventyConfig.dir information
@@ -12,3 +12,5 @@ export async function nacaraSectionDir() {
         return sectionDir;
     };
 }
+
+module.exports = nacaraSectionDir;

@@ -1,4 +1,4 @@
-export async function nacaraSection() {
+export default async function nacaraSection() {
     return async (data: any) => {
         // Normalize the path, so we can split using the path separator
         // const normalizedInputPath = path.normalize(data.page.inputPath);
@@ -29,3 +29,5 @@ export async function nacaraSection() {
         return inputPathSegments[0];
     }
 }
+
+module.exports = nacaraSection;

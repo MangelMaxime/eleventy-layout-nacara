@@ -1,4 +1,4 @@
-export async function baseUrl() {
+export default async function baseUrl() {
     return async (data: any) => {
         if (data.isDevelopment) {
             return "";
@@ -13,3 +13,5 @@ export async function baseUrl() {
         return data.metadata.nacara.baseUrl;
     };
 }
+
+module.exports = baseUrl;

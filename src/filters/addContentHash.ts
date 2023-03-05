@@ -2,7 +2,7 @@ import fs from "fs/promises";
 import crypto from "crypto";
 import path from "path";
 
-export default async function addHashFilter (
+export default async function addContentHash (
     absolutePath: string
 ) {
     try {
@@ -20,4 +20,4 @@ export default async function addHashFilter (
     }
 };
 
-module.exports = addHashFilter;
+module.exports = addContentHash;

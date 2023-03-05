@@ -1,7 +1,7 @@
-import formatDateFilter from "./filters/formatDateToUtc";
+import formatDateFilter from "./filters/formatDate";
 import lastModifiedDateFilter from "./filters/lastModifiedDate";
 import favIconFromEmojiFilter from "./filters/favIconFromEmoji";
-import addHashFilter from "./filters/addContentHash";
+import addContentHash from "./filters/addContentHash";
 import fileToBodyClassFilter from "./filters/fileToBodyClass";
 import layoutToBodyClassFilter from "./filters/layoutToBodyClass";
 import toIconFilterBuilder, {
@@ -14,13 +14,10 @@ import navigationFilter from "./filters/navigation";
 import eleventySass from "eleventy-sass";
 import { copyIncludesToUserFolder } from "./copyIncludes";
 import { copyAssetsToUserFolder } from "./copyAssets";
-import fs from "fs-extra";
 import path from "path";
 import { removeExtension } from "./utils/removeExtension";
-import { baseUrl as eleventyComputedBaseUrl } from "./eleventyComputed/baseUrl";
-import { nacaraSection as eleventyComputedNacaraSection } from "./eleventyComputed/nacaraSection";
-import { nacaraSectionDir as eleventyComputedNacaraSectionDir } from "./eleventyComputed/nacaraSectionDir";
-import { sanitizedTitle as eleventyComputedSanitizedTitle } from "./eleventyComputed/sanitizedTitle";
+import eleventyComputed from "./eleventyComputed";
+import globalData from "./globalData";
 
 export interface Options {
     iconFilter?: IconFilterBuilderOptions;
@@ -76,25 +73,42 @@ function configFunction(eleventyConfig: any, options?: Options) {
 
     eleventyConfig.addGlobalData(
         "eleventyComputed.sanitizedTitle",
-        eleventyComputedSanitizedTitle
+        eleventyComputed.sanitizedTitle
     );
     eleventyConfig.addGlobalData(
         "eleventyComputed.baseUrl",
-        eleventyComputedBaseUrl
+        eleventyComputed.baseUrl
     );
     eleventyConfig.addGlobalData(
         "eleventyComputed.nacaraSectionDir",
-        eleventyComputedNacaraSectionDir
+        eleventyComputed.nacaraSectionDir
     );
     eleventyConfig.addGlobalData(
         "eleventyComputed.nacaraSection",
-        eleventyComputedNacaraSection
+        eleventyComputed.nacaraSection
+    );
+    eleventyConfig.addGlobalData(
+        "eleventyComputed.page.absolutePath",
+        eleventyComputed.page.absolutePath
+    );
+    eleventyConfig.addGlobalData("gitRoot",
+       globalData.gitRoot
+    );
+    eleventyConfig.addGlobalData(
+        "eleventyComputed.page.gitLastModified",
+        eleventyComputed.page.gitLastModified
+    );
+    eleventyConfig.addGlobalData(
+        "eleventyComputed.page.gitCreated",
+        eleventyComputed.page.gitCreated
     );
 
     eleventyConfig.addFilter("fav_icon_from_emoji", favIconFromEmojiFilter);
     eleventyConfig.addAsyncFilter("last_modified_date", lastModifiedDateFilter);
     eleventyConfig.addFilter("format_date_to_utc", formatDateFilter);
-    eleventyConfig.addAsyncFilter("add_content_hash", addHashFilter);
+    // eleventyConfig.addFilter("format_datetime_to_utc", formatDateTimeFilter);
+    eleventyConfig.addFilter("date", formatDateFilter);
+    eleventyConfig.addAsyncFilter("add_content_hash", addContentHash);
     eleventyConfig.addFilter("file_to_body_class", fileToBodyClassFilter);
     eleventyConfig.addFilter("layout_to_body_class", layoutToBodyClassFilter);
     eleventyConfig.addAsyncFilter(

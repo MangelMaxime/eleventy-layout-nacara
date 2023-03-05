@@ -1,8 +1,5 @@
-export async function sanitizedTitle() {
-    return async (data: any) => {
-        if (!data) {
-            return "";
-        }
+export default function sanitizedTitle() {
+    return (data: any) => {
         // I don't know why but some title are undefined
         if (data.title) {
             return data.title.replace(/(<([^>]+)>)/gi, "");
@@ -11,3 +8,5 @@ export async function sanitizedTitle() {
         }
     };
 }
+
+module.exports = sanitizedTitle;
