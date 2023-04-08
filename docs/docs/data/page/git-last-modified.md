@@ -22,3 +22,5 @@ When displaying both the `page.getCreated` and `page.getModified` dates, you can
 {% endraw %}
 
 generates
+
+{{ page.gitLastModified }}
