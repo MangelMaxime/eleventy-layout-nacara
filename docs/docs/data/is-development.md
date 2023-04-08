@@ -14,3 +14,5 @@ Returns `true` if eleventy is running with the `--serve` flag.
 {% endif %}
 ```
 {% endraw %}
+
+{{ page.gitLastModified }}
