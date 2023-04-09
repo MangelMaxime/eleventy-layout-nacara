@@ -49,8 +49,7 @@
             "items": [
                 "./filters/add-content-hash.md",
                 "./filters/file-to-body-class.md",
-                "./filters/format-date-to-utc.md",
-                "./filters/last-modified-date.md",
+                "./filters/format-date.md",
                 "./filters/layout-to-body-class.md",
                 "./filters/nacara-breadcrumb.md",
                 "./filters/nacara-menu.md",
@@ -66,7 +65,10 @@
                 "./data/base-url.md",
                 "./data/nacara-section.md",
                 "./data/nacara-menu.md",
-                "./data/sanitized-title.md"
+                "./data/sanitized-title.md",
+                "./data/git-root.md",
+                "./data/page/git-created.md",
+                "./data/page/git-last-modified.md"
             ]
         }
     ]

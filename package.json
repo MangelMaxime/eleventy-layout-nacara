@@ -24,6 +24,7 @@
     "license": "MIT",
     "devDependencies": {
         "@11ty/eleventy-plugin-syntaxhighlight": "^4.2.0",
+        "@types/cross-spawn": "^6.0.2",
         "@types/fs-extra": "^11.0.1",
         "@types/luxon": "^3.2.0",
         "@types/node": "^18.14.0",
@@ -46,6 +47,7 @@
         "@fec/eleventy-plugin-remark": "^3.1.1",
         "@svgdotjs/svg.js": "^3.1.2",
         "bulma": "^0.9.4",
+        "cross-spawn": "^7.0.3",
         "fs-extra": "^11.1.0",
         "gatsby-remark-vscode": "^3.3.1",
         "lucide-static": "^0.115.0",

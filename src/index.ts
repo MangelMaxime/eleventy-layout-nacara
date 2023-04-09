@@ -1,5 +1,4 @@
 import formatDateFilter from "./filters/formatDate";
-import lastModifiedDateFilter from "./filters/lastModifiedDate";
 import favIconFromEmojiFilter from "./filters/favIconFromEmoji";
 import addContentHash from "./filters/addContentHash";
 import fileToBodyClassFilter from "./filters/fileToBodyClass";
@@ -58,6 +57,14 @@ const stemifyMenu = (menu: Menu): Menu => {
 function configFunction(eleventyConfig: any, options?: Options) {
     let isFirstBuild = true;
 
+    // Cache the last modified date of a file
+    // because invoking git log is expensive
+    const gitCreatedCache = new Map<string, Date>();
+
+    // Cache the last modified date of a file
+    // because invoking git log is expensive
+    const lastModifiedDateCache = new Map<string, Date | null>();
+
     eleventyConfig.on("eleventy.before", async (args: any) => {
         if (isFirstBuild) {
             isFirstBuild = false;
@@ -96,18 +103,17 @@ function configFunction(eleventyConfig: any, options?: Options) {
     );
     eleventyConfig.addGlobalData(
         "eleventyComputed.page.gitLastModified",
-        eleventyComputed.page.gitLastModified
+        eleventyComputed.page.gitLastModified(lastModifiedDateCache)
     );
     eleventyConfig.addGlobalData(
         "eleventyComputed.page.gitCreated",
-        eleventyComputed.page.gitCreated
+        eleventyComputed.page.gitCreated(gitCreatedCache)
     );
 
     eleventyConfig.addFilter("fav_icon_from_emoji", favIconFromEmojiFilter);
-    eleventyConfig.addAsyncFilter("last_modified_date", lastModifiedDateFilter);
-    eleventyConfig.addFilter("format_date_to_utc", formatDateFilter);
+    // eleventyConfig.addFilter("format_date_to_utc", formatDateFilter);
     // eleventyConfig.addFilter("format_datetime_to_utc", formatDateTimeFilter);
-    eleventyConfig.addFilter("date", formatDateFilter);
+    eleventyConfig.addFilter("format_date", formatDateFilter);
     eleventyConfig.addAsyncFilter("add_content_hash", addContentHash);
     eleventyConfig.addFilter("file_to_body_class", fileToBodyClassFilter);
     eleventyConfig.addFilter("layout_to_body_class", layoutToBodyClassFilter);

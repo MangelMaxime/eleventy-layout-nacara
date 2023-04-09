@@ -4,7 +4,6 @@ import fs from "fs-extra";
 /**
  * Copy Nacara includes to the user folder so it can be easily accessed
  * without having the user create layouts to reference them
-//  * @param includesDir Absolute or relative path to the includes folder
  */
 export function copyIncludesToUserFolder(args : EleventyBeforeEventArgs) {
     // Note: It would be better to have a way to access the data.eleventy

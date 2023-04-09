@@ -162,6 +162,8 @@ export default function menuFilter(this: any, pages: any[]) {
         (page) => page.filePathStem === this.ctx.page.filePathStem
     );
 
+    // console.log(currentPage);
+
     if (currentPage.data.nacaraMenu) {
         return Nano.renderSSR(
             <Menu
