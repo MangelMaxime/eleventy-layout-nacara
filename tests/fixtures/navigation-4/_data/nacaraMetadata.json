@@ -1,5 +1,5 @@
 {
-    "$schema": "./../../../schemas/metadata-schema.json",
+    "$schema": "./../../../../schemas/metadata-schema.json",
     "url": "https://mangelmaxime.github.io",
     "editUrl": "https://github.com/MangelMaxime/Nacara/edit/master/docsrc",
     "baseUrl": "/Nacara/",
