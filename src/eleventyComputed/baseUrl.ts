@@ -4,7 +4,7 @@ export default async function baseUrl() {
             return "";
         }
 
-        if (data.metadata.nacara == undefined) {
+        if (!data.metadata || !data.metadata.nacara) {
             throw new Error(
                 "eleventy-layout-nacara: Please provide the metadata information by creating a _data/metadata.nacara file."
             );
