@@ -1,0 +1,24 @@
+name: CI
+on:
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, macOS-latest, windows-latest ]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: Install and use custom npm version
+        run: npm i -g npm@9
+      - name: Install and use custom pnpm version
+        run: npm i -g pnpm
+      - name: Install dependencies
+        run: npm install
+      - name: Run the tests
+        run: pnpm run test
