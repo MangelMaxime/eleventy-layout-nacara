@@ -55,24 +55,5 @@
         "sass": "^1.61.0",
         "simple-icons": "^8.9.0",
         "svgdom": "^0.1.13"
-    },
-    "ava": {
-        "extensions": [
-            "ts",
-            "tsx"
-        ],
-        "require": [
-            "ts-node/register"
-        ],
-        "files": [
-            "tests/**/*.ts",
-            "!**/*.d.ts",
-            "!**/_site/**"
-        ],
-        "ignoredByWatcher": [
-            "tests/fixtures/**/_includes/nacara/**",
-            "tests/fixtures/**/assets/nacara/**",
-            "tests/fixtures/temp/**"
-        ]
     }
 }
