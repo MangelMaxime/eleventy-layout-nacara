@@ -1,18 +1,22 @@
 const spawn = require("cross-spawn");
 import path from "path";
 
-async function gitCreatedFromGit(cwd : string, fileName: string) {
+async function gitCreatedFromGit(cwd: string, fileName: string) {
     try {
-        const res = spawn.sync("git", [
-            "--no-pager",
-            "log",
-            "--diff-filter=A",
-            "--follow",
-            "-1",
-            "--format=%at",
-            "--",
-            fileName,
-        ], { cwd: cwd });
+        const res = spawn.sync(
+            "git",
+            [
+                "--no-pager",
+                "log",
+                "--diff-filter=A",
+                "--follow",
+                "-1",
+                "--format=%at",
+                "--",
+                fileName,
+            ],
+            { cwd: cwd }
+        );
 
         const stdout = res.stdout.toString("utf-8");
 

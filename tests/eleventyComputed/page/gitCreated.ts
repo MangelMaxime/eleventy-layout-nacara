@@ -31,7 +31,7 @@ test("returns now if the file has not been committed yet", async (t) => {
     await fs.remove(fileName);
 });
 
-test("returns the last modified date of a file based on the Git history", async (t) => {
+test("returns the created date of a file based on the Git history", async (t) => {
     const gitRoot = await globalData.gitRoot();
     const gitCreatedFunc = await gitCreated(new Map())();
 

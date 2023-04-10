@@ -12,14 +12,11 @@ test("render nothing if footer.nacara is not provided", async (t) => {
     );
 
     const json = await elev.toJSON();
+    const formattedResult = formatHTML(json[0].content);
 
     t.is(
-        `
-
-
-
-`,
-        json[0].content
+        formattedResult,
+        ``
     );
 });
 

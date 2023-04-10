@@ -1,0 +1,3 @@
+# Needs to force the eol to be LF, otherwise the tests will fail on Windows
+# because the hash of the file will be different.
+* text=auto eol=lf
