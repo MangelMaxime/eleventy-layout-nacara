@@ -1,43 +1,28 @@
-import test from "ava";
-import { formatHTML } from "../utils/_formatHTML";
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const ava_1 = __importDefault(require("ava"));
+const _formatHTML_1 = require("../utils/_formatHTML");
 const Eleventy = require("@11ty/eleventy");
-
-test("render nothing if footer.nacara is not provided", async (t) => {
-    const elev = new Eleventy(
-        "./fixtures/footer-0/",
-        "./fixtures/footer-0/_site",
-        {
-            configPath: "./fixtures/footer-0/.eleventy.js",
-        }
-    );
-
+(0, ava_1.default)("render nothing if footer.nacara is not provided", async (t) => {
+    const elev = new Eleventy("./fixtures/footer-0/", "./fixtures/footer-0/_site", {
+        configPath: "./fixtures/footer-0/.eleventy.js",
+    });
     const json = await elev.toJSON();
-
-    t.is(
-        `
+    t.is(`
 
 
-
-`,
-        json[0].content
-    );
+`, json[0].content);
 });
-
-test("is rendered if only the text is provided", async (t) => {
-    const elev = new Eleventy(
-        "./fixtures/footer-1/",
-        "./fixtures/footer-1/_site",
-        {
-            configPath: "./fixtures/footer-1/.eleventy.js",
-        }
-    );
-
+(0, ava_1.default)("is rendered if only the text is provided", async (t) => {
+    const elev = new Eleventy("./fixtures/footer-1/", "./fixtures/footer-1/_site", {
+        configPath: "./fixtures/footer-1/.eleventy.js",
+    });
     const json = await elev.toJSON();
-    const formattedResult = formatHTML(json[0].content);
-
-    t.is(
-        formattedResult,
-        `<footer class="footer">
+    const formattedResult = (0, _formatHTML_1.formatHTML)(json[0].content);
+    t.is(formattedResult, `<footer class="footer">
     <div class="is-size-5">
         <p class="has-text-centered">
             Built with
@@ -50,25 +35,15 @@ test("is rendered if only the text is provided", async (t) => {
         </p>
     </div>
 </footer>
-`
-    );
+`);
 });
-
-test("is rendered if only copyright is provided", async (t) => {
-    const elev = new Eleventy(
-        "./fixtures/footer-2/",
-        "./fixtures/footer-2/_site",
-        {
-            configPath: "./fixtures/footer-2/.eleventy.js",
-        }
-    );
-
+(0, ava_1.default)("is rendered if only copyright is provided", async (t) => {
+    const elev = new Eleventy("./fixtures/footer-2/", "./fixtures/footer-2/_site", {
+        configPath: "./fixtures/footer-2/.eleventy.js",
+    });
     const json = await elev.toJSON();
-    const formattedResult = formatHTML(json[0].content);
-
-    t.is(
-        formattedResult,
-        `<footer class="footer">
+    const formattedResult = (0, _formatHTML_1.formatHTML)(json[0].content);
+    t.is(formattedResult, `<footer class="footer">
     <div class="is-size-5">
         <p class="has-text-centered">
             Copyright © 2023-
@@ -77,34 +52,20 @@ test("is rendered if only copyright is provided", async (t) => {
         </p>
 
         <script type="text/javascript">
-            // Use IIFE to avoid polluting the global scope
-            // This also avoid conflict because of \`const year\` on the components/footer page
-            (function () {
-                const year = new Date().getFullYear();
-                document.getElementById("copyright-end-year").innerHTML = year;
-            })();
+            const year = new Date().getFullYear();
+            document.getElementById("copyright-end-year").innerHTML = year;
         </script>
     </div>
 </footer>
-`
-    );
+`);
 });
-
-test("is rendered if only the sitemapSections is provided", async (t) => {
-    const elev = new Eleventy(
-        "./fixtures/footer-3/",
-        "./fixtures/footer-3/_site",
-        {
-            configPath: "./fixtures/footer-3/.eleventy.js",
-        }
-    );
-
+(0, ava_1.default)("is rendered if only the sitemapSections is provided", async (t) => {
+    const elev = new Eleventy("./fixtures/footer-3/", "./fixtures/footer-3/_site", {
+        configPath: "./fixtures/footer-3/.eleventy.js",
+    });
     const json = await elev.toJSON();
-    const formattedResult = formatHTML(json[0].content);
-
-    t.is(
-        formattedResult,
-        `<footer class="footer">
+    const formattedResult = (0, _formatHTML_1.formatHTML)(json[0].content);
+    t.is(formattedResult, `<footer class="footer">
     <div class="is-size-5">
         <div class="sitemap">
             <div class="sitemap-section">
@@ -184,25 +145,15 @@ test("is rendered if only the sitemapSections is provided", async (t) => {
         </div>
     </div>
 </footer>
-`
-    );
+`);
 });
-
-test("is rendered with all the information provided", async (t) => {
-    const elev = new Eleventy(
-        "./fixtures/footer-4/",
-        "./fixtures/footer-4/_site",
-        {
-            configPath: "./fixtures/footer-4/.eleventy.js",
-        }
-    );
-
+(0, ava_1.default)("is rendered with all the information provided", async (t) => {
+    const elev = new Eleventy("./fixtures/footer-4/", "./fixtures/footer-4/_site", {
+        configPath: "./fixtures/footer-4/.eleventy.js",
+    });
     const json = await elev.toJSON();
-    const formattedResult = formatHTML(json[0].content);
-
-    t.is(
-        formattedResult,
-        `<footer class="footer">
+    const formattedResult = (0, _formatHTML_1.formatHTML)(json[0].content);
+    t.is(formattedResult, `<footer class="footer">
     <div class="is-size-5">
         <div class="sitemap">
             <div class="sitemap-section">
@@ -263,15 +214,10 @@ test("is rendered with all the information provided", async (t) => {
         </p>
 
         <script type="text/javascript">
-            // Use IIFE to avoid polluting the global scope
-            // This also avoid conflict because of \`const year\` on the components/footer page
-            (function () {
-                const year = new Date().getFullYear();
-                document.getElementById("copyright-end-year").innerHTML = year;
-            })();
+            const year = new Date().getFullYear();
+            document.getElementById("copyright-end-year").innerHTML = year;
         </script>
     </div>
 </footer>
-`
-    );
+`);
 });

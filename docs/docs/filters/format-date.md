@@ -3,7 +3,21 @@ title: <code>format_date</code>
 layout: nacara/layouts/docs.njk
 ---
 
-Call [`luxon.toFormat`](https://moment.github.io/luxon/#/formatting?id=toformat) on the given JSDate using the provided format string.
+Execute `dayjs(dateToFormat).format(providedFormat)`
+
+**Arguments**
+
+- `dateToFormat` - Date to format
+    - string
+    - number
+    - Date
+    - dayjs.Dayjs
+    - null
+    - undefined
+
+- `providedFormat` - Format string
+
+    You can find the full list of supported formats [here](https://day.js.org/docs/en/display/format).
 
 **Usage**
 
@@ -12,7 +26,7 @@ Call [`luxon.toFormat`](https://moment.github.io/luxon/#/formatting?id=toformat)
 ```html
 <!-- You can use any JSDate, I am using page.gitCreated for convenience -->
 {% set dateToFormat = page.gitCreated %}
-{{ page.gitCreated | format_date ("LLLL d, yyyy") }}
+{{ dateToFormat | format_date ("MMMM D, YYYY") }}
 ```
 
 {% endraw %}
@@ -21,5 +35,5 @@ generates
 
 ```html
 {% set dateToFormat = page.gitCreated %}
-{{ page.gitCreated | format_date ("LLLL d, yyyy") }}
+{{ dateToFormat | format_date ("MMMM D, YYYY") }}
 ```

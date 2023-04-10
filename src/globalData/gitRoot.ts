@@ -1,7 +1,7 @@
 import { promisify } from "util";
 const execFile = promisify(require("child_process").execFile);
 
-export default async function gitRoot() {
+export default async function gitRoot() : Promise<string> {
     try {
         const { stdout } = await execFile("git", [
             "rev-parse",
@@ -15,8 +15,6 @@ export default async function gitRoot() {
 
         throw new Error("Git root not found");
     } catch (e: any) {
-        // console.error(e.message);
-        // return new Date();
         throw new Error(`Error while trying to get the git root.
 Original error: ${e.message}`);
     }

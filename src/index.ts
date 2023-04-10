@@ -129,7 +129,7 @@ function configFunction(eleventyConfig: any, options?: Options) {
         navigationFilter
     );
 
-    // Register the sass plugin as with provide the styles using SCSS
+    // Register the sass plugin as we provide the styles using SCSS
     eleventyConfig.addPlugin(eleventySass, options?.eleventySass);
 
     eleventyConfig.addDataExtension(
