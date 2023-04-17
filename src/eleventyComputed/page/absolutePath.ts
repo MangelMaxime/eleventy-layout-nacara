@@ -2,7 +2,11 @@ import path from "path";
 
 export default function absolutePath() {
     return (data: any) => {
-        return path.join(data.eleventy.env.root, data.page.inputPath);
+        // Work around Eleventy bug/limitation when run via code and not CLI
+        // See: https://github.com/11ty/eleventy/issues/2793
+        return path.join(process.cwd(), data.page.inputPath);
+        // It would be better to use this, but it doesn’t work
+        // return path.join(data.eleventy.env.root, data.page.inputPath);
     };
 }
 

@@ -65,6 +65,8 @@ function configFunction(eleventyConfig: any, options?: Options) {
     // because invoking git log is expensive
     const lastModifiedDateCache = new Map<string, Date | null>();
 
+    // Work around Eleventy bugs/limitations when run via code and not CLI
+    // See: https://github.com/11ty/eleventy/issues/2793
     eleventyConfig.on("eleventy.before", async (args: any) => {
         if (isFirstBuild) {
             isFirstBuild = false;
