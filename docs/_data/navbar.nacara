@@ -4,37 +4,12 @@
         {
             "section": "docs",
             "label": "Docs",
-            "url": "/docs/introduction/index.html"
+            "url": "/docs/introduction/"
         },
         {
-            "section": "reference",
-            "label": "API",
-            "url": "/Nacara/reference/Nacara.Core/index.html"
-        },
-        {
-            "label": "Changelogs",
-            "items": [
-                {
-                    "section": "changelogs",
-                    "label": "Nacara",
-                    "url": "/Nacara/changelogs/nacara.html"
-                },
-                {
-                    "section": "changelogs",
-                    "label": "Nacara.Core",
-                    "url": "/Nacara/changelogs/nacara-core.html"
-                },
-                {
-                    "section": "changelogs",
-                    "label": "Nacara.Standard.Layout",
-                    "url": "/Nacara/changelogs/nacara-layout-standard.html"
-                },
-                {
-                    "section": "changelogs",
-                    "label": "Nacara.ApiGen",
-                    "url": "/Nacara/changelogs/nacara-apigen.html"
-                }
-            ]
+            "section": "docs",
+            "label": "Changelog",
+            "url": "/changelog/"
         },
         {
             "url": "https://gitter.im/fable-compiler/Fable",

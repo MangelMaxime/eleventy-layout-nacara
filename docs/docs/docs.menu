@@ -13,14 +13,15 @@
             "label": "Getting started",
             "items": [
                 "./getting-started/quick-start.md",
-                "./getting-started/migration-from-nacara.md"
+                "./getting-started/migrate-from-nacara.md"
             ]
         },
         {
             "type": "section",
             "label": "Layouts",
             "items": [
-                "./layouts/base.md"
+                "./layouts/base.md",
+                "./layouts/docs.md"
             ]
         },
         {

@@ -5,7 +5,7 @@ layout: nacara/layouts/docs.njk
 
 The base layout can be accessed using the `nacara/layouts/base.njk`.
 
-This layout provides the basic structure of the page, by default it will render a page with a navbar, the content and a footer if the `footer.nacara` is defined.
+This layout provides the basic structure of the page, by default it will render a page with a navbar, the content and a footer if `footer.nacara` is defined.
 
 **Usage**
 
@@ -38,7 +38,7 @@ If you need to customize the layout, you can create a new layout and extend the 
 
 ## Body classes
 
-The base layout will add some classes to the `<body>`. This is helpful when you want to have page or layout specific style rules.
+The base layout will add some classes to the `<body>` element. This is helpful when you want to have page or layout specific style rules.
 
 The generated classes contains the relative path with the `/` replaced by `_` and the `page--` or `layout--` prefix.
 

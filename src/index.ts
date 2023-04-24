@@ -7,6 +7,7 @@ import toIconFilterBuilder, {
     Options as IconFilterBuilderOptions,
 } from "./filters/toIcon";
 import menuFilter from "./filters/menu";
+import changelogFilter from "./filters/changelog";
 import breadcrumbFilter from "./filters/breadcrumb";
 import navigationFilter from "./filters/navigation";
 // @ts-ignore
@@ -17,6 +18,8 @@ import path from "path";
 import { removeExtension } from "./utils/removeExtension";
 import eleventyComputed from "./eleventyComputed";
 import globalData from "./globalData";
+import markdownItAnchor from "markdown-it-anchor";
+import type MdLib from "markdown-it";
 
 export interface Options {
     iconFilter?: IconFilterBuilderOptions;
@@ -100,9 +103,7 @@ function configFunction(eleventyConfig: any, options?: Options) {
         "eleventyComputed.page.absolutePath",
         eleventyComputed.page.absolutePath
     );
-    eleventyConfig.addGlobalData("gitRoot",
-       globalData.gitRoot
-    );
+    eleventyConfig.addGlobalData("gitRoot", globalData.gitRoot);
     eleventyConfig.addGlobalData(
         "eleventyComputed.page.gitLastModified",
         eleventyComputed.page.gitLastModified(lastModifiedDateCache)
@@ -125,6 +126,7 @@ function configFunction(eleventyConfig: any, options?: Options) {
     );
 
     eleventyConfig.addFilter("nacara_menu", menuFilter);
+    eleventyConfig.addAsyncFilter("nacara_changelog", changelogFilter);
     eleventyConfig.addFilter("nacara_breadcrumb", breadcrumbFilter);
     eleventyConfig.addFilter(
         "nacara_previous_next_pagination",
@@ -182,6 +184,16 @@ function configFunction(eleventyConfig: any, options?: Options) {
             }
         }
     );
+
+    // Add a markdown-it plugin to add anchors to headings
+    // This is used to generate the table of contents
+    eleventyConfig.amendLibrary("md", (mdLib: MdLib) => {
+        mdLib.use(markdownItAnchor, {
+            permalink: markdownItAnchor.permalink.linkInsideHeader({
+                placement: "after",
+            }),
+        });
+    });
 
     eleventyConfig.addPassthroughCopy("assets");
 }

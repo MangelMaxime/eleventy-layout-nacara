@@ -71,8 +71,7 @@
                         "type": "object",
                         "required": [
                             "url",
-                            "label",
-                            "section"
+                            "label"
                         ],
                         "properties": {
                             "section": {

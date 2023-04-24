@@ -2,14 +2,14 @@
 
 // Anchor behavior
 h1, h2, h3, h4, h5, h6  {
-    a span.anchor {
+    a.header-anchor {
         visibility: hidden;
         margin-left: 0.5rem;
     }
 
     &:hover {
 
-        a span.anchor {
+        a.header-anchor {
             visibility: visible;
         }
     }

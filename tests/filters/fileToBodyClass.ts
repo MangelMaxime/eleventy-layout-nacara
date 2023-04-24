@@ -1,7 +1,7 @@
 import test from "ava";
-import layoutToBodyClass from "../../src/filters/layoutToBodyClass";
+import fileToBodyClass from "../../src/filters/fileToBodyClass";
 
-test("returns 'layout--' followed by the path to the layout snakified", async (t) => {
-    const className = layoutToBodyClass("nacara/layouts/docs.njk");
-    t.is(className, "layout--nacara_layouts_docs");
+test("returns 'page--' followed by the path to the page snakified", async (t) => {
+    const className = fileToBodyClass("nacara/pages/index.njk");
+    t.is(className, "page--nacara_pages_index");
 });

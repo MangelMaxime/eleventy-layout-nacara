@@ -8,8 +8,9 @@
     "watch": [
         "dist/**/*",
         "files/**/*",
-        "docs/**/*"
+        "docs/**/*",
+        "scss/**/*"
     ],
-    "ext": "js,mjs,json,njk",
+    "ext": "js,mjs,json,njk,scss",
     "exec": "cd docs && npx @11ty/eleventy --serve"
 }

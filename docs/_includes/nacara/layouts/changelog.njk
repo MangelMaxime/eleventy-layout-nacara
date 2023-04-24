@@ -1,5 +1,5 @@
-{% extends "base.njk" %}
+{% extends "nacara/layouts/base.njk" %}
 
 {% block content %}
-   Coucou from changelog.njk
+   {{ data | nacara_changelog | safe }}
 {% endblock content %}

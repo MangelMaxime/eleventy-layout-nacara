@@ -17,8 +17,8 @@ export default function layoutToBodyClassFilter (layout : string) {
     let bodyClass = layoutWithoutExt.replaceAll(/\\/g, '/').replaceAll(/\//g, '_');
 
     // Remove leading "layouts"
-    if (bodyClass.startsWith('layouts')) {
-        bodyClass = bodyClass.substring(7);
+    if (bodyClass.startsWith('layouts_')) {
+        bodyClass = bodyClass.substring(8);
     }
 
     // Remove leading underscore
