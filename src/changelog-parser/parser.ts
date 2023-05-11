@@ -3,7 +3,7 @@ import type * as Lex from "./lexer";
 import type * as Category from "./categories";
 import { categoryFromText } from "./categories";
 
-type Version = {
+export type Version = {
     title: string;
     version: string | undefined;
     date: string | undefined;
@@ -11,8 +11,8 @@ type Version = {
     isYanked: boolean;
 };
 
-type Changelog = {
-    title: string;
+export type Changelog = {
+    title: string | undefined;
     description: string | undefined;
     versions: Version[];
 };
@@ -56,7 +56,7 @@ function eatRawText(tokens: Lex.Tokens[], captured : string []): {
     if (head === undefined) {
         return {
             unparsedTokens: tail,
-            rawText: captured.join("\n"),
+            rawText: captured.join("\n").trim(),
         };
     }
 
@@ -67,7 +67,7 @@ function eatRawText(tokens: Lex.Tokens[], captured : string []): {
             // Reach end of the category body
             return {
                 unparsedTokens: tokens,
-                rawText: captured.join("\n"),
+                rawText: captured.join("\n").trim(),
             };
     }
 }
@@ -75,18 +75,16 @@ function eatRawText(tokens: Lex.Tokens[], captured : string []): {
 function fromTokens(changelog: Changelog, tokens: Lex.Tokens[]): Changelog {
     const [head, ...tail] = tokens;
 
-    console.log(head);
-
     if (head === undefined) {
         return changelog;
     }
 
     switch (head.kind) {
         case "title":
-            if (changelog.title === "") {
+            if (changelog.title === undefined) {
                 changelog.title = head.content;
             } else {
-                throw "Title already set, please check that your changelog only has one title: `# Title`";
+                throw new Error("Title already set, please check that your changelog only has one title: `# Title`");
             }
 
             return fromTokens(changelog, tail);
@@ -111,13 +109,18 @@ function fromTokens(changelog: Changelog, tokens: Lex.Tokens[]): Changelog {
                 changelog.versions[changelog.versions.length - 1];
 
             if (currentVersion === undefined) {
-                throw `Category should always be inside a version
+                throw new Error(`Error while parsing the following item:
+---
+${head.text}
+---
+
+Category should always be inside a version
 
 Example:
 
 ## 1.0.0
 
-### Added`;
+### Added`);
             }
 
             // Create current category content if it doesn't exist
@@ -133,23 +136,43 @@ Example:
             // Add new content to category body
             categoryBody = [...categoryBody, ...subParserResult.body];
 
-            return fromTokens(changelog, tail);
+            currentVersion.categories.set(categoryType, categoryBody);
+
+            return fromTokens(changelog, subParserResult.unparsedTokens);
         case "list-item":
-            throw `List item should always be inside a category
+            throw new Error(`Error while parsing the following item:
+---
+${head.text}
+---
+
+List item should always be inside a category
 
 Example:
 
+## 1.0.0
+
 ### Added
 
-- Added a new feature`;
+- Added a new feature`);
 
         case "raw-text":
-            // Capture all the lines of the text block
-            const rawTextResult = eatRawText(tail, [head.content]);
+            // If we didn't reach the version yet, we consider the raw text
+            // as part of the description
+            if (changelog.versions.length === 0) {
+                // Capture all the lines of the text block
+                const rawTextResult = eatRawText(tail, [head.content]);
 
-            changelog.description = rawTextResult.rawText;
+                changelog.description = rawTextResult.rawText;
 
-            return fromTokens(changelog, rawTextResult.unparsedTokens);
+                return fromTokens(changelog, rawTextResult.unparsedTokens);
+            } else {
+                // Otherwise, if we have some raw text, in the main body of the
+                // tokenization, we ignore it
+                // Note:
+                // 1. keepachangelog doesn't support description at the description level
+                // 2. raw-text for list-item is handled in the list-item case directly
+                return fromTokens(changelog, tail);
+            }
 
         default:
             // Force exhaustive check from TypeScript
@@ -162,11 +185,9 @@ export function parse(text: string) {
     const lines = text.split(/\r\n|\r|\n/);
     const tokens: Lex.Tokens[] = lex(lines);
 
-    // console.log(tokens);
-
     return fromTokens(
         {
-            title: "",
+            title: undefined,
             description: undefined,
             versions: [],
         },
