@@ -37,7 +37,18 @@ function parseCategoryBody(
                 { kind: "list-item", text: head.text },
             ]);
         case "raw-text":
-            return parseCategoryBody(tail, body);
+            // If we have an empty line skip it
+            if (head.text.trim() === "") {
+                return parseCategoryBody(tail, body);
+            // Otherwise we try to eat all the raw text block
+            } else {
+                const rawTextResult = eatRawText(tail, [head.text]);
+
+                return parseCategoryBody(rawTextResult.unparsedTokens, [
+                    ...body,
+                    { kind: "text", text: rawTextResult.rawText },
+                ]);
+            }
         default:
             // Reach end of the category body
             return {
@@ -62,7 +73,7 @@ function eatRawText(tokens: Lex.Tokens[], captured : string []): {
 
     switch (head.kind) {
         case "raw-text":
-            return eatRawText(tail, [...captured, head.content]);
+            return eatRawText(tail, [...captured, head.text]);
         default:
             // Reach end of the category body
             return {
@@ -82,7 +93,7 @@ function fromTokens(changelog: Changelog, tokens: Lex.Tokens[]): Changelog {
     switch (head.kind) {
         case "title":
             if (changelog.title === undefined) {
-                changelog.title = head.content;
+                changelog.title = head.text;
             } else {
                 throw new Error("Title already set, please check that your changelog only has one title: `# Title`");
             }
@@ -160,7 +171,7 @@ Example:
             // as part of the description
             if (changelog.versions.length === 0) {
                 // Capture all the lines of the text block
-                const rawTextResult = eatRawText(tail, [head.content]);
+                const rawTextResult = eatRawText(tail, [head.text]);
 
                 changelog.description = rawTextResult.rawText;
 

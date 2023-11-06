@@ -408,9 +408,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * New feature
 
 ## 1.6.0 - 2022-03-25
+
+### Added
+
+* New feature with additional text below
+
+    This is the additional line n°1
+    This is the additional line n°2
+
+    This is the additional line n°3
 `;
 
     const changelog = parse(text);
+
+    console.log(changelog.versions[1].categories);
 
     t.deepEqual<Changelog, Changelog>(changelog, {
         title: "Changelog",
@@ -439,7 +450,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
             {
                 title: "1.6.0 - 2022-03-25",
                 version: "1.6.0",
-                categories: new Map(),
+                categories: new Map([
+                    [
+                        { kind: "added" },
+                        [
+                            {
+                                kind: "list-item",
+                                text: "New feature with additional text below",
+                            },
+                            {
+                                kind: "text",
+                                text: `This is the additional line n°1
+    This is the additional line n°2
+
+    This is the additional line n°3`,
+                            }
+                        ],
+                    ],
+                ]),
                 date: "2022-03-25",
                 isYanked: false,
             },

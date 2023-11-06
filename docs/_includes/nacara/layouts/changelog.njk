@@ -1,5 +1,16 @@
 {% extends "nacara/layouts/base.njk" %}
 
 {% block content %}
-   {{ data | nacara_changelog | safe }}
+    <div class="page-content nacara-content">
+        <div class="container content">
+            <header class="header">
+                <h2 class="title h2">
+                    {{ title }}
+                </h2>
+            </header>
+            <div class="content changelog">
+                {{ data | nacara_changelog | safe }}
+            </div>
+        </div>
+    </div>
 {% endblock content %}

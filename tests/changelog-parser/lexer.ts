@@ -11,7 +11,7 @@ test("captures title ", (t) => {
     t.deepEqual(tokens, [
         {
             kind: "title",
-            content: "Title",
+            text: "Title",
         },
     ]);
 });
@@ -27,11 +27,11 @@ test("captures raw text", (t) => {
     t.deepEqual(tokens, [
         {
             kind: "raw-text",
-            content: "Line 1",
+            text: "Line 1",
         },
         {
             kind: "raw-text",
-            content: "Line 2",
+            text: "Line 2",
         },
     ]);
 });
@@ -177,27 +177,27 @@ test("works for a full changelog", (t) => {
     t.deepEqual(tokens, [
         {
             kind: "title",
-            content: "Changelog",
+            text: "Changelog",
         },
         {
             kind: "raw-text",
-            content: "All notable changes to this project will be documented in this file.",
+            text: "All notable changes to this project will be documented in this file.",
         },
         {
             kind: "raw-text",
-            content: "",
+            text: "",
         },
         {
             kind: "raw-text",
-            content: "The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),",
+            text: "The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),",
         },
         {
             kind: "raw-text",
-            content: "and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).",
+            text: "and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).",
         },
         {
             kind: "raw-text",
-            content: "",
+            text: "",
         },
         {
             kind: "version",
@@ -223,7 +223,7 @@ test("works for a full changelog", (t) => {
         },
         {
             kind: "raw-text",
-            content: "",
+            text: "",
         },
         {
             kind: "category",
@@ -235,11 +235,11 @@ test("works for a full changelog", (t) => {
         },
         {
             kind: "raw-text",
-            content: "",
+            text: "",
         },
         {
             kind: "raw-text",
-            content: "   This a block of text under the previous list item",
+            text: "   This a block of text under the previous list item",
         },
     ]);
 })

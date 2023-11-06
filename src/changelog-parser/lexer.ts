@@ -1,11 +1,11 @@
 export type Title = {
     kind: "title";
-    content: string;
+    text: string;
 };
 
 export type RawText = {
     kind: "raw-text";
-    content: string;
+    text: string;
 };
 
 export type Version = {
@@ -41,7 +41,7 @@ export function lex(lines: string[]): Tokens[] {
         if (line.match(/^# ?[^#]/)) {
             return {
                 kind: "title",
-                content: line.substring(1).trim(),
+                text: line.substring(1).trim(),
             };
         }
 
@@ -86,7 +86,7 @@ export function lex(lines: string[]): Tokens[] {
         // If not parser captures the line, we capture it as raw text
         return {
             kind: "raw-text",
-            content: line,
+            text: line,
         };
     });
 

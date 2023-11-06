@@ -125,8 +125,15 @@ function configFunction(eleventyConfig: any, options?: Options) {
         toIconFilterBuilder(options?.iconFilter)
     );
 
+    eleventyConfig.addPairedShortcode(
+        "user",
+        function (content: string, firstName: string, lastName: string) {
+            return content;
+        }
+    );
+
     eleventyConfig.addFilter("nacara_menu", menuFilter);
-    eleventyConfig.addAsyncFilter("nacara_changelog", changelogFilter);
+    eleventyConfig.addAsyncFilter("nacara_changelog", changelogFilter(eleventyConfig));
     eleventyConfig.addFilter("nacara_breadcrumb", breadcrumbFilter);
     eleventyConfig.addFilter(
         "nacara_previous_next_pagination",
