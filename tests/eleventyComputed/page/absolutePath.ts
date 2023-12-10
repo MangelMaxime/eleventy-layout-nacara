@@ -11,7 +11,7 @@ test("returns the absolutePath of the file", async (t) => {
     const json = await elev.toJSON();
     const formattedResult = formatHTML(json[0].content);
 
-    const expected = path.normalize(path.resolve("./fixtures/absolute-path-0/docs/getting-started/page1.md"));
+    const expected = path.resolve("./fixtures/absolute-path-0/docs/getting-started/page1.md");
 
     t.is(
         formattedResult.trim(), // Remove the trailing newline
