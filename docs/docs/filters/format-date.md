@@ -33,7 +33,8 @@ Execute `dayjs(dateToFormat).format(providedFormat)`
 
 generates
 
-```html
 {% set dateToFormat = page.gitCreated %}
+
+```html
 {{ dateToFormat | format_date ("MMMM D, YYYY") }}
 ```

@@ -18,7 +18,8 @@ Transform the provided path by replacing `/` with `_` and prefixing it with `pag
 
 generates
 
-```html
 {% set bodyClass = "/docs/getting-stated.md" | file_to_body_class %}
+
+```html
 <body class="{{ bodyClass }}">
 ```

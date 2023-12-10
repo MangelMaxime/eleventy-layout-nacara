@@ -23,8 +23,9 @@ Transform the provided path by:
 
 generates
 
-```html
 {% set layout = "nacara/layouts/docs.njk" %}
 {% set layoutBodyClass = layout | layout_to_body_class %}
+
+```html
 <body class="{{ layoutBodyClass }}">
 ```

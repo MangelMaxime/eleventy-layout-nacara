@@ -18,7 +18,8 @@ This filter adds `?hash=` to the end of the URL, where `hash` is the hash of the
 
 generates
 
-```html
 {% set menuScript = "/assets/nacara/js/menu.js" | add_content_hash %}
+
+```html
 <script src="{{ menuScript }}" defer="defer" type="module"></script>
 ```
