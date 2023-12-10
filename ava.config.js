@@ -17,11 +17,13 @@ module.exports = {
         "!**/*.d.ts",
         "!**/_site/**"
     ],
-    ignoredByWatcher: [
-        "tests/fixtures/**/_includes/nacara/**",
-        "tests/fixtures/**/assets/nacara/**",
-        "tests/fixtures/temp/**"
-    ],
+    watchMode: {
+        ignoreChanges: [
+            "tests/fixtures/**/_includes/nacara/**",
+            "tests/fixtures/**/assets/nacara/**",
+            "tests/fixtures/temp/**"
+        ]
+    },
     match: [
         // If you want to focus on a specific test,
         // you can specify some matching rules below

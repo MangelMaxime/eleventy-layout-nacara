@@ -125,6 +125,7 @@ test("is rendered if only the sitemapSections is provided", async (t) => {
                         >
                             <span class="icon">
                                 <svg
+                                    class="lucide lucide-users"
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="24"
                                     height="24"
@@ -223,6 +224,7 @@ test("is rendered with all the information provided", async (t) => {
                         >
                             <span class="icon">
                                 <svg
+                                    class="lucide lucide-users"
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="24"
                                     height="24"
