@@ -65,8 +65,6 @@ Don't forget to adapt the differents properties to your needs.
 
 You are now ready to create your first page
 
-```md
-
 </li>
 
 </ul>
