@@ -1,8 +1,8 @@
-import test from "ava";
+import { expect, test } from "@jest/globals";
 import { formatHTML } from "../utils/_formatHTML";
 const Eleventy = require("@11ty/eleventy");
 
-test("returns nothing if there is not nacaraMenu provided", async (t) => {
+test("returns nothing if there is not nacaraMenu provided", async () => {
     const elev = new Eleventy(
         "./fixtures/navigation-0/",
         "./fixtures/navigation-0/_site",
@@ -14,13 +14,10 @@ test("returns nothing if there is not nacaraMenu provided", async (t) => {
     const json = await elev.toJSON();
     const formattedResult = formatHTML(json[0].content);
 
-    t.is(
-        formattedResult,
-        ``
-    );
+    expect(formattedResult).toBe(``);
 });
 
-test("returns the Previous button marked as invisible and the second button normal if this is the first page", async (t) => {
+test("returns the Previous button marked as invisible and the second button normal if this is the first page", async () => {
     const elev = new Eleventy(
         "./fixtures/navigation-1/",
         "./fixtures/navigation-1/_site",
@@ -35,8 +32,7 @@ test("returns the Previous button marked as invisible and the second button norm
     );
     const formattedResult = formatHTML(page1Json.content);
 
-    t.is(
-        formattedResult,
+    expect(formattedResult).toBe(
         `<div class="section bd-docs-pagination bd-pagination-links">
     <a class="button navigate-to-previous is-invisible"></a>
     <a
@@ -54,7 +50,7 @@ test("returns the Previous button marked as invisible and the second button norm
     );
 });
 
-test("returns the Next button marked as invisible and the first button normal if this is the last page", async (t) => {
+test("returns the Next button marked as invisible and the first button normal if this is the last page", async () => {
     const elev = new Eleventy(
         "./fixtures/navigation-2/",
         "./fixtures/navigation-2/_site",
@@ -69,8 +65,7 @@ test("returns the Next button marked as invisible and the first button normal if
     );
     const formattedResult = formatHTML(page2Json.content);
 
-    t.is(
-        formattedResult,
+    expect(formattedResult).toBe(
         `<div class="section bd-docs-pagination bd-pagination-links">
     <a
         class="button bd-fat-button is-primary is-light bd-pagination-prev"
@@ -88,7 +83,7 @@ test("returns the Next button marked as invisible and the first button normal if
     );
 });
 
-test("the Next button include the section title page is inside a section", async (t) => {
+test("the Next button include the section title page is inside a section", async () => {
     const elev = new Eleventy(
         "./fixtures/navigation-3/",
         "./fixtures/navigation-3/_site",
@@ -103,8 +98,7 @@ test("the Next button include the section title page is inside a section", async
     );
     const formattedResult = formatHTML(page2Json.content);
 
-    t.is(
-        formattedResult,
+    expect(formattedResult).toBe(
         `<div class="section bd-docs-pagination bd-pagination-links">
     <a
         class="button bd-fat-button is-primary is-light bd-pagination-prev"
@@ -122,7 +116,7 @@ test("the Next button include the section title page is inside a section", async
     );
 });
 
-test("the Previous button include the section title page is inside a section", async (t) => {
+test("the Previous button include the section title page is inside a section", async () => {
     const elev = new Eleventy(
         "./fixtures/navigation-4/",
         "./fixtures/navigation-4/_site",
@@ -137,8 +131,7 @@ test("the Previous button include the section title page is inside a section", a
     );
     const formattedResult = formatHTML(page2Json.content);
 
-    t.is(
-        formattedResult,
+    expect(formattedResult).toBe(
         `<div class="section bd-docs-pagination bd-pagination-links">
     <a class="button navigate-to-previous is-invisible"></a>
     <a
@@ -156,7 +149,7 @@ test("the Previous button include the section title page is inside a section", a
     );
 });
 
-test("both buttons are present if the page is between 2 valid element in the menu", async (t) => {
+test("both buttons are present if the page is between 2 valid element in the menu", async () => {
     const elev = new Eleventy(
         "./fixtures/navigation-5/",
         "./fixtures/navigation-5/_site",
@@ -171,8 +164,7 @@ test("both buttons are present if the page is between 2 valid element in the men
     );
     const formattedResult = formatHTML(page2Json.content);
 
-    t.is(
-        formattedResult,
+    expect(formattedResult).toBe(
         `<div class="section bd-docs-pagination bd-pagination-links">
     <a
         class="button bd-fat-button is-primary is-light bd-pagination-prev"
@@ -199,7 +191,7 @@ test("both buttons are present if the page is between 2 valid element in the men
     );
 });
 
-test("the Next button is empty if the next menu element is a link", async (t) => {
+test("the Next button is empty if the next menu element is a link", async () => {
     const elev = new Eleventy(
         "./fixtures/navigation-6/",
         "./fixtures/navigation-6/_site",
@@ -215,8 +207,7 @@ test("the Next button is empty if the next menu element is a link", async (t) =>
 
     const formattedResult = formatHTML(page2Json.content);
 
-    t.is(
-        formattedResult,
+    expect(formattedResult).toBe(
         `<div class="section bd-docs-pagination bd-pagination-links">
     <a
         class="button bd-fat-button is-primary is-light bd-pagination-prev"
@@ -234,7 +225,7 @@ test("the Next button is empty if the next menu element is a link", async (t) =>
     );
 });
 
-test("the Previous button is empty if the previous menu element is a link", async (t) => {
+test("the Previous button is empty if the previous menu element is a link", async () => {
     const elev = new Eleventy(
         "./fixtures/navigation-7/",
         "./fixtures/navigation-7/_site",
@@ -249,8 +240,7 @@ test("the Previous button is empty if the previous menu element is a link", asyn
     );
     const formattedResult = formatHTML(page2Json.content);
 
-    t.is(
-        formattedResult,
+    expect(formattedResult).toBe(
         `<div class="section bd-docs-pagination bd-pagination-links">
     <a class="button navigate-to-previous is-invisible"></a>
     <a

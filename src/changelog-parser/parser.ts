@@ -7,7 +7,7 @@ export type Version = {
     title: string;
     version: string | undefined;
     date: string | undefined;
-    categories: Map<Category.Category, Category.Body[]>;
+    categories: Map<Category.Category, string>;
     isYanked: boolean;
 };
 
@@ -19,8 +19,8 @@ export type Changelog = {
 
 function parseCategoryBody(
     tokens: Lex.Tokens[],
-    body: Category.Body[]
-): { unparsedTokens: Lex.Tokens[]; body: Category.Body[] } {
+    body: string
+): { unparsedTokens: Lex.Tokens[]; body: string } {
     const [head, ...tail] = tokens;
 
     if (head === undefined) {
@@ -31,24 +31,13 @@ function parseCategoryBody(
     }
 
     switch (head.kind) {
-        case "list-item":
-            return parseCategoryBody(tail, [
-                ...body,
-                { kind: "list-item", text: head.text },
-            ]);
-        case "raw-text":
-            // If we have an empty line skip it
-            if (head.text.trim() === "") {
-                return parseCategoryBody(tail, body);
-            // Otherwise we try to eat all the raw text block
-            } else {
-                const rawTextResult = eatRawText(tail, [head.text]);
+        case "markdown-text":
+            const rawTextResult = eatRawText(tail, [head.text]);
 
-                return parseCategoryBody(rawTextResult.unparsedTokens, [
-                    ...body,
-                    { kind: "text", text: rawTextResult.rawText },
-                ]);
-            }
+            return parseCategoryBody(
+                rawTextResult.unparsedTokens,
+                body + "\n" + rawTextResult.rawText
+            );
         default:
             // Reach end of the category body
             return {
@@ -58,7 +47,10 @@ function parseCategoryBody(
     }
 }
 
-function eatRawText(tokens: Lex.Tokens[], captured : string []): {
+function eatRawText(
+    tokens: Lex.Tokens[],
+    captured: string[]
+): {
     unparsedTokens: Lex.Tokens[];
     rawText: string;
 } {
@@ -72,7 +64,7 @@ function eatRawText(tokens: Lex.Tokens[], captured : string []): {
     }
 
     switch (head.kind) {
-        case "raw-text":
+        case "markdown-text":
             return eatRawText(tail, [...captured, head.text]);
         default:
             // Reach end of the category body
@@ -95,7 +87,9 @@ function fromTokens(changelog: Changelog, tokens: Lex.Tokens[]): Changelog {
             if (changelog.title === undefined) {
                 changelog.title = head.text;
             } else {
-                throw new Error("Title already set, please check that your changelog only has one title: `# Title`");
+                throw new Error(
+                    "Title already set, please check that your changelog only has one title: `# Title`"
+                );
             }
 
             return fromTokens(changelog, tail);
@@ -114,7 +108,7 @@ function fromTokens(changelog: Changelog, tokens: Lex.Tokens[]): Changelog {
 
         case "category":
             const categoryType = categoryFromText(head.text);
-            const subParserResult = parseCategoryBody(tail, []);
+            const subParserResult = parseCategoryBody(tail, "");
 
             const currentVersion =
                 changelog.versions[changelog.versions.length - 1];
@@ -135,38 +129,23 @@ Example:
             }
 
             // Create current category content if it doesn't exist
-            if (!(currentVersion.categories.has(categoryType))) {
-                currentVersion.categories.set(categoryType, []);
+            if (!currentVersion.categories.has(categoryType)) {
+                currentVersion.categories.set(categoryType, "");
             }
 
             // Get current category body state or create a new one
             // @ts-ignore - We made sure that the category exists
             let categoryBody: Category.Body[] =
-                currentVersion.categories.get(categoryType)
+                currentVersion.categories.get(categoryType);
 
             // Add new content to category body
-            categoryBody = [...categoryBody, ...subParserResult.body];
+            // categoryBody = [...categoryBody, ...subParserResult.body];
 
-            currentVersion.categories.set(categoryType, categoryBody);
+            currentVersion.categories.set(categoryType, subParserResult.body);
 
             return fromTokens(changelog, subParserResult.unparsedTokens);
-        case "list-item":
-            throw new Error(`Error while parsing the following item:
----
-${head.text}
----
 
-List item should always be inside a category
-
-Example:
-
-## 1.0.0
-
-### Added
-
-- Added a new feature`);
-
-        case "raw-text":
+        case "markdown-text":
             // If we didn't reach the version yet, we consider the raw text
             // as part of the description
             if (changelog.versions.length === 0) {
@@ -192,7 +171,7 @@ Example:
     }
 }
 
-export function parse(text: string) {
+export function parse(text: string): Changelog {
     const lines = text.split(/\r\n|\r|\n/);
     const tokens: Lex.Tokens[] = lex(lines);
 

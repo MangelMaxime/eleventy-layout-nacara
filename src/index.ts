@@ -20,6 +20,7 @@ import eleventyComputed from "./eleventyComputed";
 import globalData from "./globalData";
 import markdownItAnchor from "markdown-it-anchor";
 import type MdLib from "markdown-it";
+const { EleventyRenderPlugin } = require("@11ty/eleventy");
 
 export interface Options {
     iconFilter?: IconFilterBuilderOptions;
@@ -142,6 +143,7 @@ function configFunction(eleventyConfig: any, options?: Options) {
 
     // Register the sass plugin as we provide the styles using SCSS
     eleventyConfig.addPlugin(eleventySass, options?.eleventySass);
+    eleventyConfig.addPlugin(EleventyRenderPlugin);
 
     eleventyConfig.addDataExtension(
         "menu",

@@ -1,8 +1,8 @@
-import test from "ava";
+import { expect, test } from "@jest/globals";
 import { formatHTML } from "../utils/_formatHTML";
 const Eleventy = require("@11ty/eleventy");
 
-test("minimal navbar is generated if no navbar.nacara data is provided", async (t) => {
+test("minimal navbar is generated if no navbar.nacara data is provided", async () => {
     const elev = new Eleventy(
         "./fixtures/navbar-0/",
         "./fixtures/navbar-0/_site",
@@ -14,8 +14,7 @@ test("minimal navbar is generated if no navbar.nacara data is provided", async (
     const json = await elev.toJSON();
     const formattedResult = formatHTML(json[0].content);
 
-    t.is(
-        formattedResult,
+    expect(formattedResult).toBe(
         `<nav
     class="navbar is-fixed-top is-spaced"
     role="navigation"
@@ -55,7 +54,7 @@ test("minimal navbar is generated if no navbar.nacara data is provided", async (
     );
 });
 
-test("supports simple link elements in the start section", async (t) => {
+test("supports simple link elements in the start section", async () => {
     const elev = new Eleventy(
         "./fixtures/navbar-1/",
         "./fixtures/navbar-1/_site",
@@ -67,8 +66,7 @@ test("supports simple link elements in the start section", async (t) => {
     const json = await elev.toJSON();
     const formattedResult = formatHTML(json[0].content);
 
-    t.is(
-        formattedResult,
+    expect(formattedResult).toBe(
         `<nav
     class="navbar is-fixed-top is-spaced"
     role="navigation"
@@ -127,7 +125,7 @@ test("supports simple link elements in the start section", async (t) => {
     );
 });
 
-test("pinned simple link elements are always displayed on mobile", async (t) => {
+test("pinned simple link elements are always displayed on mobile", async () => {
     const elev = new Eleventy(
         "./fixtures/navbar-2/",
         "./fixtures/navbar-2/_site",
@@ -139,8 +137,7 @@ test("pinned simple link elements are always displayed on mobile", async (t) => 
     const json = await elev.toJSON();
     const formattedResult = formatHTML(json[0].content);
 
-    t.is(
-        formattedResult,
+    expect(formattedResult).toBe(
         `<nav
     class="navbar is-fixed-top is-spaced"
     role="navigation"
@@ -182,7 +179,7 @@ test("pinned simple link elements are always displayed on mobile", async (t) => 
     );
 });
 
-test("navbar endItems are rendered using their icons on desktop only and rendered using their label in the mobile menu", async (t) => {
+test("navbar endItems are rendered using their icons on desktop only and rendered using their label in the mobile menu", async () => {
     const elev = new Eleventy(
         "./fixtures/navbar-3/",
         "./fixtures/navbar-3/_site",
@@ -194,8 +191,7 @@ test("navbar endItems are rendered using their icons on desktop only and rendere
     const json = await elev.toJSON();
     const formattedResult = formatHTML(json[0].content);
 
-    t.is(
-        formattedResult,
+    expect(formattedResult).toBe(
         `<nav
     class="navbar is-fixed-top is-spaced"
     role="navigation"

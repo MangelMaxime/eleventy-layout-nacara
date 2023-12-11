@@ -1,9 +1,9 @@
-import test from "ava";
+import { expect, test } from "@jest/globals";
 import gitLastModified from "../../../src/eleventyComputed/page/gitLastModified";
 import globalData from "../../../src/globalData";
 import fs from "fs-extra";
 
-test("returns null if the file has not been committed yet", async (t) => {
+test("returns null if the file has not been committed yet", async () => {
     const gitRoot = await globalData.gitRoot();
     const gitCreatedFunc = await gitLastModified(new Map())();
 
@@ -24,13 +24,13 @@ test("returns null if the file has not been committed yet", async (t) => {
         },
     });
 
-    t.is(gitLastModifiedDate, null);
+    expect(gitLastModifiedDate).toBe(null);
 
     // Remove temporary file
     await fs.remove(fileName);
 });
 
-test("returns null if the file was only commited once", async (t) => {
+test("returns null if the file was only commited once", async () => {
     const gitRoot = await globalData.gitRoot();
     const gitLastModifiedFunc = await gitLastModified(new Map())();
 
@@ -41,10 +41,10 @@ test("returns null if the file was only commited once", async (t) => {
         },
     });
 
-    t.is(gitLastModifiedDate, null);
+    expect(gitLastModifiedDate).toBe(null);
 });
 
-test("returns a Date if the file was committed twice", async (t) => {
+test("returns a Date if the file was committed twice", async () => {
     const gitRoot = await globalData.gitRoot();
     const gitLastModifiedFunc = await gitLastModified(new Map())();
 
@@ -55,11 +55,11 @@ test("returns a Date if the file was committed twice", async (t) => {
         },
     });
 
-    t.is(gitLastModifiedDate instanceof Date, true);
-    t.is(gitLastModifiedDate?.toUTCString(), "Mon, 10 Apr 2023 14:19:47 GMT");
+    expect(gitLastModifiedDate).toBeInstanceOf(Date);
+    expect(gitLastModifiedDate?.toUTCString()).toBe("Mon, 10 Apr 2023 14:19:47 GMT");
 });
 
-test("returns newest Date in the file history if the file was committed more than twice", async (t) => {
+test("returns newest Date in the file history if the file was committed more than twice", async () => {
     const gitRoot = await globalData.gitRoot();
     const gitLastModifiedFunc = await gitLastModified(new Map())();
 
@@ -70,6 +70,6 @@ test("returns newest Date in the file history if the file was committed more tha
         },
     });
 
-    t.is(gitLastModifiedDate instanceof Date, true);
-    t.is(gitLastModifiedDate?.toUTCString(), "Mon, 10 Apr 2023 14:20:29 GMT");
+    expect(gitLastModifiedDate).toBeInstanceOf(Date);
+    expect(gitLastModifiedDate?.toUTCString()).toBe("Mon, 10 Apr 2023 14:20:29 GMT");
 });

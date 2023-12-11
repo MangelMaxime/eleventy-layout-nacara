@@ -1,8 +1,8 @@
-import test from "ava";
+import { expect, test } from "@jest/globals";
 import { formatHTML } from "../utils/_formatHTML";
 const Eleventy = require("@11ty/eleventy");
 
-test("render nothing if footer.nacara is not provided", async (t) => {
+test("render nothing if footer.nacara is not provided", async () => {
     const elev = new Eleventy(
         "./fixtures/footer-0/",
         "./fixtures/footer-0/_site",
@@ -14,13 +14,10 @@ test("render nothing if footer.nacara is not provided", async (t) => {
     const json = await elev.toJSON();
     const formattedResult = formatHTML(json[0].content);
 
-    t.is(
-        formattedResult,
-        ``
-    );
+    expect(formattedResult).toBe(``);
 });
 
-test("is rendered if only the text is provided", async (t) => {
+test("is rendered if only the text is provided", async () => {
     const elev = new Eleventy(
         "./fixtures/footer-1/",
         "./fixtures/footer-1/_site",
@@ -32,8 +29,7 @@ test("is rendered if only the text is provided", async (t) => {
     const json = await elev.toJSON();
     const formattedResult = formatHTML(json[0].content);
 
-    t.is(
-        formattedResult,
+    expect(formattedResult).toBe(
         `<footer class="footer">
     <div class="is-size-5">
         <p class="has-text-centered">
@@ -51,7 +47,7 @@ test("is rendered if only the text is provided", async (t) => {
     );
 });
 
-test("is rendered if only copyright is provided", async (t) => {
+test("is rendered if only copyright is provided", async () => {
     const elev = new Eleventy(
         "./fixtures/footer-2/",
         "./fixtures/footer-2/_site",
@@ -63,8 +59,7 @@ test("is rendered if only copyright is provided", async (t) => {
     const json = await elev.toJSON();
     const formattedResult = formatHTML(json[0].content);
 
-    t.is(
-        formattedResult,
+    expect(formattedResult).toBe(
         `<footer class="footer">
     <div class="is-size-5">
         <p class="has-text-centered">
@@ -87,7 +82,7 @@ test("is rendered if only copyright is provided", async (t) => {
     );
 });
 
-test("is rendered if only the sitemapSections is provided", async (t) => {
+test("is rendered if only the sitemapSections is provided", async () => {
     const elev = new Eleventy(
         "./fixtures/footer-3/",
         "./fixtures/footer-3/_site",
@@ -99,8 +94,7 @@ test("is rendered if only the sitemapSections is provided", async (t) => {
     const json = await elev.toJSON();
     const formattedResult = formatHTML(json[0].content);
 
-    t.is(
-        formattedResult,
+    expect(formattedResult).toBe(
         `<footer class="footer">
     <div class="is-size-5">
         <div class="sitemap">
@@ -186,7 +180,7 @@ test("is rendered if only the sitemapSections is provided", async (t) => {
     );
 });
 
-test("is rendered with all the information provided", async (t) => {
+test("is rendered with all the information provided", async () => {
     const elev = new Eleventy(
         "./fixtures/footer-4/",
         "./fixtures/footer-4/_site",
@@ -198,8 +192,7 @@ test("is rendered with all the information provided", async (t) => {
     const json = await elev.toJSON();
     const formattedResult = formatHTML(json[0].content);
 
-    t.is(
-        formattedResult,
+    expect(formattedResult).toBe(
         `<footer class="footer">
     <div class="is-size-5">
         <div class="sitemap">

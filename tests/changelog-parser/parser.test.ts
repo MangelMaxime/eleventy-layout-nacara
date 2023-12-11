@@ -1,27 +1,27 @@
-import test from "ava";
+import { expect, test } from "@jest/globals";
 import { parse } from "../../src/changelog-parser/parser";
 import type { Changelog } from "../../src/changelog-parser/parser";
 
-test("parses title", (t) => {
+test("parses title", () => {
     const text = `# Title`;
 
     const changelog = parse(text);
 
-    t.deepEqual(changelog, {
+    expect(changelog).toStrictEqual({
         title: "Title",
         versions: [],
         description: undefined,
     });
 });
 
-test("parses description", (t) => {
+test("parses description", () => {
     const text = `This line is a description
 
 And this one too`;
 
     const changelog = parse(text);
 
-    t.deepEqual(changelog, {
+    expect(changelog).toStrictEqual({
         title: undefined,
         versions: [],
         description: `This line is a description
@@ -30,12 +30,12 @@ And this one too`,
     });
 });
 
-test("parses version", (t) => {
+test("parses version", () => {
     const text = `## 1.0.0 - 2020-01-01`;
 
     const changelog = parse(text);
 
-    t.deepEqual(changelog, {
+    expect(changelog).toStrictEqual({
         title: undefined,
         description: undefined,
         versions: [
@@ -50,12 +50,12 @@ test("parses version", (t) => {
     });
 });
 
-test("parses version without date", (t) => {
+test("parses version without date", () => {
     const text = `## 1.0.0`;
 
     const changelog = parse(text);
 
-    t.deepEqual(changelog, {
+    expect(changelog).toStrictEqual({
         title: undefined,
         description: undefined,
         versions: [
@@ -70,12 +70,12 @@ test("parses version without date", (t) => {
     });
 });
 
-test("parses version without date and yanked", (t) => {
+test("parses version without date and yanked", () => {
     const text = `## 1.0.0 [YANKED]`;
 
     const changelog = parse(text);
 
-    t.deepEqual(changelog, {
+    expect(changelog).toStrictEqual({
         title: undefined,
         description: undefined,
         versions: [
@@ -90,12 +90,12 @@ test("parses version without date and yanked", (t) => {
     });
 });
 
-test("parses version with date and yanked", (t) => {
+test("parses version with date and yanked", () => {
     const text = `## 1.0.0 - 2020-01-01 [YANKED]`;
 
     const changelog = parse(text);
 
-    t.deepEqual(changelog, {
+    expect(changelog).toStrictEqual({
         title: undefined,
         description: undefined,
         versions: [
@@ -110,14 +110,11 @@ test("parses version with date and yanked", (t) => {
     });
 });
 
-test("throw an exception if a category is not inside a version", (t) => {
+test("throw an exception if a category is not inside a version", () => {
     const text = `### Added`;
 
-    const error = t.throws(() => parse(text));
-
-    t.is(
-        error?.message,
-        `Error while parsing the following item:
+    expect(() => parse(text))
+        .toThrowError(`Error while parsing the following item:
 ---
 Added
 ---
@@ -128,35 +125,10 @@ Example:
 
 ## 1.0.0
 
-### Added`
-    );
+### Added`);
 });
 
-test("throw an exception if list-item is not inside a category", (t) => {
-    const text = `- List item`;
-
-    const error = t.throws(() => parse(text));
-
-    t.is(
-        error?.message,
-        `Error while parsing the following item:
----
-List item
----
-
-List item should always be inside a category
-
-Example:
-
-## 1.0.0
-
-### Added
-
-- Added a new feature`
-    );
-});
-
-test("parses a Added category", (t) => {
+test("parses a Added category", () => {
     const text = `## 1.0.0
 
 ### Added
@@ -165,7 +137,7 @@ test("parses a Added category", (t) => {
 
     const changelog = parse(text);
 
-    t.deepEqual<Changelog, Changelog>(changelog, {
+    expect(changelog).toStrictEqual({
         title: undefined,
         description: undefined,
         versions: [
@@ -175,12 +147,8 @@ test("parses a Added category", (t) => {
                 categories: new Map([
                     [
                         { kind: "added" },
-                        [
-                            {
-                                kind: "list-item",
-                                text: "Added a new feature",
-                            },
-                        ],
+                        `
+- Added a new feature`,
                     ],
                 ]),
                 date: undefined,
@@ -190,7 +158,7 @@ test("parses a Added category", (t) => {
     });
 });
 
-test("parses a Changed category", (t) => {
+test("parses a Changed category", () => {
     const text = `## 1.0.0
 
 ### Changed
@@ -199,7 +167,7 @@ test("parses a Changed category", (t) => {
 
     const changelog = parse(text);
 
-    t.deepEqual<Changelog, Changelog>(changelog, {
+    expect(changelog).toStrictEqual({
         title: undefined,
         description: undefined,
         versions: [
@@ -209,12 +177,8 @@ test("parses a Changed category", (t) => {
                 categories: new Map([
                     [
                         { kind: "changed" },
-                        [
-                            {
-                                kind: "list-item",
-                                text: "Changed a new feature",
-                            },
-                        ],
+                        `
+- Changed a new feature`,
                     ],
                 ]),
                 date: undefined,
@@ -224,7 +188,7 @@ test("parses a Changed category", (t) => {
     });
 });
 
-test("parses a Deprecated category", (t) => {
+test("parses a Deprecated category", () => {
     const text = `## 1.0.0
 
 ### Deprecated
@@ -233,7 +197,7 @@ test("parses a Deprecated category", (t) => {
 
     const changelog = parse(text);
 
-    t.deepEqual<Changelog, Changelog>(changelog, {
+    expect(changelog).toStrictEqual({
         title: undefined,
         description: undefined,
         versions: [
@@ -243,12 +207,8 @@ test("parses a Deprecated category", (t) => {
                 categories: new Map([
                     [
                         { kind: "deprecated" },
-                        [
-                            {
-                                kind: "list-item",
-                                text: "Deprecated a new feature",
-                            },
-                        ],
+                        `
+- Deprecated a new feature`,
                     ],
                 ]),
                 date: undefined,
@@ -258,7 +218,7 @@ test("parses a Deprecated category", (t) => {
     });
 });
 
-test("parses a Removed category", (t) => {
+test("parses a Removed category", () => {
     const text = `## 1.0.0
 
 ### Removed
@@ -267,7 +227,7 @@ test("parses a Removed category", (t) => {
 
     const changelog = parse(text);
 
-    t.deepEqual<Changelog, Changelog>(changelog, {
+    expect(changelog).toStrictEqual({
         title: undefined,
         description: undefined,
         versions: [
@@ -277,12 +237,8 @@ test("parses a Removed category", (t) => {
                 categories: new Map([
                     [
                         { kind: "removed" },
-                        [
-                            {
-                                kind: "list-item",
-                                text: "Removed a new feature",
-                            },
-                        ],
+                        `
+- Removed a new feature`,
                     ],
                 ]),
                 date: undefined,
@@ -292,7 +248,7 @@ test("parses a Removed category", (t) => {
     });
 });
 
-test("parses a Fixed category", (t) => {
+test("parses a Fixed category", () => {
     const text = `## 1.0.0
 
 ### Fixed
@@ -301,7 +257,7 @@ test("parses a Fixed category", (t) => {
 
     const changelog = parse(text);
 
-    t.deepEqual<Changelog, Changelog>(changelog, {
+    expect(changelog).toStrictEqual({
         title: undefined,
         description: undefined,
         versions: [
@@ -311,12 +267,8 @@ test("parses a Fixed category", (t) => {
                 categories: new Map([
                     [
                         { kind: "fixed" },
-                        [
-                            {
-                                kind: "list-item",
-                                text: "Fixed a new feature",
-                            },
-                        ],
+                        `
+- Fixed a new feature`,
                     ],
                 ]),
                 date: undefined,
@@ -326,7 +278,7 @@ test("parses a Fixed category", (t) => {
     });
 });
 
-test("parses a Security category", (t) => {
+test("parses a Security category", () => {
     const text = `## 1.0.0
 
 ### Security
@@ -335,7 +287,7 @@ test("parses a Security category", (t) => {
 
     const changelog = parse(text);
 
-    t.deepEqual<Changelog, Changelog>(changelog, {
+    expect(changelog).toStrictEqual({
         title: undefined,
         description: undefined,
         versions: [
@@ -345,12 +297,8 @@ test("parses a Security category", (t) => {
                 categories: new Map([
                     [
                         { kind: "security" },
-                        [
-                            {
-                                kind: "list-item",
-                                text: "Security a new feature",
-                            },
-                        ],
+                        `
+- Security a new feature`,
                     ],
                 ]),
                 date: undefined,
@@ -360,7 +308,7 @@ test("parses a Security category", (t) => {
     });
 });
 
-test("parses a Unknown category", (t) => {
+test("parses a Unknown category", () => {
     const text = `## 1.0.0
 
 ### Unknown1
@@ -369,7 +317,7 @@ test("parses a Unknown category", (t) => {
 
     const changelog = parse(text);
 
-    t.deepEqual<Changelog, Changelog>(changelog, {
+    expect(changelog).toStrictEqual({
         title: undefined,
         description: undefined,
         versions: [
@@ -379,12 +327,8 @@ test("parses a Unknown category", (t) => {
                 categories: new Map([
                     [
                         { kind: "unknown", name: "Unknown1" },
-                        [
-                            {
-                                kind: "list-item",
-                                text: "Unknown a new feature",
-                            },
-                        ],
+                        `
+- Unknown a new feature`,
                     ],
                 ]),
                 date: undefined,
@@ -394,7 +338,7 @@ test("parses a Unknown category", (t) => {
     });
 });
 
-test("parses a complex changelog", (t) => {
+test("parses a complex changelog", () => {
     const text = `# Changelog
 All notable changes to this project will be documented in this file.
 
@@ -421,9 +365,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
     const changelog = parse(text);
 
-    console.log(changelog.versions[1].categories);
-
-    t.deepEqual<Changelog, Changelog>(changelog, {
+    expect(changelog).toStrictEqual({
         title: "Changelog",
         description: `All notable changes to this project will be documented in this file.
 
@@ -436,12 +378,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
                 categories: new Map([
                     [
                         { kind: "added" },
-                        [
-                            {
-                                kind: "list-item",
-                                text: "New feature",
-                            },
-                        ],
+                        `
+* New feature`,
                     ],
                 ]),
                 date: undefined,
@@ -453,19 +391,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
                 categories: new Map([
                     [
                         { kind: "added" },
-                        [
-                            {
-                                kind: "list-item",
-                                text: "New feature with additional text below",
-                            },
-                            {
-                                kind: "text",
-                                text: `This is the additional line n°1
+                        `
+* New feature with additional text below
+
+    This is the additional line n°1
     This is the additional line n°2
 
     This is the additional line n°3`,
-                            }
-                        ],
                     ],
                 ]),
                 date: "2022-03-25",

@@ -3,8 +3,8 @@ export type Title = {
     text: string;
 };
 
-export type RawText = {
-    kind: "raw-text";
+export type MardownText = {
+    kind: "markdown-text";
     text: string;
 };
 
@@ -21,12 +21,7 @@ export type Category = {
     text: string;
 };
 
-export type Item = {
-    kind: "list-item";
-    text: string;
-};
-
-export type Tokens = Title | Version | Category | Item | RawText;
+export type Tokens = Title | Version | Category | MardownText;
 
 const versionRegex = /\[?v?([\w\d.-]+\.[\w\d.-]+[a-zA-Z0-9])\]?/;
 const dateRegex = /(\d{4}-\d{2}-\d{2})/;
@@ -73,19 +68,9 @@ export function lex(lines: string[]): Tokens[] {
             };
         }
 
-        // Handle list items like:
-        // - - This is a list item
-        // - * This is another list item
-        if (line.match(/^[*-]/)) {
-            return {
-                kind: "list-item",
-                text: line.substring(1).trim(),
-            };
-        }
-
-        // If not parser captures the line, we capture it as raw text
+        // If no parser captures the line, we capture it as markdown text
         return {
-            kind: "raw-text",
+            kind: "markdown-text",
             text: line,
         };
     });

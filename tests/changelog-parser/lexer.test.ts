@@ -1,22 +1,22 @@
-import test from "ava";
+import { expect, test } from "@jest/globals";
 import { lex } from "../../src/changelog-parser/lexer";
 
-test("captures title ", (t) => {
+test("captures title ", () => {
     const lines = [
         "# Title",
     ];
 
     const tokens = lex(lines);
 
-    t.deepEqual(tokens, [
+    expect(tokens).toStrictEqual([
         {
             kind: "title",
             text: "Title",
-        },
+        }
     ]);
 });
 
-test("captures raw text", (t) => {
+test("captures raw text", () => {
     const lines = [
         "Line 1",
         "Line 2",
@@ -24,26 +24,26 @@ test("captures raw text", (t) => {
 
     const tokens = lex(lines);
 
-    t.deepEqual(tokens, [
+    expect(tokens).toStrictEqual([
         {
-            kind: "raw-text",
+            kind: "markdown-text",
             text: "Line 1",
         },
         {
-            kind: "raw-text",
+            kind: "markdown-text",
             text: "Line 2",
         },
     ]);
 });
 
-test("captures Unrelesaed version", (t) => {
+test("captures Unrelesaed version", () => {
     const lines = [
         "## Unreleased",
     ];
 
     const tokens = lex(lines);
 
-    t.deepEqual(tokens, [
+    expect(tokens).toStrictEqual([
         {
             kind: "version",
             text: "Unreleased",
@@ -54,14 +54,14 @@ test("captures Unrelesaed version", (t) => {
     ]);
 })
 
-test("captures version with date", (t) => {
+test("captures version with date", () => {
     const lines = [
         "## 1.0.0 - 2020-01-01",
     ];
 
     const tokens = lex(lines);
 
-    t.deepEqual(tokens, [
+    expect(tokens).toStrictEqual([
         {
             kind: "version",
             text: "1.0.0 - 2020-01-01",
@@ -72,14 +72,14 @@ test("captures version with date", (t) => {
     ]);
 })
 
-test("captures without date", (t) => {
+test("captures without date", () => {
     const lines = [
         "## 1.0.0",
     ];
 
     const tokens = lex(lines);
 
-    t.deepEqual(tokens, [
+    expect(tokens).toStrictEqual([
         {
             kind: "version",
             text: "1.0.0",
@@ -90,14 +90,14 @@ test("captures without date", (t) => {
     ]);
 })
 
-test("captures yanked version", (t) => {
+test("captures yanked version", () => {
     const lines = [
         "## 1.0.0 - 2020-01-01 [YANKED]",
     ];
 
     const tokens = lex(lines);
 
-    t.deepEqual(tokens, [
+    expect(tokens).toStrictEqual([
         {
             kind: "version",
             text: "1.0.0 - 2020-01-01 [YANKED]",
@@ -108,14 +108,14 @@ test("captures yanked version", (t) => {
     ]);
 })
 
-test("captures category", (t) => {
+test("captures category", () => {
     const lines = [
         "### Added",
     ];
 
     const tokens = lex(lines);
 
-    t.deepEqual(tokens, [
+    expect(tokens).toStrictEqual([
         {
             kind: "category",
             text: "Added",
@@ -123,37 +123,37 @@ test("captures category", (t) => {
     ]);
 })
 
-test("captures list item marked with a -", (t) => {
+test("captures list item marked with a -", () => {
     const lines = [
         "- This is a list item",
     ];
 
     const tokens = lex(lines);
 
-    t.deepEqual(tokens, [
+    expect(tokens).toStrictEqual([
         {
-            kind: "list-item",
-            text: "This is a list item",
+            kind: "markdown-text",
+            text: "- This is a list item",
         },
     ]);
 })
 
-test("captures list item marked with a *", (t) => {
+test("captures list item marked with a *", () => {
     const lines = [
         "* This is a list item",
     ];
 
     const tokens = lex(lines);
 
-    t.deepEqual(tokens, [
+    expect(tokens).toStrictEqual([
         {
-            kind: "list-item",
-            text: "This is a list item",
+            kind: "markdown-text",
+            text: "* This is a list item",
         },
     ]);
 })
 
-test("works for a full changelog", (t) => {
+test("works for a full changelog", () => {
     const lines = [
         "# Changelog",
         "All notable changes to this project will be documented in this file.",
@@ -174,29 +174,29 @@ test("works for a full changelog", (t) => {
 
     const tokens = lex(lines);
 
-    t.deepEqual(tokens, [
+    expect(tokens).toStrictEqual([
         {
             kind: "title",
             text: "Changelog",
         },
         {
-            kind: "raw-text",
+            kind: "markdown-text",
             text: "All notable changes to this project will be documented in this file.",
         },
         {
-            kind: "raw-text",
+            kind: "markdown-text",
             text: "",
         },
         {
-            kind: "raw-text",
+            kind: "markdown-text",
             text: "The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),",
         },
         {
-            kind: "raw-text",
+            kind: "markdown-text",
             text: "and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).",
         },
         {
-            kind: "raw-text",
+            kind: "markdown-text",
             text: "",
         },
         {
@@ -218,11 +218,11 @@ test("works for a full changelog", (t) => {
             text: "Added",
         },
         {
-            kind: "list-item",
-            text: "This is a list item",
+            kind: "markdown-text",
+            text: "- This is a list item",
         },
         {
-            kind: "raw-text",
+            kind: "markdown-text",
             text: "",
         },
         {
@@ -230,15 +230,15 @@ test("works for a full changelog", (t) => {
             text: "Changed",
         },
         {
-            kind: "list-item",
-            text: "This is a list item",
+            kind: "markdown-text",
+            text: "- This is a list item",
         },
         {
-            kind: "raw-text",
+            kind: "markdown-text",
             text: "",
         },
         {
-            kind: "raw-text",
+            kind: "markdown-text",
             text: "   This a block of text under the previous list item",
         },
     ]);

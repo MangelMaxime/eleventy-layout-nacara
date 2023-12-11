@@ -1,9 +1,9 @@
-import test from "ava";
+import { expect, test } from "@jest/globals";
 import gitCreated from "../../../src/eleventyComputed/page/gitCreated";
 import fs from "fs-extra";
 import globalData from "../../../src/globalData";
 
-test("returns now if the file has not been committed yet", async (t) => {
+test("returns now if the file has not been committed yet", async () => {
     const gitRoot = await globalData.gitRoot();
     const gitCreatedFunc = await gitCreated(new Map())();
 
@@ -24,14 +24,14 @@ test("returns now if the file has not been committed yet", async (t) => {
         },
     });
 
-    t.is(gitCreatedDate instanceof Date, true);
-    t.is(gitCreatedDate.toUTCString(), new Date().toUTCString());
+    expect(gitCreatedDate).toBeInstanceOf(Date);
+    expect(gitCreatedDate.toUTCString()).toBe(new Date().toUTCString());
 
     // Remove temporary file
     await fs.remove(fileName);
 });
 
-test("returns the created date of a file based on the Git history", async (t) => {
+test("returns the created date of a file based on the Git history", async () => {
     const gitRoot = await globalData.gitRoot();
     const gitCreatedFunc = await gitCreated(new Map())();
 
@@ -42,6 +42,6 @@ test("returns the created date of a file based on the Git history", async (t) =>
         },
     });
 
-    t.is(gitCreatedDate instanceof Date, true);
-    t.is(gitCreatedDate.toUTCString(), "Tue, 27 Dec 2022 09:51:08 GMT");
+    expect(gitCreatedDate).toBeInstanceOf(Date);
+    expect(gitCreatedDate.toUTCString()).toBe("Tue, 27 Dec 2022 09:51:08 GMT");
 });

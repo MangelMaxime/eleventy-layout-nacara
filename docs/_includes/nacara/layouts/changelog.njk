@@ -2,7 +2,13 @@
 
 {% block content %}
     <div class="page-content nacara-content">
-        <div class="container content">
+        <div class="section container content">
+            {% renderTemplate "md" %}
+            # I am a title
+
+            * I am a list
+            * I am a list
+            {% endrenderTemplate %}
             <header class="header">
                 <h2 class="title h2">
                     {{ title }}
