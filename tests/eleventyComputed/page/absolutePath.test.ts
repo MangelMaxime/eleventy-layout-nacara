@@ -19,5 +19,5 @@ test("returns the absolutePath of the file", async () => {
         "./fixtures/absolute-path-0/docs/getting-started/page1.md"
     );
 
-    expect(formattedResult.trim().replace("&#92;", "\\")).toBe(expected);
+    expect(formattedResult.trim().replace(/&#92;/g, "\\")).toBe(expected);
 });
