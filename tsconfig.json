@@ -12,16 +12,8 @@
         "jsx": "react",
         "jsxFactory": "h",
         "jsxFragmentFactory": "Fragment",
-        "preserveWatchOutput": true,
-        "esModuleInterop": true,
-        "strict": true,
-        "strictNullChecks": true,
-        "strictFunctionTypes": true,
-        "strictBindCallApply": true,
-        "strictPropertyInitialization": true,
-        "noEmit": true
+        "preserveWatchOutput": true
     },
     "include": ["src/**/*", "types/**/*"],
-    "exclude": ["node_modules", "dist"],
-    "files": ["node_modules/jest-extended/types/index.d.ts"],
+    "exclude": ["node_modules", "dist"]
 }
