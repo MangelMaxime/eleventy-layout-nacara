@@ -61,7 +61,7 @@ export function lex(lines: string[]): Tokens[] {
         // - Added
         // - Changed
         // - etc.
-        if (line.match(/^###/)) {
+        if (line.match(/^### /)) {
             return {
                 kind: "category",
                 text: line.substring(3).trim(),

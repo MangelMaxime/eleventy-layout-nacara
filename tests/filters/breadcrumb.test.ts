@@ -14,7 +14,7 @@ test("returns nothing if there is no menu", async () => {
     const json = await elev.toJSON();
     const formattedResult = formatHTML(json[0].content);
 
-    expect(formattedResult).toBe(``);
+    expect(formattedResult).toMatchSnapshot();
 });
 
 test("works for one level deep elements", async () => {
@@ -29,15 +29,7 @@ test("works for one level deep elements", async () => {
     const json = await elev.toJSON();
     const formattedResult = formatHTML(json[0].content);
 
-    expect(formattedResult).toBe(
-        `<nav class="breadcrumb">
-    <ul>
-        <li class="is-active"><a>Getting started</a></li>
-        <li class="is-active"><a>Page</a></li>
-    </ul>
-</nav>
-`
-    );
+    expect(formattedResult).toMatchSnapshot();
 });
 
 test("works for multiple level deep elements", async () => {
@@ -52,15 +44,5 @@ test("works for multiple level deep elements", async () => {
     const json = await elev.toJSON();
     const formattedResult = formatHTML(json[0].content);
 
-    expect(formattedResult).toBe(
-        `<nav class="breadcrumb">
-    <ul>
-        <li class="is-active"><a>Getting started</a></li>
-        <li class="is-active"><a>Part 1</a></li>
-        <li class="is-active"><a>Part 2</a></li>
-        <li class="is-active"><a>Page</a></li>
-    </ul>
-</nav>
-`
-    );
+    expect(formattedResult).toMatchSnapshot();
 });

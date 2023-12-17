@@ -1,0 +1,25 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`returns nothing if there is no menu 1`] = `""`;
+
+exports[`works for multiple level deep elements 1`] = `
+"<nav class="breadcrumb">
+    <ul>
+        <li class="is-active"><a>Getting started</a></li>
+        <li class="is-active"><a>Part 1</a></li>
+        <li class="is-active"><a>Part 2</a></li>
+        <li class="is-active"><a>Page</a></li>
+    </ul>
+</nav>
+"
+`;
+
+exports[`works for one level deep elements 1`] = `
+"<nav class="breadcrumb">
+    <ul>
+        <li class="is-active"><a>Getting started</a></li>
+        <li class="is-active"><a>Page</a></li>
+    </ul>
+</nav>
+"
+`;

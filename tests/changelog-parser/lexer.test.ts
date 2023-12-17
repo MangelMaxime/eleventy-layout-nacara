@@ -243,3 +243,39 @@ test("works for a full changelog", () => {
         },
     ]);
 })
+
+
+test("works with sub-categories", () => {
+    const lines = [
+        "### Added",
+        "",
+        "#### Sub-category",
+        "",
+        "- This is a list item",
+    ];
+
+    const tokens = lex(lines);
+
+    expect(tokens).toStrictEqual([
+        {
+            kind: "category",
+            text: "Added",
+        },
+        {
+            kind: "markdown-text",
+            text: "",
+        },
+        {
+            kind: "markdown-text",
+            text: "#### Sub-category",
+        },
+        {
+            kind: "markdown-text",
+            text: "",
+        },
+        {
+            kind: "markdown-text",
+            text: "- This is a list item",
+        },
+    ]);
+})

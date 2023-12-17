@@ -7,9 +7,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 1.0.0 - 2021-07-27
+
+### Added
+
+#### JavaScript
+
+* Item 1
+    * Item 1.1
+    * Item 1.2
+
+#### JavaScript
+
+* Item 2
+* Inline code `code`
+* Code block
+
+    ```javascript
+    const foo = 'bar';
+    ```
+
+* Link [link](https://example.com)
+* Image ![alt](https://example.com/image.png)
+* Bold **bold**
+* Item with a description
+
+    This is a description and it even has a code block:
+
+    ```javascript
+    const foo = 'bar';
+    ```
+
 ## 1.0.0-beta-001 - 2021-07-29
 
 ### Added
+
+#### JavaScript
 
 * Add `excludeFromNavigation` property to all the layout allowing to opt-out a page from the Next / Previous button generation
 * Recompute the known pages if the attributes of a page change.
@@ -23,7 +56,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
     For example, this structure defined 2 sections.
 
-    ```
+    ```text
     docsrc
     ├── changelogs
     │   ├── file.md
@@ -70,8 +103,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
     Right now Windows user needs to install make or use Gitpod. In the future, a `make.bat` will be available but I don't have time to add it right now.
 
-
-
 ## 0.4.1 - 2021-05-10
 
 ### Fixed
@@ -84,7 +115,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * Make the text in the textual steps use a normal `font-weight`. It was making it hard to read the text when on a white background
 * Change the font-size to `16px` to improve readibility and accessibility
-
 
 ## 0.4.0 - 2021-05-02
 

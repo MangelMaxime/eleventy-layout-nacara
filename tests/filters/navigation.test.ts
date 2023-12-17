@@ -14,7 +14,7 @@ test("returns nothing if there is not nacaraMenu provided", async () => {
     const json = await elev.toJSON();
     const formattedResult = formatHTML(json[0].content);
 
-    expect(formattedResult).toBe(``);
+    expect(formattedResult).toMatchSnapshot();
 });
 
 test("returns the Previous button marked as invisible and the second button normal if this is the first page", async () => {
@@ -32,22 +32,7 @@ test("returns the Previous button marked as invisible and the second button norm
     );
     const formattedResult = formatHTML(page1Json.content);
 
-    expect(formattedResult).toBe(
-        `<div class="section bd-docs-pagination bd-pagination-links">
-    <a class="button navigate-to-previous is-invisible"></a>
-    <a
-        class="button bd-fat-button is-primary is-light bd-pagination-next"
-        href="/Nacara//docs/getting-started/page2/"
-    >
-        <span class="is-hidden-mobile">
-            <em></em>
-            <strong>Page 2</strong>
-        </span>
-        <i>→</i>
-    </a>
-</div>
-`
-    );
+    expect(formattedResult).toMatchSnapshot();
 });
 
 test("returns the Next button marked as invisible and the first button normal if this is the last page", async () => {
@@ -65,22 +50,7 @@ test("returns the Next button marked as invisible and the first button normal if
     );
     const formattedResult = formatHTML(page2Json.content);
 
-    expect(formattedResult).toBe(
-        `<div class="section bd-docs-pagination bd-pagination-links">
-    <a
-        class="button bd-fat-button is-primary is-light bd-pagination-prev"
-        href="/Nacara//docs/getting-started/page1/"
-    >
-        <i>←</i>
-        <span class="is-hidden-mobile">
-            <em></em>
-            <strong>Page 1</strong>
-        </span>
-    </a>
-    <a class="button navigate-to-next is-invisible"></a>
-</div>
-`
-    );
+    expect(formattedResult).toMatchSnapshot();
 });
 
 test("the Next button include the section title page is inside a section", async () => {
@@ -98,22 +68,7 @@ test("the Next button include the section title page is inside a section", async
     );
     const formattedResult = formatHTML(page2Json.content);
 
-    expect(formattedResult).toBe(
-        `<div class="section bd-docs-pagination bd-pagination-links">
-    <a
-        class="button bd-fat-button is-primary is-light bd-pagination-prev"
-        href="/Nacara//docs/getting-started/page1/"
-    >
-        <i>←</i>
-        <span class="is-hidden-mobile">
-            <em>Getting Started</em>
-            <strong>Page 1</strong>
-        </span>
-    </a>
-    <a class="button navigate-to-next is-invisible"></a>
-</div>
-`
-    );
+    expect(formattedResult).toMatchSnapshot();
 });
 
 test("the Previous button include the section title page is inside a section", async () => {
@@ -131,22 +86,7 @@ test("the Previous button include the section title page is inside a section", a
     );
     const formattedResult = formatHTML(page2Json.content);
 
-    expect(formattedResult).toBe(
-        `<div class="section bd-docs-pagination bd-pagination-links">
-    <a class="button navigate-to-previous is-invisible"></a>
-    <a
-        class="button bd-fat-button is-primary is-light bd-pagination-next"
-        href="/Nacara//docs/getting-started/page2/"
-    >
-        <span class="is-hidden-mobile">
-            <em>Getting Started</em>
-            <strong>Page 2</strong>
-        </span>
-        <i>→</i>
-    </a>
-</div>
-`
-    );
+    expect(formattedResult).toMatchSnapshot();
 });
 
 test("both buttons are present if the page is between 2 valid element in the menu", async () => {
@@ -164,31 +104,7 @@ test("both buttons are present if the page is between 2 valid element in the men
     );
     const formattedResult = formatHTML(page2Json.content);
 
-    expect(formattedResult).toBe(
-        `<div class="section bd-docs-pagination bd-pagination-links">
-    <a
-        class="button bd-fat-button is-primary is-light bd-pagination-prev"
-        href="/Nacara//docs/getting-started/page1/"
-    >
-        <i>←</i>
-        <span class="is-hidden-mobile">
-            <em>Getting Started</em>
-            <strong>Page 1</strong>
-        </span>
-    </a>
-    <a
-        class="button bd-fat-button is-primary is-light bd-pagination-next"
-        href="/Nacara//docs/getting-started/page3/"
-    >
-        <span class="is-hidden-mobile">
-            <em>Getting Started</em>
-            <strong>Page 3</strong>
-        </span>
-        <i>→</i>
-    </a>
-</div>
-`
-    );
+    expect(formattedResult).toMatchSnapshot();
 });
 
 test("the Next button is empty if the next menu element is a link", async () => {
@@ -207,22 +123,7 @@ test("the Next button is empty if the next menu element is a link", async () => 
 
     const formattedResult = formatHTML(page2Json.content);
 
-    expect(formattedResult).toBe(
-        `<div class="section bd-docs-pagination bd-pagination-links">
-    <a
-        class="button bd-fat-button is-primary is-light bd-pagination-prev"
-        href="/Nacara//docs/getting-started/page1/"
-    >
-        <i>←</i>
-        <span class="is-hidden-mobile">
-            <em>Getting Started</em>
-            <strong>Page 1</strong>
-        </span>
-    </a>
-    <a class="button navigate-to-next is-invisible"></a>
-</div>
-`
-    );
+    expect(formattedResult).toMatchSnapshot();
 });
 
 test("the Previous button is empty if the previous menu element is a link", async () => {
@@ -240,20 +141,5 @@ test("the Previous button is empty if the previous menu element is a link", asyn
     );
     const formattedResult = formatHTML(page2Json.content);
 
-    expect(formattedResult).toBe(
-        `<div class="section bd-docs-pagination bd-pagination-links">
-    <a class="button navigate-to-previous is-invisible"></a>
-    <a
-        class="button bd-fat-button is-primary is-light bd-pagination-next"
-        href="/Nacara//docs/getting-started/page3/"
-    >
-        <span class="is-hidden-mobile">
-            <em>Getting Started</em>
-            <strong>Page 3</strong>
-        </span>
-        <i>→</i>
-    </a>
-</div>
-`
-    );
+    expect(formattedResult).toMatchSnapshot();
 });

@@ -21,6 +21,7 @@ import globalData from "./globalData";
 import markdownItAnchor from "markdown-it-anchor";
 import type MdLib from "markdown-it";
 const { EleventyRenderPlugin } = require("@11ty/eleventy");
+import slugify from 'slugify'
 
 export interface Options {
     iconFilter?: IconFilterBuilderOptions;
@@ -201,6 +202,7 @@ function configFunction(eleventyConfig: any, options?: Options) {
             permalink: markdownItAnchor.permalink.linkInsideHeader({
                 placement: "after",
             }),
+            slugify: (s: string) => slugify(s)
         });
     });
 

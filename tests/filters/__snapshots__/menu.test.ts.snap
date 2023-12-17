@@ -1,0 +1,136 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`returns a menu with a TOC containing headers respecting the provided toc config 1`] = `
+"<div class="menu-container">
+    <aside class="menu">
+        <p class="menu-label">Getting started</p>
+        <ul class="menu-list">
+            <li>
+                <a
+                    href="/Nacara//docs/getting-started/page1/"
+                    class="is-active"
+                >
+                    Page 1
+                </a>
+            </li>
+            <li>
+                <ul class="table-of-content">
+                    <li data-toc-rank="3">
+                        <a href="#Header-3-1" data-toc-element="true">
+                            Header 3 - #1
+                        </a>
+                    </li>
+                    <li data-toc-rank="4">
+                        <a href="#Header-4-1" data-toc-element="true">
+                            Header 4 - #1
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </aside>
+</div>
+"
+`;
+
+exports[`returns a menu with a TOC containing only h2 headers if no toc data is provided 1`] = `
+"<div class="menu-container">
+    <aside class="menu">
+        <p class="menu-label">Getting started</p>
+        <ul class="menu-list">
+            <li>
+                <a
+                    href="/Nacara//docs/getting-started/page1/"
+                    class="is-active"
+                >
+                    Page 1
+                </a>
+            </li>
+            <li>
+                <ul class="table-of-content">
+                    <li data-toc-rank="2">
+                        <a href="#Header-2-1" data-toc-element="true">
+                            Header 2 - #1
+                        </a>
+                    </li>
+                    <li data-toc-rank="2">
+                        <a href="#Header-2-2" data-toc-element="true">
+                            Header 2 - #2
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </aside>
+</div>
+"
+`;
+
+exports[`returns a menu with no TOC if it has been disabled via the config 1`] = `
+"<div class="menu-container">
+    <aside class="menu">
+        <p class="menu-label">Getting started</p>
+        <ul class="menu-list">
+            <li>
+                <a
+                    href="/Nacara//docs/getting-started/page1/"
+                    class="is-active"
+                >
+                    Page 1
+                </a>
+            </li>
+        </ul>
+    </aside>
+</div>
+"
+`;
+
+exports[`returns nothing if there is not nacaraMenu provided 1`] = `""`;
+
+exports[`supports nacaraMenu with a Section 1`] = `
+"<div class="menu-container">
+    <aside class="menu">
+        <p class="menu-label">Getting started</p>
+        <ul class="menu-list">
+            <li>
+                <a
+                    href="/Nacara//docs/getting-started/page1/"
+                    class="is-active"
+                >
+                    Page 1
+                </a>
+            </li>
+            <li>
+                <a href="/Nacara//docs/getting-started/page2/" class="">
+                    Page 2
+                </a>
+            </li>
+        </ul>
+    </aside>
+</div>
+"
+`;
+
+exports[`supports nacaraMenu with a Section 2`] = `
+"<div class="menu-container">
+    <aside class="menu">
+        <p class="menu-label">Getting started</p>
+        <ul class="menu-list">
+            <li>
+                <a href="/Nacara//docs/getting-started/page1/" class="">
+                    Page 1
+                </a>
+            </li>
+            <li>
+                <a
+                    href="/Nacara//docs/getting-started/page2/"
+                    class="is-active"
+                >
+                    Page 2
+                </a>
+            </li>
+        </ul>
+    </aside>
+</div>
+"
+`;
