@@ -2,7 +2,7 @@ import { expect, test } from 'vitest'
 const Eleventy = require("@11ty/eleventy");
 import { formatHTML } from "../utils/_formatHTML";
 
-test("categories are rendered in a fixed order", async () => {
+test("known categories are rendered in a fixed order", async () => {
     const elev = new Eleventy(
         "./fixtures/changelog-0/",
         "./fixtures/changelog-0/_site",
@@ -12,53 +12,298 @@ test("categories are rendered in a fixed order", async () => {
     );
 
     const json = await elev.toJSON();
-    const formattedResult = formatHTML(json[0].content);
+    const result =
+        json.find(
+            (item: any) => item.url === "/docs/changelog/"
+        );
+    const formattedResult = formatHTML(result.content);
 
-    console.log(formattedResult);
+    expect(formattedResult).toBe(`<ul class="changelog-list">
+    <li class="changelog-list-item is-version">
+        <a href="#1.0.0-beta-001-2021-07-29">
+            <span class="anchor" id="1.0.0-beta-001-2021-07-29"></span>
+            <span class="tag is-primary is-large has-text-weight-bold">
+                1.0.0-beta-001
+            </span>
+        </a>
+        <span class="release-date is-uppercase has-text-weight-bold is-size-5">
+            29 July 2021
+        </span>
+    </li>
+    <div>
+        <li class="changelog-list-item">
+            <span
+                class="tag changelog-list-item-category is-medium has-text-weight-bold is-success"
+            >
+                Added
+            </span>
+        </li>
+        <li class="changelog-list-item changelog-version-body">
+            <ul>
+                <li>Added - Item 1</li>
+            </ul>
+        </li>
+    </div>
+    <div>
+        <li class="changelog-list-item">
+            <span
+                class="tag changelog-list-item-category is-medium has-text-weight-bold is-info"
+            >
+                Changed
+            </span>
+        </li>
+        <li class="changelog-list-item changelog-version-body">
+            <ul>
+                <li>Changed - Item 1</li>
+            </ul>
+        </li>
+    </div>
+    <div>
+        <li class="changelog-list-item">
+            <span
+                class="tag changelog-list-item-category is-medium has-text-weight-bold is-warning"
+            >
+                Deprecated
+            </span>
+        </li>
+        <li class="changelog-list-item changelog-version-body">
+            <ul>
+                <li>Deprecated - Item 1</li>
+            </ul>
+        </li>
+    </div>
+    <div>
+        <li class="changelog-list-item">
+            <span
+                class="tag changelog-list-item-category is-medium has-text-weight-bold is-danger"
+            >
+                Removed
+            </span>
+        </li>
+        <li class="changelog-list-item changelog-version-body">
+            <ul>
+                <li>Removed - Item 1</li>
+            </ul>
+        </li>
+    </div>
+    <div>
+        <li class="changelog-list-item">
+            <span
+                class="tag changelog-list-item-category is-medium has-text-weight-bold is-info"
+            >
+                Fixed
+            </span>
+        </li>
+        <li class="changelog-list-item changelog-version-body">
+            <ul>
+                <li>Fixed - Item 1</li>
+            </ul>
+        </li>
+    </div>
+    <div>
+        <li class="changelog-list-item">
+            <span
+                class="tag changelog-list-item-category is-medium has-text-weight-bold is-info"
+            >
+                Security
+            </span>
+        </li>
+        <li class="changelog-list-item changelog-version-body">
+            <ul>
+                <li>Security - Item 1</li>
+            </ul>
+        </li>
+    </div>
+</ul>
+`);
 
-    expect(formattedResult).toBe(`<h1 id="changelog" tabindex="-1">
-    Changelog
-    <a class="header-anchor" href="#changelog">#</a>
-</h1>
-<p>All notable changes to this project will be documented in this file.</p>
-<p>
-    The format is based on
-    <a href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a>
-    , and this project adheres to
-    <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>
-    .
-</p>
-<h2 id="unreleased" tabindex="-1">
-    Unreleased
-    <a class="header-anchor" href="#unreleased">#</a>
-</h2>
-<h2 id="1.0.0-beta-001---2021-07-29" tabindex="-1">
-    1.0.0-beta-001 - 2021-07-29
-    <a class="header-anchor" href="#1.0.0-beta-001---2021-07-29">#</a>
-</h2>
-<h3 id="deprecated" tabindex="-1">
-    Deprecated
-    <a class="header-anchor" href="#deprecated">#</a>
-</h3>
-<h3 id="removed" tabindex="-1">
-    Removed
-    <a class="header-anchor" href="#removed">#</a>
-</h3>
-<h3 id="security" tabindex="-1">
-    Security
-    <a class="header-anchor" href="#security">#</a>
-</h3>
-<h3 id="changed" tabindex="-1">
-    Changed
-    <a class="header-anchor" href="#changed">#</a>
-</h3>
-<h3 id="fixed" tabindex="-1">
-    Fixed
-    <a class="header-anchor" href="#fixed">#</a>
-</h3>
-<h3 id="added" tabindex="-1">
-    Added
-    <a class="header-anchor" href="#added">#</a>
-</h3>
+});
+
+test("unknown categories are rendered in alphabetical order", async () => {
+    const elev = new Eleventy(
+        "./fixtures/changelog-1/",
+        "./fixtures/changelog-1/_site",
+        {
+            configPath: "./fixtures/changelog-1/.eleventy.js",
+        }
+    );
+
+    const json = await elev.toJSON();
+    const result =
+        json.find(
+            (item: any) => item.url === "/docs/changelog/"
+        );
+    const formattedResult = formatHTML(result.content);
+
+    expect(formattedResult).toBe(`<ul class="changelog-list">
+    <li class="changelog-list-item is-version">
+        <a href="#1.0.0-beta-001-2021-07-29">
+            <span class="anchor" id="1.0.0-beta-001-2021-07-29"></span>
+            <span class="tag is-primary is-large has-text-weight-bold">
+                1.0.0-beta-001
+            </span>
+        </a>
+        <span class="release-date is-uppercase has-text-weight-bold is-size-5">
+            29 July 2021
+        </span>
+    </li>
+    <div>
+        <li class="changelog-list-item">
+            <span
+                class="tag changelog-list-item-category is-medium has-text-weight-bold is-info"
+            >
+                B
+            </span>
+        </li>
+        <li class="changelog-list-item changelog-version-body">
+            <ul>
+                <li>Item 1</li>
+            </ul>
+        </li>
+    </div>
+    <div>
+        <li class="changelog-list-item">
+            <span
+                class="tag changelog-list-item-category is-medium has-text-weight-bold is-info"
+            >
+                A
+            </span>
+        </li>
+        <li class="changelog-list-item changelog-version-body">
+            <ul>
+                <li>Item 1</li>
+            </ul>
+        </li>
+    </div>
+    <div>
+        <li class="changelog-list-item">
+            <span
+                class="tag changelog-list-item-category is-medium has-text-weight-bold is-info"
+            >
+                Category C
+            </span>
+        </li>
+        <li class="changelog-list-item changelog-version-body">
+            <ul>
+                <li>Item 1</li>
+            </ul>
+        </li>
+    </div>
+</ul>
+`);
+
+});
+
+test("unknown categories are rendered after known categories", async () => {
+    const elev = new Eleventy(
+        "./fixtures/changelog-2/",
+        "./fixtures/changelog-2/_site",
+        {
+            configPath: "./fixtures/changelog-2/.eleventy.js",
+        }
+    );
+
+    const json = await elev.toJSON();
+    const result =
+        json.find(
+            (item: any) => item.url === "/docs/changelog/"
+        );
+    const formattedResult = formatHTML(result.content);
+
+    expect(formattedResult).toBe(`<ul class="changelog-list">
+    <li class="changelog-list-item is-version">
+        <a href="#1.0.0-beta-001-2021-07-29">
+            <span class="anchor" id="1.0.0-beta-001-2021-07-29"></span>
+            <span class="tag is-primary is-large has-text-weight-bold">
+                1.0.0-beta-001
+            </span>
+        </a>
+        <span class="release-date is-uppercase has-text-weight-bold is-size-5">
+            29 July 2021
+        </span>
+    </li>
+    <div>
+        <li class="changelog-list-item">
+            <span
+                class="tag changelog-list-item-category is-medium has-text-weight-bold is-success"
+            >
+                Added
+            </span>
+        </li>
+        <li class="changelog-list-item changelog-version-body">
+            <ul>
+                <li>Item 1</li>
+            </ul>
+        </li>
+    </div>
+    <div>
+        <li class="changelog-list-item">
+            <span
+                class="tag changelog-list-item-category is-medium has-text-weight-bold is-info"
+            >
+                Category A
+            </span>
+        </li>
+        <li class="changelog-list-item changelog-version-body">
+            <ul>
+                <li>Item 1</li>
+            </ul>
+        </li>
+    </div>
+</ul>
+`);
+});
+
+test("all the versions are rendered", async () => {
+    const elev = new Eleventy(
+        "./fixtures/changelog-3/",
+        "./fixtures/changelog-3/_site",
+        {
+            configPath: "./fixtures/changelog-3/.eleventy.js",
+        }
+    );
+
+    const json = await elev.toJSON();
+    const result =
+        json.find(
+            (item: any) => item.url === "/docs/changelog/"
+        );
+    const formattedResult = formatHTML(result.content);
+
+    expect(formattedResult).toBe(`<ul class="changelog-list">
+    <li class="changelog-list-item is-version">
+        <a href="#2.0.0-2021-07-30">
+            <span class="anchor" id="2.0.0-2021-07-30"></span>
+            <span class="tag is-primary is-large has-text-weight-bold">
+                2.0.0
+            </span>
+        </a>
+        <span class="release-date is-uppercase has-text-weight-bold is-size-5">
+            30 July 2021
+        </span>
+    </li>
+    <li class="changelog-list-item is-version">
+        <a href="#1.1.0-2021-07-28">
+            <span class="anchor" id="1.1.0-2021-07-28"></span>
+            <span class="tag is-primary is-large has-text-weight-bold">
+                1.1.0
+            </span>
+        </a>
+        <span class="release-date is-uppercase has-text-weight-bold is-size-5">
+            28 July 2021
+        </span>
+    </li>
+    <li class="changelog-list-item is-version">
+        <a href="#1.0.0-2021-07-27">
+            <span class="anchor" id="1.0.0-2021-07-27"></span>
+            <span class="tag is-primary is-large has-text-weight-bold">
+                1.0.0
+            </span>
+        </a>
+        <span class="release-date is-uppercase has-text-weight-bold is-size-5">
+            27 July 2021
+        </span>
+    </li>
+</ul>
 `);
 });

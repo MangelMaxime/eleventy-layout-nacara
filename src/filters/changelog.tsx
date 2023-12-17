@@ -102,12 +102,9 @@ const Categories = ({ categories }: ICategoriesProps) => {
     let security = ""
     let others = []
 
-    console.log("categories", categories)
-
     for (const [categoryType, body] of categories) {
         switch (categoryType.kind) {
             case "added":
-                console.log(`added ${body}`)
                 added += body;
                 break;
 
@@ -165,8 +162,6 @@ const Categories = ({ categories }: ICategoriesProps) => {
     if (security !== "") {
         res.push(<Category category={CategoryType.security} body={security} />);
     }
-
-    console.log("res", res)
 
     for (const { categoryType, body } of others) {
         res.push(<Category category={categoryType} body={body} />);

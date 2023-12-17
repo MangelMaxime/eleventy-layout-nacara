@@ -9,26 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 1.0.0-beta-001 - 2021-07-29
 
-### Deprecated
+### Category C
 
-- Deprecated - Item 1
+- Item 1
 
-### Removed
+### A
 
-- Removed - Item 1
+- Item 1
 
-### Security
+### B
 
-- Security - Item 1
-
-### Changed
-
-- Changed - Item 1
-
-### Fixed
-
-- Fixed - Item 1
-
-### Added
-
-- Added - Item 1
+- Item 1

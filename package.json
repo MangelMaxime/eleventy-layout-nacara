@@ -5,8 +5,8 @@
     "description": "",
     "main": "dist/index.js",
     "scripts": {
-        "test": "npx tsc && cd tests && npx jest",
-        "test-watch-jest": "cd tests && npx jest --watch",
+        "test": "npx tsc && cd tests && npx vitest run",
+        "test-watch-jest": "cd tests && npx vitest --ui",
         "test-watch-typescript": "npx tsc --watch",
         "test-watch": "npx concurrently --handle-input -p none npm:test-watch-*",
         "demo": "cd docs && npx @11ty/eleventy",
@@ -24,7 +24,6 @@
     "license": "MIT",
     "devDependencies": {
         "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.0",
-        "@jest/globals": "^29.7.0",
         "@types/changelog-parser": "^2.8.4",
         "@types/cross-spawn": "^6.0.6",
         "@types/fs-extra": "^11.0.4",
@@ -36,13 +35,10 @@
         "chokidar": "^3.5.3",
         "concurrently": "^8.2.2",
         "debug": "^4.3.4",
-        "jest": "^29.7.0",
-        "jest-extended": "^4.0.2",
         "nodemon": "^3.0.2",
         "prettier": "2.8.7",
         "primjs": "^0.6.5",
         "shx": "^0.3.4",
-        "ts-jest": "^29.1.1",
         "typescript": "^5.3.3",
         "vitest": "^1.0.4"
     },
