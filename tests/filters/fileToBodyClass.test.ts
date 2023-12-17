@@ -1,4 +1,4 @@
-import { expect, test } from "@jest/globals";
+import { expect, test } from 'vitest'
 import fileToBodyClass from "../../src/filters/fileToBodyClass";
 
 test("returns 'page--' followed by the path to the page snakified", async () => {

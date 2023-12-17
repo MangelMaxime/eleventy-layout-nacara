@@ -5,7 +5,7 @@ import { createSVGWindow } from "svgdom";
 const window = createSVGWindow();
 const document = window.document;
 import { SVG, registerWindow } from "@svgdotjs/svg.js";
-import simpleIcons from "simple-icons";
+import * as simpleIcons from 'simple-icons';
 import fs from "fs/promises";
 import path from "path";
 

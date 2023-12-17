@@ -1,4 +1,4 @@
-import { expect, test } from "@jest/globals";
+import { expect, test } from 'vitest'
 import { parse } from "../../src/changelog-parser/parser";
 import type { Changelog } from "../../src/changelog-parser/parser";
 

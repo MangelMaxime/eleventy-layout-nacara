@@ -3,7 +3,7 @@ import path from "path";
 import fs from "fs-extra";
 import { parse } from "./../changelog-parser/parser";
 import type { Changelog, Version } from "./../changelog-parser/parser";
-import type * as CategoryType from "./../changelog-parser/categories";
+import * as CategoryType from "./../changelog-parser/categories";
 import { categoryToText } from "./../changelog-parser/categories";
 import slugify from "slugify";
 import dayjs from "dayjs";
@@ -44,7 +44,7 @@ const Version = ({ version }: IVersionProps) => {
 
 interface ICategoryProps {
     category: CategoryType.Category;
-    body: CategoryType.Body[];
+    body: string;
 }
 
 const getCategoryColor = (category: CategoryType.Category) => {
@@ -66,27 +66,6 @@ const getCategoryColor = (category: CategoryType.Category) => {
     }
 };
 
-interface ICategoryBodyProps {
-    elements: CategoryType.Body[];
-}
-
-const CategoryBody = ({ elements }: ICategoryBodyProps) => {
-    return elements.map((element: CategoryType.Body) => {
-        switch (element.kind) {
-            case "text":
-                return <div dangerouslySetInnerHTML={{ __html: element.text }}></div>;
-            case "list-item":
-                return (
-                    <li class="changelog-list-item">
-                        <div class="changelog-list-item-text">
-                            <span dangerouslySetInnerHTML={{ __html: element.text }}></span>
-                        </div>
-                    </li>
-                );
-        }
-    });
-};
-
 const Category = ({ category, body }: ICategoryProps) => {
     const tagColor = getCategoryColor(category);
     const tagText = categoryToText(category);
@@ -101,19 +80,95 @@ const Category = ({ category, body }: ICategoryProps) => {
                 </span>
             </li>
 
-            <CategoryBody elements={body} />
+            <li class="changelog-list-item changelog-version-body" dangerouslySetInnerHTML={{ __html: body }}>
+            </li>
         </div>
     );
 };
 
 interface ICategoriesProps {
-    categories: Map<CategoryType.Category, CategoryType.Body[]>;
+    categories: Map<CategoryType.Category, string>;
 }
 
 const Categories = ({ categories }: ICategoriesProps) => {
     let res = [];
 
+    // Sort the categories by kind
+    let added = ""
+    let changed = ""
+    let deprecated = ""
+    let removed = ""
+    let fixed = ""
+    let security = ""
+    let others = []
+
+    console.log("categories", categories)
+
     for (const [categoryType, body] of categories) {
+        switch (categoryType.kind) {
+            case "added":
+                console.log(`added ${body}`)
+                added += body;
+                break;
+
+            case "changed":
+                changed += body;
+                break;
+
+            case "deprecated":
+                deprecated += body;
+                break;
+
+            case "removed":
+                removed += body;
+                break;
+
+            case "fixed":
+                fixed += body;
+                break;
+
+            case "security":
+                security += body;
+                break;
+
+            default:
+                others.push({
+                    categoryType,
+                    body
+                })
+        }
+    }
+
+    // Unkown categories are sorted alphabetically
+    others = others.sort((a, b) => a.categoryType > b.categoryType ? 1 : -1)
+
+    if (added !== "") {
+        res.push(<Category category={CategoryType.added} body={added} />);
+    }
+
+    if (changed !== "") {
+        res.push(<Category category={CategoryType.changed} body={changed} />);
+    }
+
+    if (deprecated !== "") {
+        res.push(<Category category={CategoryType.deprecated} body={deprecated} />);
+    }
+
+    if (removed !== "") {
+        res.push(<Category category={CategoryType.removed} body={removed} />);
+    }
+
+    if (fixed !== "") {
+        res.push(<Category category={CategoryType.fixed} body={fixed} />);
+    }
+
+    if (security !== "") {
+        res.push(<Category category={CategoryType.security} body={security} />);
+    }
+
+    console.log("res", res)
+
+    for (const { categoryType, body } of others) {
         res.push(<Category category={categoryType} body={body} />);
     }
 
@@ -122,28 +177,17 @@ const Categories = ({ categories }: ICategoriesProps) => {
 
 const TemplateRender = require("@11ty/eleventy/src/TemplateRender");
 
-async function compile(
+async function compileMarkdown(
     content: string,
-    templateLang: string,
     { templateConfig, extensionMap }: any
 ) {
-    // Breaking change in 2.0+, previous default was `html` and now we default to the page template syntax
-    // if (!templateLang) {
-    //     templateLang = this.page.templateSyntax;
-    // }
+    let inputDir = templateConfig?.dir?.input;
 
-    // let inputDir = templateConfig?.dir?.input;
+    let tr = new TemplateRender("md", inputDir, templateConfig);
+    tr.extensionMap = extensionMap;
+    await tr.setEngineOverride("md");
 
-    // let tr = new TemplateRender(templateLang, inputDir, templateConfig);
-    // tr.extensionMap = extensionMap;
-    // if (templateLang) {
-    //     await tr.setEngineOverride(templateLang);
-    // } else {
-    //     await tr.init();
-    // }
-
-    // return tr.getCompiledTemplate(content);
-    return content;
+    return tr.getCompiledTemplate(content);
 }
 
 /**
@@ -164,18 +208,9 @@ export default function changelogFilter(eleventyConfig: any) {
         extensionMap = map;
     });
 
-    // console.log(eleventyConfig)
-    // console.log(eleventyConfig.constructor.name)
-    // console.log(eleventyConfig?.dir?.input)
-
     return async function (this: any, pages: any[]) {
-        let res = await compile("* Item 1", "md", {
-            templateConfig: eleventyConfig,
-            extensionMap,
-        });
-        // console.log(res(this.ctx))
         const ctx = this.ctx;
-        // console.log(this)
+
         if (this.ctx.changelog_path) {
             const changelogFilePath = path.join(
                 this.ctx.page.absolutePath,
@@ -185,25 +220,16 @@ export default function changelogFilter(eleventyConfig: any) {
             const fileContent = await fs.readFile(changelogFilePath, "utf8");
             const changelog: Changelog = parse(fileContent);
 
+            // Transform the markdown to HTML
+            // Needs to happen before the JSX rendering as async is not well
+            // supported in Nano JSX at least not in an easy way for us
             for (const version of changelog.versions) {
                 for (const [categoryType, body] of version.categories) {
-                    for (const element of body) {
-                        // switch (element.kind) {
-                        //     case "text":
-                        //         const fn1 = await compile(element.text, "md", {
-                        //             templateConfig: eleventyConfig,
-                        //             extensionMap,
-                        //         })
-                        //         element.text = fn1(ctx);
-
-                        //     case "list-item":
-                        //         const fn2 = await compile(element.text, "md", {
-                        //             templateConfig: eleventyConfig,
-                        //             extensionMap,
-                        //         })
-                        //         element.text = fn2(ctx);
-                        // }
-                    }
+                    const compileMarkdownFn = await compileMarkdown(body, {
+                        templateConfig: eleventyConfig,
+                        extensionMap,
+                    })
+                    version.categories.set(categoryType, compileMarkdownFn(ctx));
                 }
             }
 
@@ -212,7 +238,7 @@ export default function changelogFilter(eleventyConfig: any) {
                     {changelog.versions.map((entry) => (
                         <>
                             <Version version={entry} />
-                            {/* <Categories categories={entry.categories} /> */}
+                            <Categories categories={entry.categories} />
                         </>
                     ))}
                 </ul>

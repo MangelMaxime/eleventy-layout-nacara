@@ -1,4 +1,4 @@
-import { expect, test } from "@jest/globals";
+import { expect, test } from 'vitest'
 const Eleventy = require("@11ty/eleventy");
 import { formatHTML } from "../utils/_formatHTML";
 

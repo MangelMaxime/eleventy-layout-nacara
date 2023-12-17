@@ -1,4 +1,4 @@
-import { expect, test } from "@jest/globals";
+import { expect, test } from 'vitest'
 import addContentHash from "../../src/filters/addContentHash";
 
 test("returns the provided path suffixed with the hash of the file content", async () => {

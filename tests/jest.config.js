@@ -14,6 +14,5 @@ module.exports = {
     watchPathIgnorePatterns: [
         "./fixtures/"
     ],
-    globalSetup: "./utils/globalSetup.js",
-    setupFilesAfterEnv: ["jest-extended/all"]
+    globalSetup: "./utils/globalSetup.js"
 };

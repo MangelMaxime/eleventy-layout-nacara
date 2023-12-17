@@ -1,4 +1,4 @@
-import { expect, test } from "@jest/globals";
+import { expect, test } from 'vitest'
 import toIconFilterBuilder from "../../src/filters/toIcon";
 
 test("supports Lucide icons out of the box", async () => {

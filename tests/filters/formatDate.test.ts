@@ -1,4 +1,4 @@
-import { expect, test } from "@jest/globals";
+import { expect, test } from 'vitest'
 import formatDate from "../../src/filters/formatDate";
 
 test("works for Date based on UTC time", async () => {

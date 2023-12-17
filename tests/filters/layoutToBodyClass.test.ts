@@ -1,4 +1,4 @@
-import { expect, test } from "@jest/globals";
+import { expect, test } from 'vitest'
 import layoutToBodyClass from "../../src/filters/layoutToBodyClass";
 
 test("returns 'layout--' followed by the path to the layout snakified", async () => {

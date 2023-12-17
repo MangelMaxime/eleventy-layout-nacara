@@ -1,290 +1,11 @@
 # Changelog
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
-
-## 1.6.0 - 2022-03-25
-
-### Changed
-
-* Remove unused middleware
-* On redirection based on the `BaseUrl` add a query params to the URL allowing us to detect already redirected URLs
-
-    This is important to support url of the form `/Fable.Form/Fable.Form/introduction.html` where `Fable.Form` is the `BaseUrl`.
-
-    Prior to this fix, the url was being redirected twice and ended up to `/introduction.html` instead of `/Fable.Form/introduction.html`.
-
-* Fix #154: Clear the console when the live reload websocket is trying to reconnect
-
-### Added
-
-* Fix #156: Create a `gitignore` file in the destination folder
-
-## 1.5.1 - 2021-12-05
-
-### Fixed
-
-* Better detect front-matter section in F# literate file to avoid capturing direct next block comment.
-
-## 1.5.0 - 2021-12-02
-
-### Fixed
-
-* Fix #143: Make the F# literate front-matter less strict
-
-## 1.4.2 - 2021-11-21
-
-### Fixed
-
-* Improve Windows support for `afterClean` spawn process
-
-## 1.4.1 - 2021-11-21
-
-### Fixed
-
-* Change the `run` hook name to `afterClean`. This was a relica coming from the development.
-
-## 1.4.0 - 2021-11-20
-
-### Added
-
-* Add support for "Literate F#" files
-
-### Fixed
-
-* Fix #139: Don't crash on invalid menu.json file
-* Fix #133: In watch mode, don't crash on invalid JS/JSX file
-
-## 1.3.1 - 2021-11-09
-
-### Fixed
-
-* Run `build` if no command is specified
-
-## 1.3.0 - 2021-11-09
-
-### Added
-
-* Add a new option `--afterClean` allowing the user to launch a command after Nacara clean the output folder.
-
-    Example usage:
-
-    If you are not using SCSS to generate your style but TailwindCSS you can hook it up here in the Nacara process.
-
-### Changed
-
-* Fix #134: Trigger `live-reload` mechanism by watching the output folder.
-
-    Example usage:
-
-    This allows the user to generates their CSS files externally from Nacara
-
-## 1.2.0 - 2021-11-08
-
-### Fixed
-
-* Detect the Node.JS version and use `fs.rm` or `fs.rmdir` depending on the version.
-
-    This avoid warning about `fs.rmdir` being deprecated in the future.
-
-* Fix missing `fable_modules` folder from `dist`
-
-## 1.1.0 - 2021-11-04
-
-### Changed
-
-* Provide the `relativePath` to `unified`.
-
-    This is required for `remark-code-import` plugins to work.
-
-## 1.0.0 - 2021-10-28
-
-### Added
-
-* Release v1.0.0
-
-## 1.0.0-beta-023 - 2021-10-28
-
-### Fixed
-
-* Check if a directory exist before executing `Directory.rmdir`. Since Node.js v16 it generate an error if the directory doesn't exist
-
-## 1.0.0-beta-022 - 2021-10-26
-
-### Fixed
-
-* Fix detection of `nacara.config.json` it was a relicat from a test
-
-## 1.0.0-beta-021 - 2021-10-26
-
-### Added
-
-* Support both `nacara.config.json` and `nacara.config.js` as the config file.
-
-    The main goal is to have access to comments makking it easier for people to use the template.
-
-## 1.0.0-beta-020 - 2021-09-30
-
-### Fixed
-
-* Force to display `nacara` as the script name when displaying help
-* Fix dynamic load of module from absolute and relative path for Windows
-
-## 1.0.0-beta-019 - 2021-09-30
-
-### Added
-
-* Add support for the partial inside the dropdowns
-
-## 1.0.0-beta-018 - 2021-09-28
-
-### Added
-
-* Fix #120: Add support for watching layout files changes
-
-### Fixed
-
-* Fix live reload for the index page it was never reloading
-
-## 1.0.0-beta-017 - 2021-09-28
-
-### Added
-
-* Fix #105: Re-add support for JS/JSX for both partials and layouts
-
-## 1.0.0-beta-016 - 2021-09-26
-
-### Fixed
-
-* Add a default command so if Nacara is run without a command, it build the website
-
-## 1.0.0-beta-015 - 2021-09-26
-
-### Changed
-
-* Fix #44: Move the "site metadata info" into a siteMetadata property in `nacara.config.json` (by @mabasic)
-* Move the NPM package to be a pure ESM package
-
-## 1.0.0-beta-014 - 2021-08-23
-
-### Fixed
-
-* Fix #80: Fix pages cache update, depending on the pages order, it could erase the "found" boolean
-
-## 1.0.0-beta-013 - 2021-08-21
-
-### Added
-
-* Add `clean` command
-* Fix #8: Add `favIcon` property to `nacara.config.json`
-* Fix #70: Generate a .nojekyll file on production build
-* Fix #96: Add partials support
-* Fix #77: Add footer support
-* Fix #2: Restart Nacara when changes to `nacara.config.json` are detected
-
-### Changed
-
-* Clean the output folder before `build` and `watch`
-
-### Fixed
-
-* Fix #22: Make navigation buttons display on top of each other when on mobile display
-* Fix #67: Nacara crash if a folder under the source folder is empty
-
-## 1.0.0-beta-012 - 2021-08-21
-
-### Added
-
-* Fix #68: Add `serve` command
-* Add `--version` argument
-
-### Changed
-
-* Fix #69: Change the default source folder from `docsrc` to `docs`
-* Fix #71: Change the default output folder from `docs` to `docs_deploy`
-* Change `--watch` argument to `watch` command
-
-## 1.0.0-beta-011 - 2021-08-21
-
-### Added
-
-* Load `@babel/register` if a `babel.config.json` is found.
-
-    It is up to you to install `@babel/register` and the required presets.
-
-### Changed
-
-* Start WebServer after setting up the websocket
-
-## 1.0.0-beta-010 - 2021-08-19
-
-### Fixed
-
-* Answer on websocket connection, because it was causing the websocket to be really slow to connect
-
-## 1.0.0-beta-009 - 2021-08-19
-
-### Changed
-
-* Reword category to section to have it consistent everywhere.
-
-    You need to replace `category` with `section` in both `menu.json` and `nacara.config.json`
-
-* Wait only `200ms` instead of `2s` before considering a file stable. This makes Nacara detect changes faster and improve responsivenes
-
-### Removed
-
-* Remove `--verbose` option
-
-## 1.0.0-beta-008 - 2021-08-18
-
-### Fixed
-
-* Include the `scripts` folder into the published package
-
-## 1.0.0-beta-007 - 2021-08-18
-
-### Added
-
-* Add `$menu-list-spacing` SCSS variable
-
-### Changed
-
-* Make chokidar wait for stable file before notifying a change
-* Fix #53: Remove live-server dependency instead use express and a custom implementation
-
-### Fixed
-
-* Fix #62: Rework menu alignment and margin to have a better display
-
-## 1.0.0-beta-006 - 2021-08-01
-
-### Changed
-
-* Relax Nacara requirements on npm engine from `7.13.0` to `7.0.0`
-
-## 1.0.0-beta-005 - 2021-08-01
-
-## 1.0.0-beta-004 - 2021-07-30
-
-### Changed
-
-* Publish `.fable` folder
-
-## 1.0.0-beta-003 - 2021-07-30
-
-### Changed
-
-* Publish `.fable` folder
-
-## 1.0.0-beta-002 - 2021-07-30
-
-### Changed
-
-* Publish `.fable` folder
 
 ## 1.0.0-beta-001 - 2021-07-29
 
@@ -293,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Add `excludeFromNavigation` property to all the layout allowing to opt-out a page from the Next / Previous button generation
 * Recompute the known pages if the attributes of a page change.
 
-This ensure that the information using the attributes like the menu or the next / previous buttons are up to date on all the page
+    This ensure that the information using the attributes like the menu or the next / previous buttons are up to date on all the page
 
 * Add copy button to code blocks
 * Add `$textual-steps-color` color SCSS variable
@@ -347,7 +68,7 @@ This ensure that the information using the attributes like the menu or the next 
 * Remove plugins property from the config file. Now the layouts can extends their own version of markdown-it to meet their needs
 * Remove the `menu` property from the config file
 
-Right now Windows user needs to install make or use Gitpod. In the future, a `make.bat` will be available but I don't have time to add it right now.
+    Right now Windows user needs to install make or use Gitpod. In the future, a `make.bat` will be available but I don't have time to add it right now.
 
 
 
@@ -357,7 +78,7 @@ Right now Windows user needs to install make or use Gitpod. In the future, a `ma
 
 * When Nacara encounter an unknown file in build mode skip it and trigger the next process.
 
-It was stopping the whole generation causing problem is the user hosted some PNG files in the source folder for example.
+    It was stopping the whole generation causing problem is the user hosted some PNG files in the source folder for example.
 
 ### Changed
 
@@ -416,17 +137,17 @@ It was stopping the whole generation causing problem is the user hosted some PNG
 
 * Responsive mode is now implemented supported in the standard layout
 
-<img style="width: 75%; margin-left: 12.5%;" src="/Nacara/assets/changelog/0_2_0/desktop_preview.png" alt="Desktop preview">
-<br/>
-<br/>
-<div class="has-text-weight-bold has-text-centered">Desktop preview</div>
-<br/>
+    <img style="width: 75%; margin-left: 12.5%;" src="https://mangelmaxime.github.io/Nacara/assets/changelog/0_2_0/desktop_preview.png" alt="Desktop preview">
+    <br/>
+    <br/>
+    <div class="has-text-weight-bold has-text-centered">Desktop preview</div>
+    <br/>
 
-<img style="width: 75%; margin-left: 12.5%;" src="/Nacara/assets/changelog/0_2_0/touch_preview.gif" alt="Touchscreen preview">
-<br/>
-<br/>
-<div class="has-text-weight-bold has-text-centered">Desktop preview</div>
-<br/>
+    <img style="width: 75%; margin-left: 12.5%;" src="https://mangelmaxime.github.io/Nacara/assets/changelog/0_2_0/desktop_preview.png" alt="Touchscreen preview">
+    <br/>
+    <br/>
+    <div class="has-text-weight-bold has-text-centered">Desktop preview</div>
+    <br/>
 
 * Markdown plugins are now configurable via `plugins.markdown` in `nacara.js`
 

@@ -1,15 +1,3 @@
-export type ListItem = {
-    kind: "list-item";
-    text: string;
-};
-
-export type Text = {
-    kind: "text";
-    text: string;
-};
-
-export type Body = ListItem | Text;
-
 export type Added = {
     kind: "added";
 };
@@ -72,6 +60,13 @@ export function categoryFromText(text: string): Category {
             return { kind: "unknown", name: text };
     }
 }
+
+export const added = categoryFromText("added");
+export const changed = categoryFromText("changed");
+export const deprecated = categoryFromText("deprecated");
+export const removed = categoryFromText("removed");
+export const fixed = categoryFromText("fixed");
+export const security = categoryFromText("security");
 
 export function categoryToText(category: Category): string {
     switch (category.kind) {

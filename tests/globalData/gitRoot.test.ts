@@ -1,4 +1,4 @@
-import { expect, test } from "@jest/globals";
+import { expect, test } from 'vitest'
 import globalData from "../../src/globalData";
 
 test("should returns a non empty string", async () => {

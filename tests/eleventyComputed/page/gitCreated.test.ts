@@ -1,4 +1,4 @@
-import { expect, test } from "@jest/globals";
+import { expect, test } from 'vitest'
 import gitCreated from "../../../src/eleventyComputed/page/gitCreated";
 import fs from "fs-extra";
 import globalData from "../../../src/globalData";

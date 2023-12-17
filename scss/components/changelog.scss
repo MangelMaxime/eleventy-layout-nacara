@@ -75,9 +75,22 @@ $changelog-no-category-tag-width: 2rem;
                 width: $changelog-tag-width;
             }
 
-            .changelog-list-item-text {
+            .changelog-details {
+                width: 100%;
+                margin-left: calc(#{$changelog-tag-width} + 1rem);
+            }
+        }
+
+        li.changelog-version-body {
+            ul {
+                list-style-type: none;
+                padding: 0;
+            }
+
+            li {
                 margin-left: calc(#{$changelog-tag-width} + 1rem);
                 position: relative;
+                padding: .5rem 0;
 
                 &::before {
                     content: '\f054';
@@ -87,12 +100,9 @@ $changelog-no-category-tag-width: 2rem;
                     position: absolute;
                     left: -2rem;
                 }
+
             }
 
-            .changelog-details {
-                width: 100%;
-                margin-left: calc(#{$changelog-tag-width} + 1rem);
-            }
         }
     }
 }
