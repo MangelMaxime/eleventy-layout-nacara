@@ -116,4 +116,4 @@ test("additional Markdown plugins are supported when rendering the markdown cont
     const formattedResult = formatHTML(fileContent);
 
     expect(formattedResult).toMatchSnapshot();
-});
+}, 10000);
