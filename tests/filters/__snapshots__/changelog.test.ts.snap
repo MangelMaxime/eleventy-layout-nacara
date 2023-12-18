@@ -1,5 +1,48 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`additional Markdown plugins are supported when rendering the markdown content 1`] = `
+"<ul class="changelog-list">
+    <li class="changelog-list-item is-version">
+        <a href="#1.0.0-2021-07-27">
+            <span class="anchor" id="1.0.0-2021-07-27"></span>
+            <span class="tag is-primary is-large has-text-weight-bold">
+                1.0.0
+            </span>
+        </a>
+        <span class="release-date is-uppercase has-text-weight-bold is-size-5">
+            27 July 2021
+        </span>
+    </li>
+    <div>
+        <li class="changelog-list-item">
+            <span
+                class="tag changelog-list-item-category is-medium has-text-weight-bold is-success"
+            >
+                Added
+            </span>
+        </li>
+        <li class="changelog-list-item changelog-version-body">
+            <h4 id="JavaScript" tabindex="-1">
+                JavaScript
+                <a class="header-anchor" href="#JavaScript">#</a>
+            </h4>
+            <ul>
+                <li>
+                    <p>Code block</p>
+                    <pre
+                        class="language-fs"
+                    ><code class="language-fs"><span class="token keyword">let</span> foo <span class="token operator">=</span> 'bar'<span class="token punctuation">;</span></code></pre>
+                    <pre
+                        class="language-javascript"
+                    ><code class="language-javascript"><span class="token keyword">const</span> foo <span class="token operator">=</span> <span class="token string">'bar'</span><span class="token punctuation">;</span></code></pre>
+                </li>
+            </ul>
+        </li>
+    </div>
+</ul>
+"
+`;
+
 exports[`all the versions are rendered 1`] = `
 "<ul class="changelog-list">
     <li class="changelog-list-item is-version">

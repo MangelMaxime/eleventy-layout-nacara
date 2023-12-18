@@ -1,6 +1,8 @@
 import { expect, test } from 'vitest'
 const Eleventy = require("@11ty/eleventy");
 import { formatHTML } from "../utils/_formatHTML";
+import { exec } from 'teen_process';
+import fs from "fs/promises";
 
 test("known categories are rendered in a fixed order", async () => {
     const elev = new Eleventy(
@@ -93,6 +95,25 @@ test("body of a category is rendered convert from markdown to HTML", async () =>
             (item: any) => item.url === "/docs/changelog/"
         );
     const formattedResult = formatHTML(result.content);
+
+    expect(formattedResult).toMatchSnapshot();
+});
+
+test("additional Markdown plugins are supported when rendering the markdown content", async () => {
+    // Run eleventy as a process because there seems to be a bug / missing API
+    // when trying to use the `Eleventy` class directly in this test.
+    await exec("npx", [ "@11ty/eleventy" ], {
+        cwd: "./fixtures/changelog-5/",
+    });
+
+    const fileContent = await fs.readFile(
+        "./fixtures/changelog-5/_site/docs/changelog/index.html",
+        {
+            encoding: "utf-8",
+        }
+    );
+
+    const formattedResult = formatHTML(fileContent);
 
     expect(formattedResult).toMatchSnapshot();
 });
