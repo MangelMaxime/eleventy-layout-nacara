@@ -28,6 +28,7 @@
         "@types/cross-spawn": "^6.0.6",
         "@types/fs-extra": "^11.0.4",
         "@types/markdown-it": "^13.0.7",
+        "@types/markdown-it-container": "^2.0.9",
         "@types/node": "^20.10.4",
         "@types/prettier": "2.7.2",
         "@vitest/ui": "^1.0.4",

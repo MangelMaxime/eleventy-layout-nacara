@@ -26,6 +26,6 @@ jobs:
       - name: Install and use custom pnpm version
         run: npm i -g pnpm
       - name: Install dependencies
-        run: npm install
+        run: pnpm install
       - name: Run the tests
         run: pnpm run test
