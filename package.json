@@ -4,6 +4,12 @@
     "version": "0.0.0",
     "description": "",
     "main": "dist/index.js",
+    "files": [
+        "dist",
+        "files",
+        "schemas",
+        "scss"
+    ],
     "scripts": {
         "test": "npx tsc && cd tests && npx vitest run",
         "test-watch-jest": "cd tests && npx vitest --ui",
