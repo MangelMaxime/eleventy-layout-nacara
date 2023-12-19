@@ -16,11 +16,31 @@ When displaying both the `page.getCreated` and `page.getModified` dates, you can
 **Usage**
 
 {% raw %}
+
 ```html
 {{ page.gitLastModified }}
 ```
+
 {% endraw %}
 
 generates
 
 {{ page.gitLastModified }}
+
+:::info {title="Important"}
+
+For this filter to work properly, you need to have the full git history of your project.
+
+If you are using a CI, it is possible that it only fetches part of the history by default.
+
+For exampe, for GitHub Actions, you need use `fetch-depth: 0`
+
+```yaml
+steps:
+    - uses: actions/checkout@v3
+    with:
+        # We need the full history for gitCreated/gitLastUpdated to works as expected
+        fetch-depth: 0
+```
+
+:::

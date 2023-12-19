@@ -25,7 +25,6 @@ generates
     <p class="text-center">
         This is a demo to show what the generated breadcrumb looks like.
     </p>
-
-    <!-- Include the footer components to render it -->
+    {# Include the footer components to render it #}
     {{ collections.all | nacara_breadcrumb | safe }}
 </div>

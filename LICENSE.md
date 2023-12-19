@@ -1,3 +1,5 @@
+<!-- markdownlint-disable-->
+
 MIT License
 
 Copyright (c) [2022] [Mangel Maxime]

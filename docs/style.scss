@@ -57,19 +57,6 @@ $body-size: 14px;
 @import "./../node_modules/bulma/bulma.sass";
 @import "./../scss/nacara.scss";
 
-// Begin gatsby-remark-vscode specific
-:root {
-    --grvsc-padding-v: 1.25rem;
-}
-
-// Make the code use the full width for when user use line highlighting
-.content {
-    pre > code {
-        width: 100%;
-    }
-}
-// End gatsby-remark-vscode specific
-
 // Override bulma
 .navbar {
     .navbar-dropdown {

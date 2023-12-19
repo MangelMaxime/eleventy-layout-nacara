@@ -32,9 +32,9 @@ if (document.readyState === "complete") {
     scrollMenuOrTableOfContentIfNeeded();
     // The page is not ready, wait for it to be ready
 } else {
-    document.onreadystatechange = () => {
+    document.addEventListener("readystatechange", () => {
         if (document.readyState === "complete") {
             scrollMenuOrTableOfContentIfNeeded();
         }
-    }
+    });
 }

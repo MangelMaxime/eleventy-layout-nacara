@@ -19,6 +19,7 @@ import { removeExtension } from "./utils/removeExtension";
 import eleventyComputed from "./eleventyComputed";
 import globalData from "./globalData";
 import markdownItAnchor from "markdown-it-anchor";
+import markdownItContainer from "markdown-it-container";
 import type MdLib from "markdown-it";
 const { EleventyRenderPlugin } = require("@11ty/eleventy");
 import slugify from 'slugify'
@@ -58,6 +59,39 @@ const stemifyMenu = (menu: Menu): Menu => {
         throw new Error("Unknown menu item type");
     });
 };
+
+const registerBulmaContainer = (mdLib : MdLib, containerName: string) => {
+    const regex = new RegExp(`^${containerName}\\s*({title="(?<title>.*)"})?$`);
+
+    mdLib.use(markdownItContainer, containerName, {
+        validate: function(params : string) {
+            console.log(params);
+            console.log(params.trim().match(regex));
+            return params.trim().match(regex);
+        },
+        render: function (tokens: any, idx: any) {
+            var m : RegExpMatchArray | null = tokens[idx].info.trim().match(regex);
+
+            if (tokens[idx].nesting === 1) {
+                if (m && m.groups?.title) {
+                    return `<article class="message is-${containerName}">
+    <div class="message-header">
+    <p>${mdLib.utils.escapeHtml(m.groups?.title)}</p>
+    </div>
+    <div class="message-body">`;
+                } else {
+                // opening tag
+                return `<article class="message is-${containerName}"><div class="message-body">`;
+                }
+
+            } else {
+                // closing tag
+                return '</div>\n</article>\n';
+            }
+        }
+    });
+}
+
 
 function configFunction(eleventyConfig: any, options?: Options) {
     let isFirstBuild = true;
@@ -198,12 +232,21 @@ function configFunction(eleventyConfig: any, options?: Options) {
     // Add a markdown-it plugin to add anchors to headings
     // This is used to generate the table of contents
     eleventyConfig.amendLibrary("md", (mdLib: MdLib) => {
-        mdLib.use(markdownItAnchor, {
-            permalink: markdownItAnchor.permalink.linkInsideHeader({
-                placement: "after",
-            }),
-            slugify: (s: string) => slugify(s)
-        });
+        // Naive way of checking if the user is using markdown-it
+        if (mdLib.use !== undefined) {
+            mdLib.use(markdownItAnchor, {
+                permalink: markdownItAnchor.permalink.linkInsideHeader({
+                    placement: "after",
+                }),
+                slugify: (s: string) => slugify(s)
+            });
+
+            registerBulmaContainer(mdLib, "primary");
+            registerBulmaContainer(mdLib, "info");
+            registerBulmaContainer(mdLib, "success");
+            registerBulmaContainer(mdLib, "warning");
+            registerBulmaContainer(mdLib, "danger");
+        }
     });
 
     eleventyConfig.addPassthroughCopy("assets");

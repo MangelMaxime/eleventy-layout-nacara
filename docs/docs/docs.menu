@@ -21,7 +21,8 @@
             "label": "Layouts",
             "items": [
                 "./layouts/base.md",
-                "./layouts/docs.md"
+                "./layouts/docs.md",
+                "./layouts/changelog.md"
             ]
         },
         {
@@ -32,6 +33,16 @@
                 "./components/footer.md",
                 "./components/menu.md",
                 "./components/previous-next-pagination.md"
+            ]
+        },
+        {
+            "type": "section",
+            "label": "Markdown",
+            "items": [
+                "./markdown/introduction.md",
+                "./markdown/block-container.md",
+                "./markdown/copy-button.md",
+                "./markdown/textual-steps.md"
             ]
         },
         {

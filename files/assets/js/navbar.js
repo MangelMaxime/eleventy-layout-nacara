@@ -10,6 +10,7 @@ const setupNavbarBurger = () => {
 
     if ($navbarBurgerDots !== null) {
         $navbarBurgerDots.addEventListener("click", (ev) => {
+            console.log("click");
             const $nacaraNavbarMenu = document.querySelector(
                 ".nacara-navbar-menu"
             );
@@ -156,11 +157,11 @@ if (document.readyState === "complete") {
     setupMobileMenu();
     // The page is not ready, wait for it to be ready
 } else {
-    document.onreadystatechange = () => {
+    document.addEventListener("readystatechange", () => {
         if (document.readyState === "complete") {
             setupNavbarBurger();
             setupNavbarDropdown();
             setupMobileMenu();
         }
-    };
+    });
 }

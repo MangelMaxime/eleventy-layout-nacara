@@ -1,9 +1,6 @@
 ---
 title: <code>page.gitCreated</code>
 layout: nacara/layouts/docs.njk
-toc:
-    from: 2
-    to: 6
 ---
 
 Returns the date of creation of the current page based on the first commit in git.
@@ -13,27 +10,31 @@ If the page was never committed, it returns `now`.
 **Usage**
 
 {% raw %}
+
 ```html
 {{ page.gitCreated }}
 ```
+
 {% endraw %}
 
 generates
 
 {{ page.gitCreated }}
 
-Code for creating the TOC stuff
+:::info {title="Important"}
 
-## Header 2
+For this filter to work properly, you need to have the full git history of your project.
 
-### Header 2.1
+If you are using a CI, it is possible that it only fetches part of the history by default.
 
-#### Header 2.1.1
+For exampe, for GitHub Actions, you need use `fetch-depth: 0`
 
-##### Header 2.1.1.1
+```yaml
+steps:
+    - uses: actions/checkout@v3
+    with:
+        # We need the full history for gitCreated/gitLastUpdated to works as expected
+        fetch-depth: 0
+```
 
-### Header 2.2
-
-## Header 3
-
-### Header 3.1
+:::

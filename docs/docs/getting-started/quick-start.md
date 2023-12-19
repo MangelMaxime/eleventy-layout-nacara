@@ -20,7 +20,7 @@ npm install eleventy-layout-nacara
 Register the plugin in your `.eleventy.js` file
 
 ```js
-const eleventyLayoutNacara = require("../dist/index.js");
+const eleventyLayoutNacara = require("@mangelmaxime/eleventy-layout-nacara");
 
 /** @param {import("@11ty/eleventy/src/UserConfig")} eleventyConfig */
 module.exports = function (eleventyConfig) {
@@ -55,15 +55,26 @@ In your Data folder, you need to at least the `nacaraMetadata` file
 }
 ```
 
-Code fend goes here:
-
+:::info
 Don't forget to adapt the differents properties to your needs.
+:::
 
 </li>
 
 <li>
 
-You are now ready to create your first page
+You can now use `nacara` features in your pages.
+
+For example, you can create a standard documentation page by using `nacara/layouts/docs.njk`
+
+```md
+---
+title: Docs
+layout: nacara/layouts/docs.njk
+---
+
+This is my first page
+```
 
 </li>
 

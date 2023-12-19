@@ -1,10 +1,9 @@
 {
     "$schema": "./../../schemas/footer-schema.json",
     "copyright": {
-        "startDate": "2021",
-        "attribution": "Elmish contributors"
+        "startDate": "2021"
     },
-    "text": "Built with <a class=\"is-underlined\" href=\"https://mangelmaxime.github.io/Nacara/\">eleventy-layout-nacara</a>",
+    "text": "Built with <a class=\"is-underlined\" href=\"https://github.com/mangelmaxime/eleventy-layout-nacara/\">eleventy-layout-nacara</a>",
     "sitemapSections": [
         {
             "title": "Project ressources",
@@ -12,37 +11,27 @@
                 {
                     "label": "Repository",
                     "icon": "lucide:file-code",
-                    "url": "https://github.com/elmish/elmish.github.io"
+                    "url": "https://github.com/mangelmaxime/eleventy-layout-nacara/"
                 },
                 {
                     "label": "License",
                     "icon": "lucide:copyright",
-                    "url": "https://github.com/elmish/elmish.github.io"
+                    "url": "https://github.com/MangelMaxime/eleventy-layout-nacara/blob/main/LICENSE.md"
                 }
             ]
         },
         {
-            "title": "Other Links",
+            "title": "Social",
             "items": [
                 {
-                    "label": "Fable",
-                    "icon": "assets:fable",
-                    "url": "https://github.com/elmish/elmish.github.io"
+                    "label": "Twitter",
+                    "icon": "simpleIcons:twitter",
+                    "url": "https://twitter.com/MangelMaxime"
                 },
                 {
-                    "label": "Fable Gitter",
-                    "icon": "simpleIcons:gitter",
-                    "url": "https://github.com/elmish/elmish.github.io"
-                },
-                {
-                    "label": "Fable Slack",
-                    "icon": "simpleIcons:slack",
-                    "url": ""
-                },
-                {
-                    "label": "F# Software Foundation",
-                    "icon": "assets:fsf",
-                    "url": "https://github.com/elmish/elmish.github.io"
+                    "label": "Patreon",
+                    "icon": "simpleIcons:patreon",
+                    "url": "https://www.patreon.com/MangelMaxime"
                 }
             ]
         }

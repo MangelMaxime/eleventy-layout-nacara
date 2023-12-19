@@ -21,7 +21,8 @@ layout: nacara/layouts/base.njk
 If you need to customize the layout, you can create a new layout and extend the base layout:
 
 {% raw %}
-```html
+
+```twig
 {# Tell Nunjucks to use the base layout #}
 {% extends "nacara/layouts/docs.njk" %}
 
@@ -34,6 +35,7 @@ If you need to customize the layout, you can create a new layout and extend the 
     {{ content | safe }}
 {% endblock %}
 ```
+
 {% endraw %}
 
 ## Body classes

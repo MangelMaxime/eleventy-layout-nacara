@@ -12,6 +12,9 @@ module.exports = function (eleventyConfig) {
     eleventyConfig.addPlugin(syntaxHighlight, {
         init: function ({ Prism }) {
             Prism.languages.fs = Prism.languages.fsharp;
+            // Prism.languages.njk = Prism.languages.twig;
+            // The line above does not work, so we have to do use `twig` directly
+            // the markdown files...
         }
     });
 

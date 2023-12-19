@@ -61,6 +61,10 @@
             {% include "nacara/components/footer.njk" %}
         {% endblock footer %}
 
+        {% if not disableCopyButton %}
+            {% set copyButtonScript = "/assets/nacara/js/copyButton.js" | add_content_hash %}
+            <script src="{{ copyButtonScript }}" defer="defer" type="module"></script>
+        {% endif %}
     </body>
 
 </html>
