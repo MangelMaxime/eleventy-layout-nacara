@@ -364,7 +364,7 @@ URL to navigate to
 
 ```json
 {
-    "$schema": "./../../schemas/footer-schema.json",
+    "$schema": "../../node_modules/@mangelmaxime/eleventy-layout-nacara/schemas/navbar-schema.json",
     "copyright": {
         "startDate": "2021",
         "attribution": "Elmish contributors"

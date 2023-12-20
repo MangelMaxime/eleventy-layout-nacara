@@ -1,6 +1,7 @@
 import Nano, { h, Fragment } from "nano-jsx";
 import path from "path";
 import { removeExtension } from "../utils/removeExtension";
+import { normalizeUrl } from "../utils/normalizeUrl";
 
 interface TocConfig {
     from: number;
@@ -113,7 +114,8 @@ const MenuItemPage = ({
 
     const isCurrentPage = currentPageStem === pageOfMenuItem.filePathStem;
 
-    const pageHref = pageOfMenuItem.data.baseUrl + pageOfMenuItem.data.page.url;
+    const outputPath = pageOfMenuItem.data.permalink ?? pageOfMenuItem.data.page.outputPath;
+    const pageHref = normalizeUrl(pageOfMenuItem.data.baseUrl + outputPath);
 
     // If we are on the current page, we render the TOC
     const tocElement = isCurrentPage ? (

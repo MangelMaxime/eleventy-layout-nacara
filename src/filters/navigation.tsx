@@ -1,6 +1,7 @@
 import Nano, { h, Fragment } from "nano-jsx";
 import path from "path";
 import { removeExtension } from "../utils/removeExtension";
+import { normalizeUrl } from "../utils/normalizeUrl";
 
 function flattenMenu(menu: Menu): FlatMenu {
     function flatten(menuItem: MenuItem): FlatMenu {
@@ -150,8 +151,12 @@ const PreviousPageButton = ({
     );
     const previousButtonSectionText = previousButtonSection?.label;
 
-    const previousButtonHref =
-        previousPageContext.data.baseUrl + previousPageContext.data.page.url;
+    const outputPath =
+        previousPageContext.data.permalink ??
+        previousPageContext.data.page.outputPath;
+    const previousButtonHref = normalizeUrl(
+        previousPageContext.data.baseUrl + outputPath
+    );
 
     return (
         <a
@@ -215,8 +220,12 @@ const NextPageButton = ({
     const nextButtonSection = tryFindSection(menu, nextPageRelativePath);
     const nextButtonSectionText = nextButtonSection?.label;
 
-    const nextButtonHref =
-        nextPageContext.data.baseUrl + nextPageContext.data.page.url;
+    const outputPath =
+        nextPageContext.data.permalink ?? nextPageContext.data.page.outputPath;
+
+    const nextButtonHref = normalizeUrl(
+        nextPageContext.data.baseUrl + outputPath
+    );
 
     return (
         <a

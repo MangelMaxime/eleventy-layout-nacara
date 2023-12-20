@@ -61,7 +61,7 @@ File: `docs/docs/nacaraMenu.json`
 
 ```json
 {
-    "$schema": "./../../schemas/menu-schema.json",
+    "$schema": "../../node_modules/@mangelmaxime/eleventy-layout-nacara/schemas/menu-schema.json",
     "items": [
         {
             "type": "page",

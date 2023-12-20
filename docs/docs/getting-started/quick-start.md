@@ -3,6 +3,17 @@ title: Quickstart
 layout: nacara/layouts/docs.njk
 ---
 
+Explain how to setup eleventy and say if you already have it setup, you can skip this step.
+
+npm install @11ty/eleventy
+
+Create a `docs` folder
+
+Create `.eleventy.js` file
+
+```js
+
+
 <ul class="textual-steps">
 
 <li>
@@ -10,7 +21,7 @@ layout: nacara/layouts/docs.njk
 Install `eleventy-layout-nacara`
 
 ```bash
-npm install eleventy-layout-nacara
+npm install @mangelmaxime/eleventy-layout-nacara
 ```
 
 </li>

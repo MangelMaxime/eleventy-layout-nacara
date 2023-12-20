@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+* Include page content in the `base` layout
+* Remove debug console.log from the **block container** function
+
 ## 0.1.0 - 2023-12-18
 
 ### Added

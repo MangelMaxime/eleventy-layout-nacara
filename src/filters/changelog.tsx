@@ -1,4 +1,4 @@
-import Nano, { h, Fragment, Suspense, Component } from "nano-jsx";
+import Nano, { h, Fragment } from "nano-jsx";
 import path from "path";
 import fs from "fs-extra";
 import { parse } from "./../changelog-parser/parser";
@@ -7,7 +7,6 @@ import * as CategoryType from "./../changelog-parser/categories";
 import { categoryToText } from "./../changelog-parser/categories";
 import slugify from "slugify";
 import dayjs from "dayjs";
-const { EleventyRenderPlugin } = require("@11ty/eleventy");
 interface IVersionProps {
     version: Version;
 }
@@ -170,21 +169,6 @@ const Categories = ({ categories }: ICategoriesProps) => {
     return res;
 };
 
-const TemplateRender = require("@11ty/eleventy/src/TemplateRender");
-
-async function compileMarkdown(
-    content: string,
-    { templateConfig, extensionMap }: any
-) {
-    let inputDir = templateConfig?.dir?.input;
-
-    let tr = new TemplateRender("md", inputDir, templateConfig);
-    tr.extensionMap = extensionMap;
-    await tr.setEngineOverride("md");
-
-    return tr.getCompiledTemplate(content);
-}
-
 /**
  * This function is a "generator" in the sense that it returns a function.
  *
@@ -197,14 +181,7 @@ async function compileMarkdown(
  * @returns
  */
 export default function changelogFilter(eleventyConfig: any) {
-    let extensionMap : any;
-
-    eleventyConfig.on("eleventy.extensionmap", (map: any) => {
-        extensionMap = map;
-    });
-
     return async function (this: any, pages: any[]) {
-        const ctx = this.ctx;
 
         if (this.ctx.changelog_path) {
             const changelogFilePath = path.join(
@@ -220,11 +197,8 @@ export default function changelogFilter(eleventyConfig: any) {
             // supported in Nano JSX at least not in an easy way for us
             for (const version of changelog.versions) {
                 for (const [categoryType, body] of version.categories) {
-                    const compileMarkdownFn = await compileMarkdown(body, {
-                        templateConfig: eleventyConfig,
-                        extensionMap,
-                    })
-                    version.categories.set(categoryType, compileMarkdownFn(ctx));
+                    const compiledBody = await eleventyConfig.getFilter("renderTemplate")(body, "md");
+                    version.categories.set(categoryType, compiledBody);
                 }
             }
 

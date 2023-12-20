@@ -29,12 +29,11 @@ exports[`additional Markdown plugins are supported when rendering the markdown c
             <ul>
                 <li>
                     <p>Code block</p>
-                    <pre
-                        class="language-fs"
-                    ><code class="language-fs"><span class="token keyword">let</span> foo <span class="token operator">=</span> 'bar'<span class="token punctuation">;</span></code></pre>
-                    <pre
-                        class="language-javascript"
-                    ><code class="language-javascript"><span class="token keyword">const</span> foo <span class="token operator">=</span> <span class="token string">'bar'</span><span class="token punctuation">;</span></code></pre>
+                    <article class="message is-warning">
+                        <div class="message-body">
+                            <p><em>here be dragons</em></p>
+                        </div>
+                    </article>
                 </li>
             </ul>
         </li>

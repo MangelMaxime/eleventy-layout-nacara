@@ -100,20 +100,22 @@ test("body of a category is rendered convert from markdown to HTML", async () =>
 });
 
 test("additional Markdown plugins are supported when rendering the markdown content", async () => {
-    // Run eleventy as a process because there seems to be a bug / missing API
-    // when trying to use the `Eleventy` class directly in this test.
-    await exec("npx", [ "@11ty/eleventy" ], {
-        cwd: "./fixtures/changelog-5/",
-    });
-
-    const fileContent = await fs.readFile(
-        "./fixtures/changelog-5/_site/docs/changelog/index.html",
+    const elev = new Eleventy(
+        "./fixtures/changelog-5/",
+        "./fixtures/changelog-5/_site",
         {
-            encoding: "utf-8",
+            configPath: "./fixtures/changelog-5/.eleventy.js",
         }
     );
 
-    const formattedResult = formatHTML(fileContent);
+    const json = await elev.toJSON();
+    const result =
+        json.find(
+            (item: any) => item.url === "/docs/changelog/"
+        );
+
+    // const formattedResult = formatHTML(fileContent);
+    const formattedResult = formatHTML(result.content);
 
     expect(formattedResult).toMatchSnapshot();
-}, 30000); // CI can be really slow sometimes...
+});

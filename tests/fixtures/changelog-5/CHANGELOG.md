@@ -15,10 +15,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * Code block
 
-    ```fs
-    let foo = 'bar';
-    ```
-
-    ```javascript
-    const foo = 'bar';
-    ```
+    ::: warning
+    *here be dragons*
+    :::

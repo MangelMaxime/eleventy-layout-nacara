@@ -3,6 +3,7 @@ import favIconFromEmojiFilter from "./filters/favIconFromEmoji";
 import addContentHash from "./filters/addContentHash";
 import fileToBodyClassFilter from "./filters/fileToBodyClass";
 import layoutToBodyClassFilter from "./filters/layoutToBodyClass";
+import addBaseUrlIfNoProtocol from "./filters/addBaseUrlIfNoProtocol";
 import toIconFilterBuilder, {
     Options as IconFilterBuilderOptions,
 } from "./filters/toIcon";
@@ -23,6 +24,7 @@ import markdownItContainer from "markdown-it-container";
 import type MdLib from "markdown-it";
 const { EleventyRenderPlugin } = require("@11ty/eleventy");
 import slugify from 'slugify'
+import { baseUrlRedirect } from "./middlewares/baseUrlRedirect";
 
 export interface Options {
     iconFilter?: IconFilterBuilderOptions;
@@ -65,8 +67,6 @@ const registerBulmaContainer = (mdLib : MdLib, containerName: string) => {
 
     mdLib.use(markdownItContainer, containerName, {
         validate: function(params : string) {
-            console.log(params);
-            console.log(params.trim().match(regex));
             return params.trim().match(regex);
         },
         render: function (tokens: any, idx: any) {
@@ -150,6 +150,7 @@ function configFunction(eleventyConfig: any, options?: Options) {
     );
 
     eleventyConfig.addFilter("fav_icon_from_emoji", favIconFromEmojiFilter);
+    eleventyConfig.addFilter("add_base_url_if_no_protocol", addBaseUrlIfNoProtocol);
     // eleventyConfig.addFilter("format_date_to_utc", formatDateFilter);
     // eleventyConfig.addFilter("format_datetime_to_utc", formatDateTimeFilter);
     eleventyConfig.addFilter("format_date", formatDateFilter);
@@ -159,13 +160,6 @@ function configFunction(eleventyConfig: any, options?: Options) {
     eleventyConfig.addAsyncFilter(
         "to_icon",
         toIconFilterBuilder(options?.iconFilter)
-    );
-
-    eleventyConfig.addPairedShortcode(
-        "user",
-        function (content: string, firstName: string, lastName: string) {
-            return content;
-        }
     );
 
     eleventyConfig.addFilter("nacara_menu", menuFilter);
@@ -204,6 +198,8 @@ function configFunction(eleventyConfig: any, options?: Options) {
         }
     );
 
+    let baseUrl = "";
+
     eleventyConfig.addDataExtension(
         "nacara",
         (contents: string, filePath: string) => {
@@ -220,6 +216,8 @@ function configFunction(eleventyConfig: any, options?: Options) {
                         nacara: parsed,
                     };
                 case "metadata.nacara":
+                    // Capture baseUrl to forward it to the middleware
+                    baseUrl = parsed.baseUrl;
                     return {
                         nacara: parsed,
                     };
@@ -248,6 +246,14 @@ function configFunction(eleventyConfig: any, options?: Options) {
             registerBulmaContainer(mdLib, "danger");
         }
     });
+
+    eleventyConfig.serverOptions.setup = async () => {
+        return {
+            middleware: [
+                baseUrlRedirect(baseUrl)
+            ],
+        };
+    }
 
     eleventyConfig.addPassthroughCopy("assets");
 }

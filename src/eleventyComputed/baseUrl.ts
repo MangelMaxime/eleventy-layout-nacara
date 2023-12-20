@@ -1,7 +1,7 @@
 export default async function baseUrl() {
     return async (data: any) => {
         if (data.isDevelopment) {
-            return "";
+            return "/";
         }
 
         if (!data.metadata || !data.metadata.nacara) {

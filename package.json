@@ -1,7 +1,7 @@
 {
     "name": "@mangelmaxime/eleventy-layout-nacara",
     "private": false,
-    "version": "0.0.0",
+    "version": "0.1.0",
     "description": "",
     "main": "dist/index.js",
     "files": [
@@ -19,7 +19,7 @@
         "docs-watch-typescript": "npx tsc --watch",
         "docs-watch-eleventy": "npx nodemon",
         "docs-watch": "npx shx rm -rf docs/_site && npx concurrently -p none npm:docs-watch-*",
-        "prepublish": "npx tsc && node ./scripts/release-npm.mjs"
+        "publish": "npx tsc && node ./scripts/release-npm.mjs"
     },
     "keywords": [
         "eleventy",

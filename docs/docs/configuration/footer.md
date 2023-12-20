@@ -163,7 +163,7 @@ The icon to display for the page. This icon is processed using `to_icon` filter,
 
 ```json
 {
-    "$schema": "./../../schemas/footer-schema.json",
+    "$schema": "../../node_modules/@mangelmaxime/eleventy-layout-nacara/schemas/footer-schema.json",
     "copyright": {
         "startDate": "2021",
         "attribution": "Elmish contributors"

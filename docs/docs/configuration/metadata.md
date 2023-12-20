@@ -120,7 +120,7 @@ Example: `editUrl + 'docs/introduction.md'`. If this field is omitted, there wil
 
 ```json
 {
-    "$schema": "./../../schemas/metadata-schema.json",
+    "$schema": "../../node_modules/@mangelmaxime/eleventy-layout-nacara/schemas/metadata-schema.json",
     "url": "https://mangelmaxime.github.io",
     "editUrl": "https://github.com/MangelMaxime/Nacara/edit/master/docsrc",
     "baseUrl": "/Nacara/",

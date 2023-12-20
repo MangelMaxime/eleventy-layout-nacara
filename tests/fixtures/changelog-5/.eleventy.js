@@ -1,18 +1,13 @@
 const eleventyLayoutNacara = require("../../../dist/index.js");
-const syntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
-
-const loadLanguages = require("prismjs/components/");
-
-loadLanguages("fsharp");
+const markdownItContainer = require("markdown-it-container");
 
 /** @param {import("@11ty/eleventy/src/UserConfig")} eleventyConfig */
 module.exports = function (eleventyConfig) {
     // Add the layout plugin
     eleventyConfig.addPlugin(eleventyLayoutNacara);
-    eleventyConfig.addPlugin(syntaxHighlight, {
-        init: function ({ Prism }) {
-            Prism.languages.fs = Prism.languages.fsharp;
-        }
+
+    eleventyConfig.amendLibrary("md", mdLib => {
+        mdLib.use(markdownItContainer, "warning");
     });
 
     eleventyConfig.ignores.add("./CHANGELOG.md")
