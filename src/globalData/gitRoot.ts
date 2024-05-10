@@ -1,5 +1,7 @@
 import { promisify } from "util";
-const execFile = promisify(require("child_process").execFile);
+import { execFile as execFile_node } from "child_process";
+
+const execFile = promisify(execFile_node);
 
 export default async function gitRoot() : Promise<string> {
     try {

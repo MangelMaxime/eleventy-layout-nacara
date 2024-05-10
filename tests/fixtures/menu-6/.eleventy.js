@@ -1,7 +1,7 @@
-import eleventyLayoutNacara from "../../../dist/index.js";
+const eleventyLayoutNacara = require("../../../dist/index.js");
 
 /** @param {import("@11ty/eleventy/src/UserConfig")} eleventyConfig */
-export default function (eleventyConfig) {
+module.exports = function (eleventyConfig) {
 
     // Add the layout plugin
     eleventyConfig.addPlugin(eleventyLayoutNacara);

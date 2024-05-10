@@ -11,6 +11,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * Include page content in the `base` layout
 * Remove debug console.log from the **block container** function
+* Fix changelog tests
+* Better support of baseUrl and follow permalink configuration
+
+### Changed
+
+* Use `renderTemplate` filter instead of our own implementation
 
 ## 0.1.0 - 2023-12-18
 

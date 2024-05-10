@@ -140,3 +140,41 @@ exports[`supports nacaraMenu with a Section 2`] = `
 </div>
 "
 `;
+
+exports[`works with a directory data permalink 1`] = `
+"<div class="menu-container">
+    <aside class="menu">
+        <p class="menu-label">Getting started</p>
+        <ul class="menu-list">
+            <li>
+                <a
+                    href="/Nacara/docs/getting-started/page1.html"
+                    class="is-active"
+                >
+                    Page 1
+                </a>
+            </li>
+        </ul>
+    </aside>
+</div>
+"
+`;
+
+exports[`works with a global data permalink 1`] = `
+"<div class="menu-container">
+    <aside class="menu">
+        <p class="menu-label">Getting started</p>
+        <ul class="menu-list">
+            <li>
+                <a
+                    href="/Nacara/docs/getting-started/page1.html"
+                    class="is-active"
+                >
+                    Page 1
+                </a>
+            </li>
+        </ul>
+    </aside>
+</div>
+"
+`;

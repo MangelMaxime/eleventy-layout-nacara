@@ -1,0 +1,11 @@
+@charset "utf-8";
+
+.content {
+    a {
+        text-decoration: underline;
+
+        &:hover {
+            font-weight: $weight-medium;
+        }
+    }
+}

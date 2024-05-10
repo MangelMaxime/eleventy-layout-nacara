@@ -1,4 +1,4 @@
-const spawn = require("cross-spawn");
+import spawn from "cross-spawn";
 import path from "path";
 
 async function lastModifiedDateFromGit(cwd : string, fileName: string) {

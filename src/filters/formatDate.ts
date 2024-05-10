@@ -6,5 +6,3 @@ export default function formatDateFilter(
 ) {
     return dayjs(date).format(format);
 }
-
-module.exports = formatDateFilter;

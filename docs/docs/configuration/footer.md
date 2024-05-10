@@ -87,7 +87,6 @@ See [sitemapSections](#sitemapSections) for more information.
 
 ### sitemapSections
 
-
 <table class="table is-narrow is-bordered is-vcentered">
     <thead>
         <tr>

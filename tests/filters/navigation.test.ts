@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest'
 import { formatHTML } from "../utils/_formatHTML";
-const Eleventy = require("@11ty/eleventy");
+import Eleventy from "@11ty/eleventy";
 
 test("returns nothing if there is not nacaraMenu provided", async () => {
     const elev = new Eleventy(
@@ -12,7 +12,7 @@ test("returns nothing if there is not nacaraMenu provided", async () => {
     );
 
     const json = await elev.toJSON();
-    const formattedResult = formatHTML(json[0].content);
+    const formattedResult = await formatHTML(json[0].content);
 
     expect(formattedResult).toMatchSnapshot();
 });
@@ -30,7 +30,7 @@ test("returns the Previous button marked as invisible and the second button norm
     const page1Json = json.find(
         (item: any) => item.url === "/docs/getting-started/page1/"
     );
-    const formattedResult = formatHTML(page1Json.content);
+    const formattedResult = await formatHTML(page1Json.content);
 
     expect(formattedResult).toMatchSnapshot();
 });
@@ -48,7 +48,7 @@ test("returns the Next button marked as invisible and the first button normal if
     const page2Json = json.find(
         (item: any) => item.url === "/docs/getting-started/page2/"
     );
-    const formattedResult = formatHTML(page2Json.content);
+    const formattedResult = await formatHTML(page2Json.content);
 
     expect(formattedResult).toMatchSnapshot();
 });
@@ -66,7 +66,7 @@ test("the Next button include the section title page is inside a section", async
     const page2Json = json.find(
         (item: any) => item.url === "/docs/getting-started/page2/"
     );
-    const formattedResult = formatHTML(page2Json.content);
+    const formattedResult = await formatHTML(page2Json.content);
 
     expect(formattedResult).toMatchSnapshot();
 });
@@ -84,7 +84,7 @@ test("the Previous button include the section title page is inside a section", a
     const page2Json = json.find(
         (item: any) => item.url === "/docs/getting-started/page1/"
     );
-    const formattedResult = formatHTML(page2Json.content);
+    const formattedResult = await formatHTML(page2Json.content);
 
     expect(formattedResult).toMatchSnapshot();
 });
@@ -102,7 +102,7 @@ test("both buttons are present if the page is between 2 valid element in the men
     const page2Json = json.find(
         (item: any) => item.url === "/docs/getting-started/page2/"
     );
-    const formattedResult = formatHTML(page2Json.content);
+    const formattedResult = await formatHTML(page2Json.content);
 
     expect(formattedResult).toMatchSnapshot();
 });
@@ -121,7 +121,7 @@ test("the Next button is empty if the next menu element is a link", async () => 
         (item: any) => item.url === "/docs/getting-started/page2/"
     );
 
-    const formattedResult = formatHTML(page2Json.content);
+    const formattedResult = await formatHTML(page2Json.content);
 
     expect(formattedResult).toMatchSnapshot();
 });
@@ -139,7 +139,7 @@ test("the Previous button is empty if the previous menu element is a link", asyn
     const page2Json = json.find(
         (item: any) => item.url === "/docs/getting-started/page2/"
     );
-    const formattedResult = formatHTML(page2Json.content);
+    const formattedResult = await formatHTML(page2Json.content);
 
     expect(formattedResult).toMatchSnapshot();
 });

@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest'
 import { formatHTML } from "../utils/_formatHTML";
-const Eleventy = require("@11ty/eleventy");
+import Eleventy from "@11ty/eleventy";
 
 test("returns nothing if there is not nacaraMenu provided", async () => {
     const elev = new Eleventy("./fixtures/menu-0/", "./fixtures/menu-0/_site", {
@@ -8,7 +8,7 @@ test("returns nothing if there is not nacaraMenu provided", async () => {
     });
 
     const json = await elev.toJSON();
-    const formattedResult = formatHTML(json[0].content);
+    const formattedResult = await formatHTML(json[0].content);
 
     expect(formattedResult).toMatchSnapshot();
 });
@@ -22,11 +22,11 @@ test("supports nacaraMenu with a Section", async () => {
     const page1Json = json.find(
         (item: any) => item.url === "/docs/getting-started/page1/"
     );
-    const page1FormattedResult = formatHTML(page1Json.content);
+    const page1FormattedResult = await formatHTML(page1Json.content);
     const page2Json = json.find(
         (item: any) => item.url === "/docs/getting-started/page2/"
     );
-    const page2FormattedResult = formatHTML(page2Json.content);
+    const page2FormattedResult = await formatHTML(page2Json.content);
 
     expect(page1FormattedResult).toMatchSnapshot();
     expect(page2FormattedResult).toMatchSnapshot();
@@ -52,7 +52,7 @@ test("returns a menu with a TOC containing only h2 headers if no toc data is pro
     });
 
     const json = await elev.toJSON();
-    const formattedResult = formatHTML(json[0].content);
+    const formattedResult = await formatHTML(json[0].content);
 
     expect(formattedResult).toMatchSnapshot();
 });
@@ -63,7 +63,7 @@ test("returns a menu with a TOC containing headers respecting the provided toc c
     });
 
     const json = await elev.toJSON();
-    const formattedResult = formatHTML(json[0].content);
+    const formattedResult = await formatHTML(json[0].content);
 
     expect(formattedResult).toMatchSnapshot();
 });
@@ -74,7 +74,29 @@ test("returns a menu with no TOC if it has been disabled via the config", async 
     });
 
     const json = await elev.toJSON();
-    const formattedResult = formatHTML(json[0].content);
+    const formattedResult = await formatHTML(json[0].content);
+
+    expect(formattedResult).toMatchSnapshot();
+});
+
+test("works with a global data permalink", async () => {
+    const elev = new Eleventy("./fixtures/menu-6/", "./fixtures/menu-6/_site", {
+        configPath: "./fixtures/menu-6/.eleventy.js",
+    });
+
+    const json = await elev.toJSON();
+    const formattedResult = await formatHTML(json[0].content);
+
+    expect(formattedResult).toMatchSnapshot();
+});
+
+test("works with a directory data permalink", async () => {
+    const elev = new Eleventy("./fixtures/menu-7/", "./fixtures/menu-7/_site", {
+        configPath: "./fixtures/menu-7/.eleventy.js",
+    });
+
+    const json = await elev.toJSON();
+    const formattedResult = await formatHTML(json[0].content);
 
     expect(formattedResult).toMatchSnapshot();
 });

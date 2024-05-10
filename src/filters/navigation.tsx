@@ -2,6 +2,7 @@ import Nano, { h, Fragment } from "nano-jsx";
 import path from "path";
 import { removeExtension } from "../utils/removeExtension";
 import { normalizeUrl } from "../utils/normalizeUrl";
+import { evaluatePermalink } from "../utils/evaluatePermalink";
 
 function flattenMenu(menu: Menu): FlatMenu {
     function flatten(menuItem: MenuItem): FlatMenu {
@@ -152,7 +153,7 @@ const PreviousPageButton = ({
     const previousButtonSectionText = previousButtonSection?.label;
 
     const outputPath =
-        previousPageContext.data.permalink ??
+        evaluatePermalink(previousPageContext) ??
         previousPageContext.data.page.outputPath;
     const previousButtonHref = normalizeUrl(
         previousPageContext.data.baseUrl + outputPath
@@ -221,7 +222,8 @@ const NextPageButton = ({
     const nextButtonSectionText = nextButtonSection?.label;
 
     const outputPath =
-        nextPageContext.data.permalink ?? nextPageContext.data.page.outputPath;
+        evaluatePermalink(nextPageContext) ??
+        nextPageContext.data.page.outputPath;
 
     const nextButtonHref = normalizeUrl(
         nextPageContext.data.baseUrl + outputPath

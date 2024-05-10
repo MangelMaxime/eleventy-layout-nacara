@@ -103,6 +103,7 @@ export function setIconAttributes(
 
 export async function lucideGenerator(iconString: string): GeneratorFunction {
     const { iconName, attributes } = extractIconInformation(iconString);
+    // @ts-ignore
     const lucideIcon = lucideIcons[camelCase(iconName)];
 
     if (lucideIcon) {

@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest'
-const Eleventy = require("@11ty/eleventy");
+import Eleventy from "@11ty/eleventy";
 import { formatHTML } from "../utils/_formatHTML";
 
 test("returns nothing if there is no menu", async () => {
@@ -12,7 +12,7 @@ test("returns nothing if there is no menu", async () => {
     );
 
     const json = await elev.toJSON();
-    const formattedResult = formatHTML(json[0].content);
+    const formattedResult = await formatHTML(json[0].content);
 
     expect(formattedResult).toMatchSnapshot();
 });
@@ -27,7 +27,7 @@ test("works for one level deep elements", async () => {
     );
 
     const json = await elev.toJSON();
-    const formattedResult = formatHTML(json[0].content);
+    const formattedResult = await formatHTML(json[0].content);
 
     expect(formattedResult).toMatchSnapshot();
 });
@@ -42,7 +42,7 @@ test("works for multiple level deep elements", async () => {
     );
 
     const json = await elev.toJSON();
-    const formattedResult = formatHTML(json[0].content);
+    const formattedResult = await formatHTML(json[0].content);
 
     expect(formattedResult).toMatchSnapshot();
 });

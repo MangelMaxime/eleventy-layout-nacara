@@ -1,7 +1,7 @@
 import prettier from "prettier";
 
-export function formatHTML (html: string) {
-    return prettier.format(html, {
+export async function formatHTML (html: string) {
+    return await prettier.format(html, {
         parser: "html",
         htmlWhitespaceSensitivity: "ignore",
         tabWidth: 4,

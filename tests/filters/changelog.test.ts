@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest'
-const Eleventy = require("@11ty/eleventy");
+import Eleventy from "@11ty/eleventy";
 import { formatHTML } from "../utils/_formatHTML";
 import { exec } from 'teen_process';
 import fs from "fs/promises";
@@ -18,7 +18,7 @@ test("known categories are rendered in a fixed order", async () => {
         json.find(
             (item: any) => item.url === "/docs/changelog/"
         );
-    const formattedResult = formatHTML(result.content);
+    const formattedResult = await formatHTML(result.content);
 
     expect(formattedResult).toMatchSnapshot();
 });
@@ -37,7 +37,7 @@ test("unknown categories are rendered in alphabetical order", async () => {
         json.find(
             (item: any) => item.url === "/docs/changelog/"
         );
-    const formattedResult = formatHTML(result.content);
+    const formattedResult = await formatHTML(result.content);
 
     expect(formattedResult).toMatchSnapshot();
 });
@@ -56,7 +56,7 @@ test("unknown categories are rendered after known categories", async () => {
         json.find(
             (item: any) => item.url === "/docs/changelog/"
         );
-    const formattedResult = formatHTML(result.content);
+    const formattedResult = await formatHTML(result.content);
 
     expect(formattedResult).toMatchSnapshot();
 });
@@ -75,7 +75,7 @@ test("all the versions are rendered", async () => {
         json.find(
             (item: any) => item.url === "/docs/changelog/"
         );
-    const formattedResult = formatHTML(result.content);
+    const formattedResult = await formatHTML(result.content);
 
     expect(formattedResult).toMatchSnapshot();
 });
@@ -94,7 +94,7 @@ test("body of a category is rendered convert from markdown to HTML", async () =>
         json.find(
             (item: any) => item.url === "/docs/changelog/"
         );
-    const formattedResult = formatHTML(result.content);
+    const formattedResult = await formatHTML(result.content);
 
     expect(formattedResult).toMatchSnapshot();
 });
@@ -114,8 +114,8 @@ test("additional Markdown plugins are supported when rendering the markdown cont
             (item: any) => item.url === "/docs/changelog/"
         );
 
-    // const formattedResult = formatHTML(fileContent);
-    const formattedResult = formatHTML(result.content);
+    // const formattedResult = await formatHTML(fileContent);
+    const formattedResult = await formatHTML(result.content);
 
     expect(formattedResult).toMatchSnapshot();
 });

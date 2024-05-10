@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest'
 import { formatHTML } from "../utils/_formatHTML";
-const Eleventy = require("@11ty/eleventy");
+import Eleventy from "@11ty/eleventy";
 
 test("render nothing if footer.nacara is not provided", async () => {
     const elev = new Eleventy(
@@ -12,7 +12,7 @@ test("render nothing if footer.nacara is not provided", async () => {
     );
 
     const json = await elev.toJSON();
-    const formattedResult = formatHTML(json[0].content);
+    const formattedResult = await formatHTML(json[0].content);
 
     expect(formattedResult).toMatchSnapshot()
 });
@@ -27,7 +27,7 @@ test("is rendered if only the text is provided", async () => {
     );
 
     const json = await elev.toJSON();
-    const formattedResult = formatHTML(json[0].content);
+    const formattedResult = await formatHTML(json[0].content);
 
     expect(formattedResult).toMatchSnapshot()
 });
@@ -42,7 +42,7 @@ test("is rendered if only copyright is provided", async () => {
     );
 
     const json = await elev.toJSON();
-    const formattedResult = formatHTML(json[0].content);
+    const formattedResult = await formatHTML(json[0].content);
 
     expect(formattedResult).toMatchSnapshot();
 });
@@ -57,7 +57,7 @@ test("is rendered if only the sitemapSections is provided", async () => {
     );
 
     const json = await elev.toJSON();
-    const formattedResult = formatHTML(json[0].content);
+    const formattedResult = await formatHTML(json[0].content);
 
     expect(formattedResult).toMatchSnapshot();
 });
@@ -72,7 +72,7 @@ test("is rendered with all the information provided", async () => {
     );
 
     const json = await elev.toJSON();
-    const formattedResult = formatHTML(json[0].content);
+    const formattedResult = await formatHTML(json[0].content);
 
     expect(formattedResult).toMatchSnapshot();
 });

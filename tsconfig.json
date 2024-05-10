@@ -1,8 +1,9 @@
 {
     "compilerOptions": {
-        "target": "ESNEXT",
+        "target": "ESNext",
         "declaration": true,
-        "module": "commonjs",
+        "moduleResolution": "Node",
+        "module": "ESNext",
         "strict": true,
         "esModuleInterop": true,
         "skipLibCheck": true,
