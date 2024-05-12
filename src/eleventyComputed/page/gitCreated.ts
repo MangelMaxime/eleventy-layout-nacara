@@ -65,5 +65,3 @@ export default function gitCreated(gitCreatedCache: Map<string, Date>) {
         };
     };
 }
-
-module.exports = gitCreated;

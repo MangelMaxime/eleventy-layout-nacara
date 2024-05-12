@@ -1,7 +1,7 @@
 // @ts-ignore
 import path from "path";
 import Nano, { h } from "nano-jsx";
-import { removeExtension } from "../utils/removeExtension";
+import { removeExtension } from "../utils/removeExtension.js";
 
 /**
  *
@@ -161,5 +161,3 @@ export default function breadcrumbFilter(this: any, pages: any[]) {
         ));
     }
 }
-
-module.exports = breadcrumbFilter;

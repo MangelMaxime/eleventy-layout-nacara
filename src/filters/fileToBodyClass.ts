@@ -19,5 +19,3 @@ export default function fileToBodyClassFilter (filePath : string) {
 
     return `page--${bodyClass}`;
 };
-
-module.exports = fileToBodyClassFilter;

@@ -19,5 +19,3 @@ export default async function addContentHash (
         throw new Error(`Failed to addHash to '${absolutePath}': ${error}`);
     }
 };
-
-module.exports = addContentHash;

@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest'
-import { parse } from "../../src/changelog-parser/parser";
-import type { Changelog } from "../../src/changelog-parser/parser";
+import { parse } from "../../src/changelog-parser/parser.js";
+import type { Changelog } from "../../src/changelog-parser/parser.js";
 
 test("parses title", () => {
     const text = `# Title`;

@@ -12,5 +12,3 @@ export default async function nacaraSectionDir() {
         return sectionDir;
     };
 }
-
-module.exports = nacaraSectionDir;

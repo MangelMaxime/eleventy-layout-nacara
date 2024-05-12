@@ -1,7 +1,7 @@
-import { lex } from "./lexer";
-import type * as Lex from "./lexer";
-import type * as Category from "./categories";
-import { categoryFromText } from "./categories";
+import { lex } from "./lexer.js";
+import type * as Lex from "./lexer.js";
+import type * as Category from "./categories.js";
+import { categoryFromText } from "./categories.js";
 
 export type Version = {
     title: string;

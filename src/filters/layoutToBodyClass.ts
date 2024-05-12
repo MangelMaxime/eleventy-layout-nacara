@@ -28,5 +28,3 @@ export default function layoutToBodyClassFilter (layout : string) {
 
     return `layout--${bodyClass}`;
 };
-
-module.exports = layoutToBodyClassFilter;

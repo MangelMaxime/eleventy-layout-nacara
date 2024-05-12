@@ -7,7 +7,7 @@ exports[`returns a menu with a TOC containing headers respecting the provided to
         <ul class="menu-list">
             <li>
                 <a
-                    href="/Nacara/./fixtures/menu-4/_site/docs/getting-started/page1/index.html"
+                    href="/Nacara/docs/getting-started/page1/index.html"
                     class="is-active"
                 >
                     Page 1
@@ -40,7 +40,7 @@ exports[`returns a menu with a TOC containing only h2 headers if no toc data is 
         <ul class="menu-list">
             <li>
                 <a
-                    href="/Nacara/./fixtures/menu-3/_site/docs/getting-started/page1/index.html"
+                    href="/Nacara/docs/getting-started/page1/index.html"
                     class="is-active"
                 >
                     Page 1
@@ -71,14 +71,7 @@ exports[`returns a menu with no TOC if it has been disabled via the config 1`] =
     <aside class="menu">
         <p class="menu-label">Getting started</p>
         <ul class="menu-list">
-            <li>
-                <a
-                    href="/Nacara/./fixtures/menu-5/_site/docs/getting-started/page1/index.html"
-                    class="is-active"
-                >
-                    Page 1
-                </a>
-            </li>
+            <li><a href="/Nacara/undefined" class="is-active">Page 1</a></li>
         </ul>
     </aside>
 </div>
@@ -94,7 +87,7 @@ exports[`supports nacaraMenu with a Section 1`] = `
         <ul class="menu-list">
             <li>
                 <a
-                    href="/Nacara/./fixtures/menu-1/_site/docs/getting-started/page1/index.html"
+                    href="/Nacara/docs/getting-started/page1/index.html"
                     class="is-active"
                 >
                     Page 1
@@ -102,7 +95,7 @@ exports[`supports nacaraMenu with a Section 1`] = `
             </li>
             <li>
                 <a
-                    href="/Nacara/./fixtures/menu-1/_site/docs/getting-started/page2/index.html"
+                    href="/Nacara/docs/getting-started/page2/index.html"
                     class=""
                 >
                     Page 2
@@ -121,7 +114,7 @@ exports[`supports nacaraMenu with a Section 2`] = `
         <ul class="menu-list">
             <li>
                 <a
-                    href="/Nacara/./fixtures/menu-1/_site/docs/getting-started/page1/index.html"
+                    href="/Nacara/docs/getting-started/page1/index.html"
                     class=""
                 >
                     Page 1
@@ -129,7 +122,7 @@ exports[`supports nacaraMenu with a Section 2`] = `
             </li>
             <li>
                 <a
-                    href="/Nacara/./fixtures/menu-1/_site/docs/getting-started/page2/index.html"
+                    href="/Nacara/docs/getting-started/page2/index.html"
                     class="is-active"
                 >
                     Page 2

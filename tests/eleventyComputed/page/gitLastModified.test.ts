@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest'
-import gitLastModified from "../../../src/eleventyComputed/page/gitLastModified";
-import globalData from "../../../src/globalData";
+import gitLastModified from "../../../src/eleventyComputed/page/gitLastModified.js";
+import globalData from "../../../src/globalData/index.js";
 import fs from "fs-extra";
 
 test("returns null if the file has not been committed yet", async () => {
@@ -37,7 +37,7 @@ test("returns null if the file was only commited once", async () => {
     const gitLastModifiedDate = await gitLastModifiedFunc({
         gitRoot: gitRoot,
         page: {
-            absolutePath: "./fixtures/file2.txt",
+            absolutePath: "./tests/fixtures/file2.txt",
         },
     });
 
@@ -51,7 +51,7 @@ test("returns a Date if the file was committed twice", async () => {
     const gitLastModifiedDate = await gitLastModifiedFunc({
         gitRoot: gitRoot,
         page: {
-            absolutePath: "./fixtures/file3.txt",
+            absolutePath: "./tests/fixtures/file3.txt",
         },
     });
 
@@ -66,7 +66,7 @@ test("returns newest Date in the file history if the file was committed more tha
     const gitLastModifiedDate = await gitLastModifiedFunc({
         gitRoot: gitRoot,
         page: {
-            absolutePath: "./fixtures/file4.txt",
+            absolutePath: "./tests/fixtures/file4.txt",
         },
     });
 

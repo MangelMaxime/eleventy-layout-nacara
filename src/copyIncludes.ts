@@ -1,5 +1,8 @@
 import path from "path";
 import fs from "fs-extra";
+import { dirname } from 'dirname-filename-esm';
+
+const __dirname = dirname(import.meta);
 
 /**
  * Copy Nacara includes to the user folder so it can be easily accessed
@@ -21,7 +24,8 @@ export function copyIncludesToUserFolder(args : EleventyBeforeEventArgs) {
         destination = includesDir;
     // Otherwise, use the path relative to the current working directory
     } else {
-        destination = path.join(process.cwd(), args.inputDir, includesDir, "nacara");
+        const inputDir = path.isAbsolute(args.inputDir) ? args.inputDir : path.join(process.cwd(), args.inputDir);
+        destination = path.join(inputDir, includesDir, "nacara");
     }
 
     // If the folder already exists, remove it

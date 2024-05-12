@@ -29,5 +29,3 @@ export default async function nacaraSection() {
         return inputPathSegments[0];
     }
 }
-
-module.exports = nacaraSection;

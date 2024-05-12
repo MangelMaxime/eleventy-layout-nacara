@@ -8,5 +8,3 @@ export default function sanitizedTitle() {
         }
     };
 }
-
-module.exports = sanitizedTitle;

@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest'
-import globalData from "../../src/globalData";
+import globalData from "../../src/globalData/index.js";
 
 test("should returns a non empty string", async () => {
     const gitRoot = await globalData.gitRoot();

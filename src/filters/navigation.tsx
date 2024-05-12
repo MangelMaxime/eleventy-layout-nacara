@@ -1,8 +1,8 @@
 import Nano, { h, Fragment } from "nano-jsx";
 import path from "path";
-import { removeExtension } from "../utils/removeExtension";
-import { normalizeUrl } from "../utils/normalizeUrl";
-import { evaluatePermalink } from "../utils/evaluatePermalink";
+import { removeExtension } from "../utils/removeExtension.js";
+import { normalizeUrl } from "../utils/normalizeUrl.js";
+import getOutputPath from "../utils/getOutputPath.js";
 
 function flattenMenu(menu: Menu): FlatMenu {
     function flatten(menuItem: MenuItem): FlatMenu {
@@ -152,9 +152,7 @@ const PreviousPageButton = ({
     );
     const previousButtonSectionText = previousButtonSection?.label;
 
-    const outputPath =
-        evaluatePermalink(previousPageContext) ??
-        previousPageContext.data.page.outputPath;
+    const outputPath = getOutputPath(previousPageContext);
     const previousButtonHref = normalizeUrl(
         previousPageContext.data.baseUrl + outputPath
     );
@@ -221,9 +219,7 @@ const NextPageButton = ({
     const nextButtonSection = tryFindSection(menu, nextPageRelativePath);
     const nextButtonSectionText = nextButtonSection?.label;
 
-    const outputPath =
-        evaluatePermalink(nextPageContext) ??
-        nextPageContext.data.page.outputPath;
+    const outputPath = getOutputPath(nextPageContext);
 
     const nextButtonHref = normalizeUrl(
         nextPageContext.data.baseUrl + outputPath
@@ -303,5 +299,3 @@ export default function previousNextPaginationFilter(this: any, pages: any[]) {
         </div>
     ));
 }
-
-module.exports = previousNextPaginationFilter;

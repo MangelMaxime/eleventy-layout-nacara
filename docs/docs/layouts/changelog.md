@@ -33,7 +33,7 @@ This will allows you to change the orignal changelog file and see the changes on
 
 ```js
 /** @param {import("@11ty/eleventy/src/UserConfig")} eleventyConfig */
-module.exports = function (eleventyConfig) {
+export default function (eleventyConfig) {
     // ...
     eleventyConfig.addWatchTarget("./../CHANGELOG.md");
     // ...

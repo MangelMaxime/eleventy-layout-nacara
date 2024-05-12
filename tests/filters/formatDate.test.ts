@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest'
-import formatDate from "../../src/filters/formatDate";
+import formatDate from "../../src/filters/formatDate.js";
 
 test("works for Date based on UTC time", async () => {
     const date = new Date("2020-01-01T00:00:00.000Z");

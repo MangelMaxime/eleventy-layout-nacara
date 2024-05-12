@@ -1,10 +1,10 @@
 import Nano, { h, Fragment } from "nano-jsx";
 import path from "path";
 import fs from "fs-extra";
-import { parse } from "./../changelog-parser/parser";
-import type { Changelog, Version } from "./../changelog-parser/parser";
-import * as CategoryType from "./../changelog-parser/categories";
-import { categoryToText } from "./../changelog-parser/categories";
+import { parse } from "./../changelog-parser/parser.js";
+import type { Changelog, Version } from "./../changelog-parser/parser.js";
+import * as CategoryType from "./../changelog-parser/categories.js";
+import { categoryToText } from "./../changelog-parser/categories.js";
 import slugify from "slugify";
 import dayjs from "dayjs";
 interface IVersionProps {
@@ -79,8 +79,10 @@ const Category = ({ category, body }: ICategoryProps) => {
                 </span>
             </li>
 
-            <li class="changelog-list-item changelog-version-body" dangerouslySetInnerHTML={{ __html: body }}>
-            </li>
+            <li
+                class="changelog-list-item changelog-version-body"
+                dangerouslySetInnerHTML={{ __html: body }}
+            ></li>
         </div>
     );
 };
@@ -93,13 +95,13 @@ const Categories = ({ categories }: ICategoriesProps) => {
     let res = [];
 
     // Sort the categories by kind
-    let added = ""
-    let changed = ""
-    let deprecated = ""
-    let removed = ""
-    let fixed = ""
-    let security = ""
-    let others = []
+    let added = "";
+    let changed = "";
+    let deprecated = "";
+    let removed = "";
+    let fixed = "";
+    let security = "";
+    let others = [];
 
     for (const [categoryType, body] of categories) {
         switch (categoryType.kind) {
@@ -130,13 +132,13 @@ const Categories = ({ categories }: ICategoriesProps) => {
             default:
                 others.push({
                     categoryType,
-                    body
-                })
+                    body,
+                });
         }
     }
 
     // Unkown categories are sorted alphabetically
-    others = others.sort((a, b) => a.categoryType > b.categoryType ? 1 : -1)
+    others = others.sort((a, b) => (a.categoryType > b.categoryType ? 1 : -1));
 
     if (added !== "") {
         res.push(<Category category={CategoryType.added} body={added} />);
@@ -147,7 +149,9 @@ const Categories = ({ categories }: ICategoriesProps) => {
     }
 
     if (deprecated !== "") {
-        res.push(<Category category={CategoryType.deprecated} body={deprecated} />);
+        res.push(
+            <Category category={CategoryType.deprecated} body={deprecated} />,
+        );
     }
 
     if (removed !== "") {
@@ -182,22 +186,23 @@ const Categories = ({ categories }: ICategoriesProps) => {
  */
 export default function changelogFilter(eleventyConfig: any) {
     return async function (this: any, pages: any[]) {
-
         if (this.ctx.changelog_path) {
             const changelogFilePath = path.join(
                 this.ctx.page.absolutePath,
                 "..", // Remove the file segment from the path
-                this.ctx.changelog_path
+                this.ctx.changelog_path,
             );
             const fileContent = await fs.readFile(changelogFilePath, "utf8");
             const changelog: Changelog = parse(fileContent);
+            const renderTemplate = eleventyConfig.getFilter("renderTemplate");
 
             // Transform the markdown to HTML
             // Needs to happen before the JSX rendering as async is not well
             // supported in Nano JSX at least not in an easy way for us
             for (const version of changelog.versions) {
                 for (const [categoryType, body] of version.categories) {
-                    const compiledBody = await eleventyConfig.getFilter("renderTemplate")(body, "md");
+                    // Provide a fake `this` otherwise Eleventy crashes
+                    const compiledBody = await renderTemplate.call({}, body, "md");
                     version.categories.set(categoryType, compiledBody);
                 }
             }
@@ -220,5 +225,3 @@ export default function changelogFilter(eleventyConfig: any) {
         }
     };
 }
-
-module.exports = changelogFilter;

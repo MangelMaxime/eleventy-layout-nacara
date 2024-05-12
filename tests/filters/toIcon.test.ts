@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest'
-import toIconFilterBuilder from "../../src/filters/toIcon";
+import toIconFilterBuilder from "../../src/filters/toIcon.js";
 
 test("supports Lucide icons out of the box", async () => {
     const iconBuilder = toIconFilterBuilder();

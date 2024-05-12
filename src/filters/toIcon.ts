@@ -46,6 +46,10 @@ function camelCase(text: string): string {
     });
 }
 
+function pascalCase(text: string): string {
+    return text.charAt(0).toUpperCase() + camelCase(text.slice(1));
+}
+
 async function fileExists(path: string) {
     try {
         await fs.access(path);
@@ -104,10 +108,11 @@ export function setIconAttributes(
 export async function lucideGenerator(iconString: string): GeneratorFunction {
     const { iconName, attributes } = extractIconInformation(iconString);
     // @ts-ignore
-    const lucideIcon = lucideIcons[camelCase(iconName)];
+    const lucideIcon : string = lucideIcons[pascalCase(iconName)];
 
     if (lucideIcon) {
-        const lucideIconSvg = SVG(lucideIcon);
+        const lucideIconSvg = SVG(lucideIcon.trim());
+        const t = SVG("<circle cx='50' cy='50' r='40' fill='yellow' />");
         setIconAttributes(lucideIconSvg, attributes);
 
         return lucideIconSvg.svg();
@@ -213,5 +218,3 @@ export default function toIconFilterBuilder(options?: Options) {
         }
     };
 }
-
-module.exports = toIconFilterBuilder;

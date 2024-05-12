@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest'
-import fileToBodyClass from "../../src/filters/fileToBodyClass";
+import fileToBodyClass from "../../src/filters/fileToBodyClass.js";
 
 test("returns 'page--' followed by the path to the page snakified", async () => {
     const className = fileToBodyClass("nacara/pages/index.njk");

@@ -21,5 +21,3 @@ export default function favIconFromEmojiFilter (emoji: string) {
 
     return Nano.renderSSR(<LinkElement />);
 }
-
-module.exports = favIconFromEmojiFilter;

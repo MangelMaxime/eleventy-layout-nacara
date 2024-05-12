@@ -73,4 +73,3 @@ export default function gitLastModified(
         };
     };
 }
-module.exports = gitLastModified;

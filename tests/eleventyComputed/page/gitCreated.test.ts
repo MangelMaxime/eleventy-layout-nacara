@@ -1,7 +1,7 @@
 import { expect, test } from 'vitest'
-import gitCreated from "../../../src/eleventyComputed/page/gitCreated";
+import gitCreated from "../../../src/eleventyComputed/page/gitCreated.js";
 import fs from "fs-extra";
-import globalData from "../../../src/globalData";
+import globalData from "../../../src/globalData/index.js";
 
 test("returns now if the file has not been committed yet", async () => {
     const gitRoot = await globalData.gitRoot();
@@ -38,7 +38,7 @@ test("returns the created date of a file based on the Git history", async () => 
     const gitCreatedDate = await gitCreatedFunc({
         gitRoot: gitRoot,
         page: {
-            absolutePath: "./fixtures/file1.txt",
+            absolutePath: "./tests/fixtures/file1.txt",
         },
     });
 

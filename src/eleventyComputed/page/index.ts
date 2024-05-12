@@ -1,6 +1,6 @@
-import absolutePath from "./absolutePath";
-import gitCreated from "./gitCreated";
-import gitLastModified from "./gitLastModified";
+import absolutePath from "./absolutePath.js";
+import gitCreated from "./gitCreated.js";
+import gitLastModified from "./gitLastModified.js";
 
 export default {
     absolutePath: absolutePath,

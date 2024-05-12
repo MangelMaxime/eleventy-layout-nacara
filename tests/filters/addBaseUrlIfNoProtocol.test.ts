@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest'
-import addBaseUrlIfNoProtocol from "../../src/filters/addBaseUrlIfNoProtocol";
+import addBaseUrlIfNoProtocol from "../../src/filters/addBaseUrlIfNoProtocol.js";
 
 test("returns the URL without modification if it has a protocoal", async () => {
     expect(addBaseUrlIfNoProtocol("http://example.com/sub-path/file1.txt")).toBe("http://example.com/sub-path/file1.txt");

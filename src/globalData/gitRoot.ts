@@ -21,5 +21,3 @@ export default async function gitRoot() : Promise<string> {
 Original error: ${e.message}`);
     }
 }
-
-module.exports = gitRoot;

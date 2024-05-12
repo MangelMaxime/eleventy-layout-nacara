@@ -13,5 +13,3 @@ export default async function baseUrl() {
         return data.metadata.nacara.baseUrl;
     };
 }
-
-module.exports = baseUrl;

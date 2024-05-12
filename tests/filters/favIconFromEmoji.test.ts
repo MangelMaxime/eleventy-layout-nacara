@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest'
-import favIconFromEmoji from "../../src/filters/favIconFromEmoji";
+import favIconFromEmoji from "../../src/filters/favIconFromEmoji.js";
 
 test("returns the correct emoji", () => {
     const result = favIconFromEmoji("🐶");

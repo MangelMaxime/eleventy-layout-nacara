@@ -1,19 +1,19 @@
 import { expect, test } from 'vitest'
 import Eleventy from "@11ty/eleventy";
-import { formatHTML } from "../utils/_formatHTML";
+import { formatHTML } from "../utils/_formatHTML.js";
 import { exec } from 'teen_process';
 import fs from "fs/promises";
 
 test("known categories are rendered in a fixed order", async () => {
     const elev = new Eleventy(
-        "./fixtures/changelog-0/",
-        "./fixtures/changelog-0/_site",
+        "./tests/fixtures/changelog-0/",
+        "./tests/fixtures/changelog-0/_site",
         {
-            configPath: "./fixtures/changelog-0/.eleventy.js",
+            configPath: "./tests/fixtures/changelog-0/.eleventy.js",
         }
     );
 
-    const json = await elev.toJSON();
+    const json = await elev.toJSON() as any[];
     const result =
         json.find(
             (item: any) => item.url === "/docs/changelog/"
@@ -25,14 +25,14 @@ test("known categories are rendered in a fixed order", async () => {
 
 test("unknown categories are rendered in alphabetical order", async () => {
     const elev = new Eleventy(
-        "./fixtures/changelog-1/",
-        "./fixtures/changelog-1/_site",
+        "./tests/fixtures/changelog-1/",
+        "./tests/fixtures/changelog-1/_site",
         {
-            configPath: "./fixtures/changelog-1/.eleventy.js",
+            configPath: "./tests/fixtures/changelog-1/.eleventy.js",
         }
     );
 
-    const json = await elev.toJSON();
+    const json = await elev.toJSON() as any[];
     const result =
         json.find(
             (item: any) => item.url === "/docs/changelog/"
@@ -44,14 +44,14 @@ test("unknown categories are rendered in alphabetical order", async () => {
 
 test("unknown categories are rendered after known categories", async () => {
     const elev = new Eleventy(
-        "./fixtures/changelog-2/",
-        "./fixtures/changelog-2/_site",
+        "./tests/fixtures/changelog-2/",
+        "./tests/fixtures/changelog-2/_site",
         {
-            configPath: "./fixtures/changelog-2/.eleventy.js",
+            configPath: "./tests/fixtures/changelog-2/.eleventy.js",
         }
     );
 
-    const json = await elev.toJSON();
+    const json = await elev.toJSON() as any[];
     const result =
         json.find(
             (item: any) => item.url === "/docs/changelog/"
@@ -63,14 +63,14 @@ test("unknown categories are rendered after known categories", async () => {
 
 test("all the versions are rendered", async () => {
     const elev = new Eleventy(
-        "./fixtures/changelog-3/",
-        "./fixtures/changelog-3/_site",
+        "./tests/fixtures/changelog-3/",
+        "./tests/fixtures/changelog-3/_site",
         {
-            configPath: "./fixtures/changelog-3/.eleventy.js",
+            configPath: "./tests/fixtures/changelog-3/.eleventy.js",
         }
     );
 
-    const json = await elev.toJSON();
+    const json = await elev.toJSON() as any[];
     const result =
         json.find(
             (item: any) => item.url === "/docs/changelog/"
@@ -82,14 +82,14 @@ test("all the versions are rendered", async () => {
 
 test("body of a category is rendered convert from markdown to HTML", async () => {
     const elev = new Eleventy(
-        "./fixtures/changelog-4/",
-        "./fixtures/changelog-4/_site",
+        "./tests/fixtures/changelog-4/",
+        "./tests/fixtures/changelog-4/_site",
         {
-            configPath: "./fixtures/changelog-4/.eleventy.js",
+            configPath: "./tests/fixtures/changelog-4/.eleventy.js",
         }
     );
 
-    const json = await elev.toJSON();
+    const json = await elev.toJSON() as any[];
     const result =
         json.find(
             (item: any) => item.url === "/docs/changelog/"
@@ -101,14 +101,14 @@ test("body of a category is rendered convert from markdown to HTML", async () =>
 
 test("additional Markdown plugins are supported when rendering the markdown content", async () => {
     const elev = new Eleventy(
-        "./fixtures/changelog-5/",
-        "./fixtures/changelog-5/_site",
+        "./tests/fixtures/changelog-5/",
+        "./tests/fixtures/changelog-5/_site",
         {
-            configPath: "./fixtures/changelog-5/.eleventy.js",
+            configPath: "./tests/fixtures/changelog-5/.eleventy.js",
         }
     );
 
-    const json = await elev.toJSON();
+    const json = await elev.toJSON() as any[];
     const result =
         json.find(
             (item: any) => item.url === "/docs/changelog/"

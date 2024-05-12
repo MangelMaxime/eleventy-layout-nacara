@@ -1,0 +1,3 @@
+Keep this files here, it is needed for a test inside of `toIcon.test.js` file.
+
+We can't move it inside of `tests` because Vitest make the `cwd` the root of the project, so it will not be able to find the `assets/icons` folder.

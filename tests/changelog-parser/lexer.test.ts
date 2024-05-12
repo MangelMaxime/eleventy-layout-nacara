@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest'
-import { lex } from "../../src/changelog-parser/lexer";
+import { lex } from "../../src/changelog-parser/lexer.js";
 
 test("captures title ", () => {
     const lines = [

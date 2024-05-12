@@ -1,4 +1,4 @@
-import gitRoot from "./gitRoot";
+import gitRoot from "./gitRoot.js";
 
 export default {
     gitRoot: gitRoot,

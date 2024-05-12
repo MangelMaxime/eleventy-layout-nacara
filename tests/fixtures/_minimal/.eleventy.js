@@ -1,5 +1,6 @@
-import eleventyLayoutNacara from "../../../dist/index.js";
-import { dirname } from 'dirname-filename-esm';
+// import eleventyLayoutNacara from "../../../dist/index.js";
+import { dirname, filename } from 'dirname-filename-esm';
+import fs from 'node:fs/promises';
 
 const __dirname = dirname(import.meta);
 
@@ -10,17 +11,15 @@ const input = process.env.VITEST_WORKER_ID ? __dirname : ".";
 
 /** @param {import("@11ty/eleventy/src/UserConfig")} eleventyConfig */
 export default function (eleventyConfig) {
-    // Add the layout plugin
-    eleventyConfig.addPlugin(eleventyLayoutNacara);
 
-    eleventyConfig.ignores.add("./CHANGELOG.md")
+    // Add the layout plugin
+    // eleventyConfig.addPlugin(eleventyLayoutNacara);
+    console.log('hello from eleventfdfffyLayoutNacara');
 
     // Configure Eleventy options to your liking
     return {
         dir: {
             input: input,
-            includes: "_includes",
-            data: "_data",
             output: "_site",
         },
         dataTemplateEngine: "njk",
