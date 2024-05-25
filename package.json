@@ -12,8 +12,8 @@
         "scss"
     ],
     "scripts": {
-        "test": "npx tsc && cd tests && npx vitest run",
-        "test-watch-jest": "cd tests && npx vitest --ui",
+        "test": "npx tsc && npx vitest run",
+        "test-watch-vitest": "npx vitest",
         "test-watch-typescript": "npx tsc --watch",
         "test-watch": "npx concurrently --handle-input -p none npm:test-watch-*",
         "demo": "cd docs && npx @11ty/eleventy",
